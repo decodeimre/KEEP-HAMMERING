@@ -3,9 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-// Import the specific icons you need
+// Import the specific icons
 import { faBars, faUser, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { DropdownMenu } from "react-bootstrap";
 
 // Add the imported icons to the library
 library.add(faBars, faUser, faPlus);
@@ -18,9 +17,9 @@ function MenuDropDownLeft() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <Dropdown.Item href="#/action-1">Plan new Workout</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Exercise Overview</Dropdown.Item>
+        <Dropdown.Item  href="#/action-3">Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -34,9 +33,9 @@ function MenuDropDownRight() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">My Stats</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -52,14 +51,21 @@ export function Header() {
       </div>
       {/*navigation with button burger-menu, welcome text, button user-menu*/}
       <div className="row">
+        <div className="text-center">
+          <h2>Welcome, User!</h2>
+        </div>
+      </div>
+      <div className="row mt-3">
         <div className="col-2 text-center">
           <MenuDropDownLeft />
         </div>
         <div className="col-8 text-center">
-          <h2>Welcome, User!</h2>
+          <button className="btn-workout-plus">
+            <FontAwesomeIcon icon="plus" />
+          </button>
         </div>
         <div className="col-2 text-center">
-          <MenuDropDownRight/>
+          <MenuDropDownRight />
         </div>
       </div>
     </div>
