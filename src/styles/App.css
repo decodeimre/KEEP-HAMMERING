@@ -4,6 +4,19 @@ html, body {
     margin: 0;
   }
   
+/*HEADER*/
+
+/*DropDown Menu*/
+
+#dropdown-menu {
+  background-color: whitesmoke;
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+
+
+  /*Calendar*/
+
   .calendar-container {
     display: flex;
     flex-direction: column;
