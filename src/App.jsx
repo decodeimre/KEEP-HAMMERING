@@ -3,27 +3,28 @@ import "./styles/App.css";
 import "react-calendar/dist/Calendar.css";
 import { Header } from "./components/Header";
 import MyCalendar from "./components/Calendar";
+import { Routes, Route } from "react-router-dom";
+import { NewWorkout } from "./components/NewWorkout.jsx";
 
 function App() {
   return (
     <>
-      <HomePage />
+      <Header />
+      <Routes>
+        <Route path="/" element={<MyCalendar />} />
+        <Route path="newWorkout" element={<NewWorkout />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
     </>
   );
 }
 
 export default App;
 
-function HomePage() {
+const NoMatch = () => {
   return (
-    <>
-      <Header />
-
-      <div className="container calendar-container">
-        <MyCalendar />
-      </div>
-    </>
+    <div>
+      <h1>Sorry, path does not exist</h1>
+    </div>
   );
-}
-
-
+};

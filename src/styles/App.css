@@ -18,7 +18,7 @@ html, body {
   font-size: 1.5rem;
 }
 
-.btn-workout-plus {
+.btn-workout-plus, .btn-home {
   color: whitesmoke;
   width: 3rem;
   background: none;

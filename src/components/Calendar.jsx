@@ -6,10 +6,10 @@ export default function MyCalendar() {
     //example handleClick function
     //should later open day view with planned workout and option to add new workout
     const handleDateClick = (arg) => {
-      alert(arg.dateStr);
     };
   
     return (
+      <div className="container calendar-container">
       <div id="calendar">
         <FullCalendar
           plugins={[multiMonthPlugin, interactionPlugin]}
@@ -27,6 +27,6 @@ export default function MyCalendar() {
             },
           ]}
         />
-      </div>
+      </div></div>
     );
   }
