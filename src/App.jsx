@@ -4,7 +4,8 @@ import "react-calendar/dist/Calendar.css";
 import { Header } from "./components/Header";
 import MyCalendar from "./components/Calendar";
 import { Routes, Route } from "react-router-dom";
-import { NewWorkout } from "./components/NewWorkout.jsx";
+import { WorkoutDisplay } from "./components/WorkoutDisplay.jsx";
+import TargetMuscleList from "./components/TargetMuscle.jsx";
 
 function App() {
   return (
@@ -12,7 +13,12 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<MyCalendar />} />
-        <Route path="newWorkout" element={<NewWorkout />} />
+        <Route path="/workout" element={<WorkoutDisplay />} />
+        <Route
+          path="/workout/targetMuscleList"
+          element={<TargetMuscleList />}
+        />
+
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </>

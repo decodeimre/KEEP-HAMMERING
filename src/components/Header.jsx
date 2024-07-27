@@ -72,16 +72,16 @@ export function Header() {
           </div>
 
           <div className="col-8 text-center">
-            {location.pathname === "/newWorkout" ? (
-              <Link to="/">
-                <button className="btn-home">
-                  <FontAwesomeIcon icon="home" />
+            {location.pathname === "/" ? (
+              <Link to="/workout">
+                <button className="btn-workout-plus">
+                  <FontAwesomeIcon icon="plus" />
                 </button>
               </Link>
             ) : (
-              <Link to="/newWorkout">
-                <button className="btn-workout-plus">
-                  <FontAwesomeIcon icon="plus" />
+              <Link to="/">
+                <button className="btn-home">
+                  <FontAwesomeIcon icon="home" />
                 </button>
               </Link>
             )}
@@ -91,7 +91,6 @@ export function Header() {
           </div>
         </div>
       </div>
-      {/* <Outlet/> */}
     </>
   );
 }

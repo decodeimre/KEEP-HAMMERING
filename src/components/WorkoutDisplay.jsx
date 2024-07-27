@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -14,7 +15,7 @@ import {
 // Add the imported icons to the library
 library.add(faAngleLeft, faPlus, faAngleRight);
 
-export function NewWorkout() {
+export function WorkoutDisplay() {
   const [date, setDate] = useState(new Date());
 
   let selectedDate = date.toDateString();
@@ -32,6 +33,8 @@ export function NewWorkout() {
   };
 
   return (
+    <>
+
     <Container className="p-3">
       <Row className="justify-content-md-center border-bottom">
         <Col className="col-2 d-flex justify-content-start">
@@ -59,27 +62,21 @@ export function NewWorkout() {
       </Row>
       <Row>
         <Col className="d-flex justify-content-center">
+          <Link to="targetMuscleList">
           <div className="workout-plus ">
             <FontAwesomeIcon icon="plus" size="4x" />
           </div>
+          </Link>
         </Col>
       </Row>
       <Row>
         <Col className="d-flex justify-content-center">
-          <h4>Add New Workout</h4>
+         <h4>Add New Workout</h4>
         </Col>
       </Row>
     </Container>
+              </>
   );
 }
 
-// <div className="d-flex"></div>
-// <ul className="list-group muscleList">
-//   <li className="list-group-item">Abs</li>
-//   <li className="list-group-item">Back</li>
-//   <li className="list-group-item">Biceps</li>
-//   <li className="list-group-item">Chest</li>
-//   <li className="list-group-item">Legs</li>
-//   <li className="list-group-item">Shoulders</li>
-//   <li className="list-group-item">Triceps</li>
-// </ul>
+
