@@ -5,22 +5,19 @@ import { Header } from "./components/Header";
 import MyCalendar from "./components/Calendar";
 import { Routes, Route } from "react-router-dom";
 import { WorkoutDisplay } from "./components/WorkoutDisplay.jsx";
-import TargetMuscleList from "./components/TargetMuscle.jsx";
+import { DateContextProvider } from "./components/context/dateContext.jsx";
 
 function App() {
   return (
     <>
+      <DateContextProvider>
       <Header />
-      <Routes>
-        <Route path="/" element={<MyCalendar />} />
-        <Route path="/workout" element={<WorkoutDisplay />} />
-        <Route
-          path="/workout/targetMuscleList"
-          element={<TargetMuscleList />}
-        />
-
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<MyCalendar />} />
+          <Route path="/workoutLog" element={<WorkoutDisplay />} />
+             <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </DateContextProvider>
     </>
   );
 }

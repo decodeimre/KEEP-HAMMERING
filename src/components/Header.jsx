@@ -1,5 +1,7 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link, useLocation } from "react-router-dom";
+import { DateContext } from "./context/dateContext";
+import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -51,6 +53,7 @@ function MenuDropDownRight() {
 
 export function Header() {
   const location = useLocation();
+  const { setCurrentDate } = useContext(DateContext);
 
   return (
     <>
@@ -73,8 +76,11 @@ export function Header() {
 
           <div className="col-8 text-center">
             {location.pathname === "/" ? (
-              <Link to="/workout">
-                <button className="btn-workout-plus">
+              <Link to="/workoutLog">
+                <button
+                  onClick={() => setCurrentDate(new Date())}
+                  className="btn-workout-plus"
+                >
                   <FontAwesomeIcon icon="plus" />
                 </button>
               </Link>

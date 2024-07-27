@@ -1,11 +1,19 @@
 import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import multiMonthPlugin from "@fullcalendar/multimonth";
+import { DateContext } from "./context/dateContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function MyCalendar() {
+
+  const {setCurrentDate} = useContext(DateContext)
+  const navigate = useNavigate();
     //example handleClick function
     //should later open day view with planned workout and option to add new workout
     const handleDateClick = (arg) => {
+      setCurrentDate(new Date(arg.date))
+      navigate('/workoutLog')
     };
   
     return (
