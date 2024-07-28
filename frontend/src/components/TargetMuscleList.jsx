@@ -1,4 +1,5 @@
-import { ListGroup, Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { ListGroup, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -14,13 +15,15 @@ function TargetMuscleList() {
     <>
       <Container>
         <ListGroup className="target-muscle-list">
+          <Link to={`/workout/targetMuscleList/abs`}>
           <ListGroup.Item action variant="dark" className="target-muscle-item">
             <FontAwesomeIcon
               icon="fa-solid fa-circle-dot"
               style={{ color: "red", marginRight: "2rem" }}
-            />
+              />
             Abs
           </ListGroup.Item>
+              </Link>
           <ListGroup.Item
             action
             bg-color=""

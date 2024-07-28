@@ -1,6 +1,6 @@
-import TargetMuscleList from "./TargetMuscle.jsx";
+import TargetMuscleList from "./TargetMuscleList.jsx";
 import { useState } from "react";
-import { useLocation, useNavigate, Outlet} from "react-router-dom";
+import { useLocation, useNavigate, Outlet } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -14,7 +14,7 @@ import DateSelecter from "./DateSelecter.jsx";
 export function WorkoutDisplay() {
   const [isNewWorkout, setIsNewWorkout] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
   const handleAddWorkoutClick = () => {
     setIsNewWorkout(true);

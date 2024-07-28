@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 
 
 
-const URL = "mongodb+srv://decodeimre:N85qF3viKztGOsPU@cluster0.839zvwc.mongodb.net/KeepHammering_Exercises";
+const URL = "mongodb+srv://decodeimre:N85qF3viKztGOsPU@cluster0.839zvwc.mongodb.net/KeepHammering";
 
 mongoose.connect(URL);
   mongoose.connection.on("connected", () => console.log("connected to MongoDB"));

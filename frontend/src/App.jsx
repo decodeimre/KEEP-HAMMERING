@@ -6,7 +6,8 @@ import MyCalendar from "./components/Calendar.jsx";
 import { Routes, Route } from "react-router-dom";
 import { WorkoutDisplay } from "./components/WorkoutDisplay.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
-import TargetMuscleList from "./components/TargetMuscle.jsx";
+import TargetMuscleList from "./components/TargetMuscleList.jsx";
+
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
           <Route path="/" element={<MyCalendar />} />
           <Route path="/workoutLog" element={<WorkoutDisplay />}>
             <Route path="targetMuscleList" element={<TargetMuscleList />} />
-            {/* <Route path='targetMuscleList/:muscle' element={<ExerciseList/>}/>
-            <Route path='targetMuscleList/:muscle/:exercise' element={<ExerciseDetails/>}/> */}
+            <Route path='targetMuscleList/:muscle' element={<ExerciseList/>}/>
+            {/* <Route path='targetMuscleList/:muscle/:exercise' element={<ExerciseDetails/>}/> */}
           </Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>
