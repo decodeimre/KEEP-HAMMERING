@@ -22,7 +22,7 @@ export default function DateSelecter () {
             <Container className="p-3">
           <Row className="justify-content-md-center border-bottom">
             <Col className="col-2 d-flex justify-content-start">
-              <div onClick={goOneDayBack} className="change-day-arrow">
+              <div onClick={goOneDayBack} className="button change-day-arrow">
                 <FontAwesomeIcon icon="angle-left" size="3x" />
               </div>
             </Col>
@@ -34,7 +34,7 @@ export default function DateSelecter () {
               </h2>
             </Col>
             <Col className="col-2 d-flex justify-content-end">
-              <div onClick={goOneDayForward} className="change-day-arrow">
+              <div onClick={goOneDayForward} className="button change-day-arrow">
                 <FontAwesomeIcon icon="angle-right" size="3x" />
               </div>
             </Col>

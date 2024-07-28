@@ -1,28 +1,32 @@
 import TargetMuscleList from "./TargetMuscle.jsx";
 import { useState } from "react";
+import { useLocation, useNavigate, Outlet} from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
 // Import the specific icons
-import {
-  faAngleLeft,
-  faAngleRight,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // Add the imported icons to the library
-library.add(faAngleLeft, faPlus, faAngleRight);
+library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
-
 
 export function WorkoutDisplay() {
   const [isNewWorkout, setIsNewWorkout] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation()
+
+  const handleAddWorkoutClick = () => {
+    setIsNewWorkout(true);
+    navigate("targetMuscleList");
+  };
 
   return (
     <>
       <DateSelecter />
+
       {isNewWorkout ? (
-        <TargetMuscleList />
+        <Outlet />
       ) : (
         <Container>
           <Row>
@@ -33,8 +37,8 @@ export function WorkoutDisplay() {
           <Row>
             <Col className="d-flex justify-content-center">
               <div
-                onClick={() => setIsNewWorkout(true)}
-                className="workout-plus "
+                onClick={handleAddWorkoutClick}
+                className="button workout-plus "
               >
                 <FontAwesomeIcon icon="plus" size="4x" />
               </div>

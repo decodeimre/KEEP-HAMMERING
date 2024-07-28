@@ -79,14 +79,14 @@ export function Header() {
               <Link to="/workoutLog">
                 <button
                   onClick={() => setCurrentDate(new Date())}
-                  className="btn-workout-plus"
+                  className="btn-workout-plus button"
                 >
                   <FontAwesomeIcon icon="plus" />
                 </button>
               </Link>
             ) : (
               <Link to="/">
-                <button className="btn-home">
+                <button className="btn-home button">
                   <FontAwesomeIcon icon="home" />
                 </button>
               </Link>
