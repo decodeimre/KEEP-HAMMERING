@@ -7,6 +7,8 @@ import { Routes, Route } from "react-router-dom";
 import { WorkoutDisplay } from "./components/WorkoutDisplay.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
 import TargetMuscleList from "./components/TargetMuscleList.jsx";
+import ExerciseList from "./components/ExersiseList.jsx";
+
 
 
 function App() {
