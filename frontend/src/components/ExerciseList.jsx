@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
 import GoBackButton from "./GoBackButton";
@@ -23,10 +23,11 @@ export default function ExerciseList() {
   }, [muscle]);
 
   return <>
+  <Container className="containItMan"
       <ListGroup className="target-muscle-list">
       {exercises.map((exercise) => {
         return <>
-        <Link to={`/workoutLog/${muscle}/exercises/${exercise._id}`}>
+        <Link to={`/workoutLog/${muscle}/exercises/${exercise._id}`} style={{textDecoration: 'none'}}>
         <ListGroupItem action variant="dark" className="target-muscle-item" key={exercise._id}>{exercise.name}</ListGroupItem>
         </Link>
         </>

@@ -26,7 +26,7 @@ function MenuDropDownLeft() {
 
       <Dropdown.Menu>
         <Dropdown.Item href="/">Home (Calendar)</Dropdown.Item>
-        <Dropdown.Item href="#/action-1">Plan new Workout</Dropdown.Item>
+        <Dropdown.Item href="/workoutLog">Plan new Workout</Dropdown.Item>
         <Dropdown.Item href="#/action-2">Exercise Overview</Dropdown.Item>
         <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
       </Dropdown.Menu>

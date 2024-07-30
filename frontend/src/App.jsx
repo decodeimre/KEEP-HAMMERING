@@ -8,7 +8,7 @@ import { WorkoutLog } from "./components/WorkoutLog.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
 import TargetMuscleList from "./components/TargetMuscleList.jsx";
 import ExerciseList from "./components/ExerciseList.jsx";
-import { ExerciseDetails } from "./components/ExerciseDetails.jsx";
+import { ExerciseLog } from "./components/ExerciseLog.jsx";
 
 
 
@@ -22,7 +22,7 @@ function App() {
           <Route path="/workoutLog" element={<WorkoutLog />}>
             <Route path="targetMuscleList" element={<TargetMuscleList />} />
             <Route path=':muscle/exercises' element={<ExerciseList/>}/>
-            <Route path=':muscle/exercises/:exerciseID' element={<ExerciseDetails/>}/>
+            <Route path=':muscle/exercises/:exerciseID' element={<ExerciseLog/>}/>
           </Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>

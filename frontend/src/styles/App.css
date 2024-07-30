@@ -47,6 +47,12 @@ body {
   flex-direction: column;
 }
 
+
+.containItMan {
+  max-width: 600px;
+  margin-top: 5rem;
+}
+
 /* DatePicker */
 
 .change-day-arrow {
@@ -67,7 +73,7 @@ body {
 /*Target Muscle List */
 .target-muscle-list {
   font-size: 2rem;
-  max-width: 600px;
+  max-width: 550px;
   margin: auto;
   margin-top: 4rem;
 }
@@ -76,6 +82,15 @@ body {
   background-color: #343a40;
   color: whitesmoke;
 }
+
+
+.workoutSetLog-form {
+  border: 1px solid white;
+  display: flex;
+  justify-content: space-around;
+  max-width: 550px;;
+}
+
 
 
 .btn-back {

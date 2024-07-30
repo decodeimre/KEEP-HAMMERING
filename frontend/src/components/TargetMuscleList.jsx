@@ -38,7 +38,7 @@ function TargetMuscleList() {
         <ListGroup className="target-muscle-list">
           {muscleArray.map((muscle, index) => {
             return (
-              <Link key={index} to={`/workoutLog/${muscle}/exercises`}>
+              <Link key={index} to={`/workoutLog/${muscle}/exercises`} style={{textDecoration: 'none'}}>
                 <ListGroup.Item
                   action
                   variant="dark"
@@ -46,7 +46,7 @@ function TargetMuscleList() {
                 >
                   <FontAwesomeIcon
                     icon="fa-solid fa-circle-dot"
-                    style={{ color: colorArray[index], marginRight: "2rem", textDecoration: "none" }}
+                    style={{ color: colorArray[index], marginRight: "2rem" }}
                   />
                   {muscle}
                 </ListGroup.Item>
