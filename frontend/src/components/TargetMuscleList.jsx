@@ -15,7 +15,7 @@ function TargetMuscleList() {
     <>
       <Container>
         <ListGroup className="target-muscle-list">
-          <Link to={`/workout/targetMuscleList/abs`}>
+          <Link to={`/workoutLog/targetMuscleList/Abs`}>
           <ListGroup.Item action variant="dark" className="target-muscle-item">
             <FontAwesomeIcon
               icon="fa-solid fa-circle-dot"
