@@ -4,10 +4,11 @@ import "react-calendar/dist/Calendar.css";
 import { Header } from "./components/Header.jsx";
 import MyCalendar from "./components/Calendar.jsx";
 import { Routes, Route } from "react-router-dom";
-import { WorkoutDisplay } from "./components/WorkoutDisplay.jsx";
+import { WorkoutLog } from "./components/WorkoutLog.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
 import TargetMuscleList from "./components/TargetMuscleList.jsx";
 import ExerciseList from "./components/ExerciseList.jsx";
+import { ExerciseDetails } from "./components/ExerciseDetails.jsx";
 
 
 
@@ -18,10 +19,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<MyCalendar />} />
-          <Route path="/workoutLog" element={<WorkoutDisplay />}>
+          <Route path="/workoutLog" element={<WorkoutLog />}>
             <Route path="targetMuscleList" element={<TargetMuscleList />} />
-            <Route path='targetMuscleList/:muscle' element={<ExerciseList/>}/>
-            {/* <Route path='targetMuscleList/:muscle/:exercise' element={<ExerciseDetails/>}/> */}
+            <Route path=':muscle/exercises' element={<ExerciseList/>}/>
+            <Route path=':muscle/exercises/:exerciseID' element={<ExerciseDetails/>}/>
           </Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>

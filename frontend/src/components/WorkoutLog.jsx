@@ -10,7 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 
-export function WorkoutDisplay() {
+export function WorkoutLog() {
   const [isNewWorkout, setIsNewWorkout] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

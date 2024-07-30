@@ -19,7 +19,7 @@ mongoose.connect('mongodb+srv://decodeimre:N85qF3viKztGOsPU@cluster0.839zvwc.mon
 mongoose.connection.on('connected', () => console.log("connected to MongoDB"));
 mongoose.connection.on('error', (err) => console.log(err.message));
 
-server.use('/workoutLog/targetMuscleList/', exerciseRouter)
+server.use('/workoutLog', exerciseRouter)
 
 
 server.listen(PORT, ()=> console.log('server listening to port', PORT))

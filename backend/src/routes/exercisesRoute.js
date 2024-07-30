@@ -4,7 +4,7 @@ import { Router } from "express";
 
 export const exerciseRouter = Router();
 
-exerciseRouter.get(`/:muscle`, async (req, res, next) => {
+exerciseRouter.get(`/:muscle/exercises`, async (req, res, next) => {
     const {muscle} = req.params
     try {
         const searchedExercises = await Exercise.find({targetMuscle: muscle});

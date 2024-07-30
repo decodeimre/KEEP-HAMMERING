@@ -10,12 +10,11 @@ export default function ExerciseList() {
   const [exercises, setExercises] = useState([])
 
   useEffect(() => {
-    const fetchURL = `http://localhost:3000/workoutLog/targetMuscleList/${muscle}`;
+    const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises`;
    
     async function fetchExercises() {
       const response = await fetch(fetchURL);
-      console.log(response)
-      let data = await response.json();
+      const data = await response.json();
       setExercises(data)
       
     }
@@ -25,10 +24,10 @@ export default function ExerciseList() {
 
   return <>
       <ListGroup className="target-muscle-list">
-      {exercises.map((exercise, index) => {
+      {exercises.map((exercise) => {
         return <>
-        <Link to={`/workoutLog/targetMuscleList/${muscle}/exercises`}>
-        <ListGroupItem action variant="dark" className="target-muscle-item" key={index}>{exercise.name}</ListGroupItem>
+        <Link to={`/workoutLog/${muscle}/exercises/${exercise._id}`}>
+        <ListGroupItem action variant="dark" className="target-muscle-item" key={exercise._id}>{exercise.name}</ListGroupItem>
         </Link>
         </>
       })}

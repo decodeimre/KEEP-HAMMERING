@@ -38,7 +38,7 @@ function TargetMuscleList() {
         <ListGroup className="target-muscle-list">
           {muscleArray.map((muscle, index) => {
             return (
-              <Link key={index} to={`/workoutLog/targetMuscleList/Abs`}>
+              <Link key={index} to={`/workoutLog/${muscle}/exercises`}>
                 <ListGroup.Item
                   action
                   variant="dark"
