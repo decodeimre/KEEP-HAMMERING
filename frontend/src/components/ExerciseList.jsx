@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
+import GoBackButton from "./GoBackButton";
 
 export default function ExerciseList() {
 
@@ -22,13 +23,17 @@ export default function ExerciseList() {
     fetchExercises()
   }, [muscle]);
 
-  return (
-    <>
-      <ListGroup>
+  return <>
+      <ListGroup className="target-muscle-list">
       {exercises.map((exercise, index) => {
-        return <ListGroupItem key={index}>{exercise.name}</ListGroupItem>
+        return <>
+        <Link to={`/workoutLog/targetMuscleList/${muscle}/exercises`}>
+        <ListGroupItem action variant="dark" className="target-muscle-item" key={index}>{exercise.name}</ListGroupItem>
+        </Link>
+        </>
       })}
       </ListGroup>
+      <GoBackButton/>
     </>
-  );
+  
 }

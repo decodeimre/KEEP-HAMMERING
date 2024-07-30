@@ -1,5 +1,4 @@
-import TargetMuscleList from "./TargetMuscleList.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +14,14 @@ export function WorkoutDisplay() {
   const [isNewWorkout, setIsNewWorkout] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/workoutLog") {
+      setIsNewWorkout(false);
+    } else {
+      setIsNewWorkout(true);
+    }
+  }, [location.pathname]);
 
   const handleAddWorkoutClick = () => {
     setIsNewWorkout(true);

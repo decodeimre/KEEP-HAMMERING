@@ -5,7 +5,6 @@ import { Router } from "express";
 export const exerciseRouter = Router();
 
 exerciseRouter.get(`/:muscle`, async (req, res, next) => {
-    console.log('get router is working')
     const {muscle} = req.params
     try {
         const searchedExercises = await Exercise.find({targetMuscle: muscle});
