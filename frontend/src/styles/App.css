@@ -4,9 +4,15 @@ body {
   margin: 0;
   background-color: #212529;
   color: whitesmoke;
+  max-width: 1500px;
 }
 
 /*HEADER*/
+
+.app-logo {
+  color: lightblue;
+  font-size: 3rem; 
+}
 
 /*DropDown Menu*/
 
@@ -47,10 +53,53 @@ body {
   flex-direction: column;
 }
 
-
 .containItMan {
   max-width: 600px;
   margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.workoutSetLog-form {
+  border: 5px solid lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.custom-label {
+  justify-self: start;
+  margin-top: 2rem; 
+  font-size: 1.5rem; 
+}
+
+.select-unit {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  width: 5.2rem;
+}
+
+.custom-input {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem; 
+
+}
+
+.increment-btn {
+  width: 100%; 
+  font-size: 3rem; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-btn {
+  font-size: 1.5rem; 
+  padding: 0.5rem 2rem;
+  margin-top: 1rem; 
 }
 
 /* DatePicker */
@@ -83,13 +132,6 @@ body {
   color: whitesmoke;
 }
 
-
-.workoutSetLog-form {
-  border: 1px solid white;
-  display: flex;
-  justify-content: space-around;
-  max-width: 550px;;
-}
 
 
 

@@ -60,7 +60,7 @@ export function Header() {
       <div className="container-fluid bg-dark text-white p-3">
         <div className="row">
           <div className="col text-center">
-            <h1 className="app-logo">KEEP HAMMERING</h1>
+            <h1 className="app-logo">KEEP HAMMERING!</h1>
           </div>
         </div>
         {/*navigation with button burger-menu, welcome text, button user-menu*/}

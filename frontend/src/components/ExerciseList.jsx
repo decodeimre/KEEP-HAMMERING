@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
 import GoBackButton from "./GoBackButton";
@@ -23,7 +23,7 @@ export default function ExerciseList() {
   }, [muscle]);
 
   return <>
-  <Container className="containItMan"
+ 
       <ListGroup className="target-muscle-list">
       {exercises.map((exercise) => {
         return <>

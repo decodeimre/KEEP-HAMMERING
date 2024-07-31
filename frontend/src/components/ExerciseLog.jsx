@@ -2,6 +2,21 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import GoBackButton from "./GoBackButton.jsx";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// Import the FontAwesome library
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+// Import the specific icons
+import {
+  faPlus,
+  faMinus,
+} from "@fortawesome/free-solid-svg-icons";
+
+// Add the imported icons to the library
+library.add(faPlus, faMinus);
+
+
+
 
 export function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
@@ -25,40 +40,67 @@ export function ExerciseLog() {
 
   return (
     <>
-    <Container className="containItMan">
+<Container className="containItMan mt-5">
+<h2>{exercise.name}</h2>
+      <Form className="workoutSetLog-form">
+        <Form.Group as={Row} className="mb-3 align-items-center">
+          <Form.Label column sm="8" className="custom-label">
+            Weight
+          </Form.Label>
+          <Col sm="3">
+            <Form.Select className="select-unit">
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+            </Form.Select>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3 ">
+          <Col sm="3">
+            <Button variant="outline-secondary" className="increment-btn">
+              <FontAwesomeIcon icon={faMinus} />
+            </Button>
+          </Col>
+          <Col sm="6">
+            <Form.Control type="number" className="custom-input" min="0" />
+          </Col>
+          <Col sm="3">
+            <Button variant="outline-secondary" className="increment-btn">
+              <FontAwesomeIcon icon={faPlus} />
+            </Button>
+          </Col>
+        </Form.Group>
 
-      <h2>{exercise.name}</h2>
-      <Container className="workoutSetLog-form">
-        <Form>
-          <Container className="d-flex">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Weight</Form.Label>
-              <Form.Control type="number" min="0" step="2.5" placeholder="0" />
-              <Form.Text>
-                We`ll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            <Form.Group className="">
-              <Form.Label>KG or LBS</Form.Label>
-              <Form.Select type="number" min="0" step="2.5" placeholder="0">
-                <option>KG</option>
-                <option>LBS</option>
-              </Form.Select>
-            </Form.Group>
-          </Container>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column sm="6" className="custom-label">
+            Reps
+          </Form.Label>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Col sm="3">
+            <Button variant="outline-secondary" className="increment-btn">
+              <FontAwesomeIcon icon={faMinus} />
+            </Button>
+          </Col>
+          <Col sm="6">
+            <Form.Control type="number" className="custom-input" min="0" />
+          </Col>
+          <Col sm="3">
+            <Button variant="outline-secondary" className="increment-btn">
+              <FontAwesomeIcon icon={faPlus} />
+            </Button>
+          </Col>
+        </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Repetitions</Form.Label>
-            <Form.Control type="number" min="0" placeholder="0" />
-          </Form.Group>
-
-          <Button variant="dark" type="submit">
-            Save Set
-          </Button>
-        </Form>
-      </Container>
-      <GoBackButton />
+        <Row>
+          <Col>
+            <Button variant="outline-info" type="submit" className="save-btn">
+              Save
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Container>
+<GoBackButton />
     </>
   );
 }
