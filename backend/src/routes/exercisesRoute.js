@@ -1,5 +1,5 @@
 import { Exercise } from "../models/ExerciseModel.js";
-import e, { Router } from "express";
+import { Router } from "express";
 
 export const exerciseRouter = Router();
 
@@ -12,6 +12,7 @@ exerciseRouter.get(`/:muscle/exercises`, async (req, res, next) => {
     res.status(200).json(exercisesByMuscleGroup);
   } catch (err) {
     res.send(err.message);
+    next(err)
   }
 });
 
@@ -19,9 +20,10 @@ exerciseRouter.get("/:muscle/exercises/:exerciseID", async (req, res, next) => {
   const { exerciseID } = req.params;
   try {
     const exercise = await Exercise.findById(exerciseID);
-    console.log(exercise)
     res.status(200).json(exercise);
   } catch (err) {
     res.json(err.message);
+    next(err)
   }
 });
+
