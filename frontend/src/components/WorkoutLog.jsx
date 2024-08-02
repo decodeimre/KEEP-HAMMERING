@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -34,7 +34,7 @@ export function WorkoutLog() {
       }
     }
     fetchWorkoutSets();
-  }, [date]);
+  }, [date, navigate]);
 
   useEffect(() => {
     if (location.pathname === "/workoutLog") {
@@ -54,21 +54,26 @@ export function WorkoutLog() {
       <DateSelecter />
       <Outlet />
 
-      {workoutSets.length !== 0 ? (
+      {workoutSets.length !== 0 && !isNewWorkout && (
         <Container>
-          {workoutSets.map((set) => {
-            return (
-              <>
-                <Col>
-                  <h3>{set.exercise}</h3>
-                  <h4>{set.weight}</h4>
-                  <h4>{set.reps}</h4>
-                </Col>
-              </>
-            );
-          })}
+          <Col>
+            <ListGroup>
+              {workoutSets.map((set, index) => {
+                return (
+                  <ListGroupItem key={index}>
+                    <h3>{set.exercise}</h3>
+                    <h4>
+                      Weight: {set.weight} {set.unit}
+                    </h4>
+                    <h4>Reps: {set.reps}</h4>
+                  </ListGroupItem>
+                );
+              })}
+            </ListGroup>
+          </Col>
         </Container>
-      ) : (
+      )}
+      {workoutSets.length === 0 && !isNewWorkout && (
         <Container>
           <Row>
             <div className="d-flex justify-content-center align-items-center empty-workout-log">
@@ -77,23 +82,25 @@ export function WorkoutLog() {
           </Row>
         </Container>
       )}
-      <Container>
-        <Row>
-          <Col className="d-flex justify-content-center">
-            <div
-              onClick={handleAddWorkoutClick}
-              className="button workout-plus "
-            >
-              <FontAwesomeIcon icon="plus" size="4x" />
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="d-flex justify-content-center">
-            <h4>Add New Workout</h4>
-          </Col>
-        </Row>
-      </Container>
+      {!isNewWorkout && (
+        <Container>
+          <Row>
+            <Col className="d-flex justify-content-center mt-5">
+              <div
+                onClick={handleAddWorkoutClick}
+                className="button workout-plus "
+              >
+                <FontAwesomeIcon icon="plus" size="4x" />
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-center">
+              <h4>Add New Workout</h4>
+            </Col>
+          </Row>
+        </Container>
+      )}
     </>
   );
 }
