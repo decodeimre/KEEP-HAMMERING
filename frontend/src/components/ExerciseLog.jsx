@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import GoBackButton from "./GoBackButton.jsx";
 import { useEffect, useState, useContext } from "react";
 import { DateContext } from "./context/dateContext.jsx";
+import DateFormat from "./DateFormatter.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -44,7 +45,7 @@ export function ExerciseLog() {
   const saveExerciseSet = (e) => {
       e.preventDefault();
         const newSet = {
-        date: date,
+        date: DateFormat(date),
         targetMuscle: exercise.targetMuscle,
         exercise: exercise.name,
         unit: unit,
@@ -60,7 +61,7 @@ export function ExerciseLog() {
         const URL = `http://localhost:3000/workoutLog/exercise-log/save`
         const response = await fetch(URL, postRequest);
         const data =  await response.json();
-        console.log(data)
+        // console.log(data)
       }
       saveToDB(newSet);
   }

@@ -1,16 +1,17 @@
-import "dotenv/config.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import { exerciseRouter } from "./routes/exercisesRoute.js";
 import { workoutSetRouter } from "./routes/workoutSetRoute.js";
+import "dotenv/config";
 
 const server = express();
 server.use(express.json());
 server.use(cors());
-const PORT = process.env.PORT || 3000;
+
 
 //environment variable does not work
+const PORT = process.env.PORT || 3000;
 const URL = process.env.DB_URL;
 console.log(URL);
 

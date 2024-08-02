@@ -10,13 +10,13 @@ const exerciseSchema = new Schema({
   notes: String,
 });
 
-exerciseSchema.post('insertMany', function(error, docs, next) {
-  if (error.name === 'ValidationError') {
-    console.error('Error in schema validation:', error.message);
-    next(error);
-  } else {
-    next(error);
-  }
-});
+// exerciseSchema.post('insertMany', function(error, docs, next) {
+//   if (error.name === 'ValidationError') {
+//     console.error('Error in schema validation:', error.message);
+//     next(error);
+//   } else {
+//     next(error);
+//   }
+// });
 
 export const Exercise = model("Exercise", exerciseSchema);
