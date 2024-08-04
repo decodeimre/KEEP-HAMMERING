@@ -20,7 +20,7 @@ library.add(faBars, faUser, faPlus, faHome);
 function MenuDropDownLeft() {
   return (
     <Dropdown>
-      <Dropdown.Toggle as="button" id="dropdown-menu">
+      <Dropdown.Toggle className="custom-dropdown" as="button" id="dropdown-menu">
         <FontAwesomeIcon icon="bars" />
       </Dropdown.Toggle>
 

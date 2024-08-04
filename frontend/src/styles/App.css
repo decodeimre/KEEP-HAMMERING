@@ -26,6 +26,11 @@ body {
   font-size: 1.5rem;
 }
 
+/*should get rid of the arrow down in the dropdown button, does not work...*/
+.custom-dropdown::after{
+  display: none !important
+}
+
 .btn-workout-plus,
 .btn-home {
   color: whitesmoke;

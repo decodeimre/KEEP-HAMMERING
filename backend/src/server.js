@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import { exerciseRouter } from "./routes/exercisesRoute.js";
-import { workoutSetRouter } from "./routes/workoutSetRoute.js";
+import { exerciseLogRouter } from "./routes/exerciseLogRoute.js";
 import "dotenv/config";
 
 const server = express();
@@ -21,6 +21,6 @@ mongoose.connect(
 mongoose.connection.on("connected", () => console.log("connected to MongoDB"));
 mongoose.connection.on("error", (err) => console.log(err.message));
 
-server.use("/workoutLog", exerciseRouter, workoutSetRouter);
+server.use("/workoutLog", exerciseRouter, exerciseLogRouter);
 
 server.listen(PORT, () => console.log("server listening to port", PORT));

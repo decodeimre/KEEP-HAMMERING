@@ -11,6 +11,7 @@ library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import DateFormat from "./DateFormatter.jsx";
+import LoggedExercise from "./LoggedExercise.jsx";
 
 export function WorkoutLog() {
   const [isNewWorkout, setIsNewWorkout] = useState(false);
@@ -24,11 +25,11 @@ export function WorkoutLog() {
     const fetchURL = `http://localhost:3000/workoutLog/?date=${dateQuery}`;
 
     async function fetchWorkoutSets() {
-      console.log(dateQuery);
+   
       try {
         const response = await fetch(fetchURL);
         const data = await response.json();
-        setWorkoutSets(data);
+        setWorkoutSets(data); //array of all logged exercises of that day
       } catch (err) {
         console.log("an error occured during data fetching");
       }
@@ -58,16 +59,8 @@ export function WorkoutLog() {
         <Container>
           <Col>
             <ListGroup>
-              {workoutSets.map((set, index) => {
-                return (
-                  <ListGroupItem key={index}>
-                    <h3>{set.exercise}</h3>
-                    <h4>
-                      Weight: {set.weight} {set.unit}
-                    </h4>
-                    <h4>Reps: {set.reps}</h4>
-                  </ListGroupItem>
-                );
+              {workoutSets.map((exercise, index) => {
+                return <LoggedExercise exercise={exercise} key={index}/>;
               })}
             </ListGroup>
           </Col>

@@ -31,7 +31,7 @@ export function ExerciseLog() {
         const response = await fetch(fetchURL);
         const data = await response.json();
         console.log(data);
-        setExercise(data);
+        setExercise(data); // set the exercise to log for the form
       } catch (err) {
         console.log(err.message);
       }
@@ -45,25 +45,29 @@ export function ExerciseLog() {
   const saveExerciseSet = (e) => {
       e.preventDefault();
         const newSet = {
+          weight: weight,
+          reps: reps,
+          unit: unit,
+        }
+        console.log(newSet)
+        const newExerciseLog = {
         date: DateFormat(date),
         targetMuscle: exercise.targetMuscle,
-        exercise: exercise.name,
-        unit: unit,
-        weight: weight,
-        reps: reps,
+        exerciseName: exercise.name,
+        sets: newSet
       }
-      async function saveToDB (newSet) {
+      async function saveToDB (newExerciseLog) {
         const postRequest = {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(newSet)
+          body: JSON.stringify(newExerciseLog)
         }
         const URL = `http://localhost:3000/workoutLog/exercise-log/save`
         const response = await fetch(URL, postRequest);
         const data =  await response.json();
         // console.log(data)
       }
-      saveToDB(newSet);
+      saveToDB(newExerciseLog);
   }
 
   const changeUnit = (e) => {
