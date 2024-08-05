@@ -3,17 +3,21 @@ import { useParams } from "react-router-dom";
 import GoBackButton from "./GoBackButton.jsx";
 import { useEffect, useState, useContext } from "react";
 import { DateContext } from "./context/dateContext.jsx";
+import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import DateFormat from "./DateFormatter.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 // Import the specific icons
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faPlus,
+  faMinus,
+  faCircleInfo,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Add the imported icons to the library
-library.add(faPlus, faMinus);
+library.add(faPlus, faMinus, faCircleInfo);
 
 export function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
@@ -21,8 +25,10 @@ export function ExerciseLog() {
   const [exercise, setExercise] = useState({});
   const [weight, setWeight] = useState(0);
   const [reps, setReps] = useState(0);
-  const [unit, setUnit] = useState('kg');
-  const {date} = useContext(DateContext)
+  const [unit, setUnit] = useState("kg");
+  const { date } = useContext(DateContext);
+  const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
+  const [showInfo, setShowInfo] = useState(false)
 
   useEffect(() => {
     async function fetchExercise() {
@@ -39,48 +45,52 @@ export function ExerciseLog() {
     fetchExercise();
   }, [exerciseID, muscle]);
 
-//saving the Set weirdly with 1 day difference (1 day early in the Date...)
-//need to check that!!!!!!!!!!!
+  //date is correct, but time difference 2 hours (to summer time)
+  //need to check that!!!!!!!!!!!
 
   const saveExerciseSet = (e) => {
-      e.preventDefault();
-        const newSet = {
-          weight: weight,
-          reps: reps,
-          unit: unit,
-        }
-        console.log(newSet)
-        const newExerciseLog = {
-        date: DateFormat(date),
-        targetMuscle: exercise.targetMuscle,
-        exerciseName: exercise.name,
-        sets: newSet
-      }
-      async function saveToDB (newExerciseLog) {
+    e.preventDefault();
+    const newSet = {
+      weight: weight,
+      reps: reps,
+      unit: unit,
+    };
+    console.log(newSet);
+    const newExerciseLog = {
+      date: DateFormat(date),
+      targetMuscle: exercise.targetMuscle,
+      exerciseName: exercise.name,
+      sets: newSet,
+    };
+    async function saveToDB(newExerciseLog) {
+      try {
         const postRequest = {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(newExerciseLog)
-        }
-        const URL = `http://localhost:3000/workoutLog/exercise-log/save`
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newExerciseLog),
+        };
+        const URL = `http://localhost:3000/workoutLog/exercise-log/save`;
         const response = await fetch(URL, postRequest);
-        const data =  await response.json();
-        // console.log(data)
+        const data = await response.json();
+        setIsNewWorkout(true);
+      } catch (err) {
+        alert(err.message);
       }
-      saveToDB(newExerciseLog);
-  }
+    }
+    saveToDB(newExerciseLog);
+  };
 
   const changeUnit = (e) => {
-    setUnit (e.target.value)
-  }
+    setUnit(e.target.value);
+  };
 
   const changeWeight = (e) => {
-    setWeight(Number(e.target.value))
-  }
+    setWeight(Number(e.target.value));
+  };
 
   const changeReps = (e) => {
-    setReps(Number(e.target.value))
-  }
+    setReps(Number(e.target.value));
+  };
 
   const incrementWeight = () => {
     const newWeight = weight + 2.5;
@@ -105,10 +115,24 @@ export function ExerciseLog() {
     }
   };
 
+  const showExerciseInfo = () => {
+    setShowInfo(!showInfo)
+  }
+
   return (
     <>
       <Container className="containItMan mt-5">
-        <h2>{exercise.name}</h2>
+        <Container>
+          <Row>
+            <Col>
+              <h2>{exercise.name}</h2>
+            </Col>
+            <Col role="button" onClick={showExerciseInfo} className="text-end">
+              <FontAwesomeIcon size="lg" icon={faCircleInfo} />
+            </Col>
+          </Row>
+        </Container>
+        {showInfo && <h4 className="text-center">{exercise.notes}</h4>}
         <Form onSubmit={saveExerciseSet} className="workoutSetLog-form">
           <Form.Group as={Row} className="mb-3 align-items-center">
             <Form.Label column sm="8" className="custom-label">
@@ -133,7 +157,7 @@ export function ExerciseLog() {
             </Col>
             <Col sm="6">
               <Form.Control
-              onChange={changeWeight}
+                onChange={changeWeight}
                 value={weight}
                 type="number"
                 className="custom-input"
@@ -169,7 +193,7 @@ export function ExerciseLog() {
             </Col>
             <Col sm="6">
               <Form.Control
-              onChange={changeReps}
+                onChange={changeReps}
                 value={reps}
                 type="number"
                 className="custom-input"

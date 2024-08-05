@@ -10,15 +10,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
+import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import DateFormat from "./DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
 export function WorkoutLog() {
-  const [isNewWorkout, setIsNewWorkout] = useState(false);
   const [workoutSets, setWorkoutSets] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const { date } = useContext(DateContext);
+  const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
 
   useEffect(() => {
     const dateQuery = DateFormat(date);
@@ -30,20 +31,15 @@ export function WorkoutLog() {
         const response = await fetch(fetchURL);
         const data = await response.json();
         setWorkoutSets(data); //array of all logged exercises of that day
+        setIsNewWorkout(false)
       } catch (err) {
-        console.log("an error occured during data fetching");
+        alert("connection to the server failed");
       }
     }
     fetchWorkoutSets();
-  }, [date, navigate]);
+  }, [date, navigate, isNewWorkout]);
 
-  useEffect(() => {
-    if (location.pathname === "/workoutLog") {
-      setIsNewWorkout(false);
-    } else {
-      setIsNewWorkout(true);
-    }
-  }, [location.pathname]);
+
 
   const handleAddWorkoutClick = () => {
     setIsNewWorkout(true);
@@ -55,7 +51,7 @@ export function WorkoutLog() {
       <DateSelecter />
       <Outlet />
 
-      {workoutSets.length !== 0 && !isNewWorkout && (
+      {workoutSets.length !== 0  && (
         <Container>
           <Col>
             <ListGroup>
@@ -75,7 +71,7 @@ export function WorkoutLog() {
           </Row>
         </Container>
       )}
-      {!isNewWorkout && (
+      {location.pathname === '/workoutLog' && (
         <Container>
           <Row>
             <Col className="d-flex justify-content-center mt-5">

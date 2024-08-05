@@ -1,6 +1,5 @@
 import { ExerciseLog } from "../models/ExerciseLogModel.js";
 import { Router } from "express";
-import { Exercise } from "../models/ExerciseModel.js";
 
 export const exerciseLogRouter = Router();
 
@@ -19,20 +18,21 @@ exerciseLogRouter.post(`/exercise-log/save`, async (req, res, next) => {
       const updateLoggedExercise = await ExerciseLog.findByIdAndUpdate(ID, {
         sets: updatedSets,
       });
-      console.log(updateLoggedExercise);
+      res.status(200).json(updateLoggedExercise);
     } else {
       try {
         const newWorkoutSet = req.body;
         const newSet = await ExerciseLog.create(newWorkoutSet);
-        console.log(newSet);
+        // console.log(newSet);
         res.status(200).json(newSet);
       } catch (err) {
-        res.send(err.message);
+        // console.log(err.message);
         next(err);
       }
     }
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
+    next(err);
   }
 });
 
@@ -42,7 +42,7 @@ exerciseLogRouter.get("/", async (req, res, next) => {
     const dailyWorkoutSets = await ExerciseLog.find({ date: searchedDate });
     res.status(200).json(dailyWorkoutSets);
   } catch (err) {
-    res.send(err.message);
+    // console.log(err.message);
     next(err);
   }
 });

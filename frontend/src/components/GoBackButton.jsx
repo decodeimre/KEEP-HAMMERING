@@ -17,7 +17,7 @@ export default function GoBackButton () {
       navigate(-1)
     } 
     return <Container>
-          <Row className="mt-5">
+          <Row className="mt-5 mb-5">
             <div onClick={handleGoBack} className="button btn-back">
               <FontAwesomeIcon icon="angle-left" size="2x" />
               Go Back
