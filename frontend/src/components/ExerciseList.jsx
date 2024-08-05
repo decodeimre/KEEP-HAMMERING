@@ -17,8 +17,7 @@ export default function ExerciseList() {
         const data = await response.json();
         setExercises(data);
       } catch (error) {
-        alert("conncection to server failed");
-        console.log(error.message);
+        alert("ExerciseList error");
       }
     }
 

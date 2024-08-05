@@ -27,8 +27,8 @@ export function ExerciseLog() {
   const [reps, setReps] = useState(0);
   const [unit, setUnit] = useState("kg");
   const { date } = useContext(DateContext);
-  const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
-  const [showInfo, setShowInfo] = useState(false)
+  const { setIsNewWorkout } = useContext(newWorkoutContext);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     async function fetchExercise() {
@@ -55,7 +55,6 @@ export function ExerciseLog() {
       reps: reps,
       unit: unit,
     };
-    console.log(newSet);
     const newExerciseLog = {
       date: DateFormat(date),
       targetMuscle: exercise.targetMuscle,
@@ -71,7 +70,9 @@ export function ExerciseLog() {
         };
         const URL = `http://localhost:3000/workoutLog/exercise-log/save`;
         const response = await fetch(URL, postRequest);
-        const data = await response.json();
+        if (!response.ok) {
+          throw new Error("failed to save to database");
+        }
         setIsNewWorkout(true);
       } catch (err) {
         alert(err.message);
@@ -116,8 +117,8 @@ export function ExerciseLog() {
   };
 
   const showExerciseInfo = () => {
-    setShowInfo(!showInfo)
-  }
+    setShowInfo(!showInfo);
+  };
 
   return (
     <>
