@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import { exerciseRouter } from "./routes/exercisesRoute.js";
-import { exerciseLogRouter } from "./routes/exerciseLogRoute.js";
-import "dotenv/config";
+import { exerciseRouter } from "./src/routes/exercisesRoute.js";
+import { exerciseLogRouter } from "./src/routes/exerciseLogRoute.js";
+import "dotenv/config.js";
 
 const server = express();
 server.use(express.json());
@@ -14,6 +14,7 @@ server.use(cors());
 const PORT = process.env.PORT || 3000;
 const URL = process.env.DB_URL;
 console.log(URL);
+console.log(PORT)
 
 mongoose.connect(
   "mongodb+srv://decodeimre:N85qF3viKztGOsPU@cluster0.839zvwc.mongodb.net/KeepHammering"
