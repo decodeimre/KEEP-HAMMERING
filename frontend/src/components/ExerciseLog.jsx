@@ -1,10 +1,11 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import GoBackButton from "./GoBackButton.jsx";
+import GoBackButton from "./utils/GoBackButton.jsx";
 import { useEffect, useState, useContext } from "react";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import DateFormat from "./DateFormatter.jsx";
+import { exerciseSetContext } from "./context/exerciseSetContext.jsx";
+import DateFormat from "./utils/DateFormatter.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -23,12 +24,27 @@ export function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
   //should ultimately be a context for use on other pages:
   const [exercise, setExercise] = useState({});
-  const [weight, setWeight] = useState(0);
-  const [reps, setReps] = useState(0);
-  const [unit, setUnit] = useState("kg");
+  const {
+    weight,
+    setWeight,
+    reps,
+    setReps,
+    unit,
+    setUnit,
+    currentSet,
+    setCurrentSet,
+  } = useContext(exerciseSetContext);
   const { date } = useContext(DateContext);
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [showInfo, setShowInfo] = useState(false);
+
+  useEffect(() => {
+    setCurrentSet({
+      weight: 0,
+      reps: 0,
+      unit: "kg",
+    });
+  }, []);
 
   useEffect(() => {
     async function fetchExercise() {
@@ -48,18 +64,15 @@ export function ExerciseLog() {
   //date is correct, but time difference 2 hours (to summer time)
   //need to check that!!!!!!!!!!!
 
-  const saveExerciseSet = (e) => {
+  const saveExerciseSet = async (e) => {
     e.preventDefault();
-    const newSet = {
-      weight: weight,
-      reps: reps,
-      unit: unit,
-    };
+
+
     const newExerciseLog = {
       date: DateFormat(date),
       targetMuscle: exercise.targetMuscle,
       exerciseName: exercise.name,
-      sets: newSet,
+      sets: currentSet,
     };
     async function saveToDB(newExerciseLog) {
       try {
@@ -73,6 +86,7 @@ export function ExerciseLog() {
         if (!response.ok) {
           throw new Error("failed to save to database");
         }
+   
         setIsNewWorkout(true);
       } catch (err) {
         alert(err.message);
@@ -159,7 +173,7 @@ export function ExerciseLog() {
             <Col sm="6">
               <Form.Control
                 onChange={changeWeight}
-                value={weight}
+                value={currentSet.weight}
                 type="number"
                 className="custom-input"
                 min="0"
@@ -195,7 +209,7 @@ export function ExerciseLog() {
             <Col sm="6">
               <Form.Control
                 onChange={changeReps}
-                value={reps}
+                value={currentSet.reps}
                 type="number"
                 className="custom-input"
                 min="0"

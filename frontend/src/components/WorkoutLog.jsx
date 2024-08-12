@@ -11,7 +11,7 @@ library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import DateFormat from "./DateFormatter.jsx";
+import DateFormat from "./utils/DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
 export function WorkoutLog() {

@@ -6,20 +6,18 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 // Add the imported icons to the library
 library.add(faEllipsisVertical);
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import { useContext, useEffect } from "react";
-import { set } from "mongoose";
+import { exerciseSetContext } from "./context/exerciseSetContext.jsx";
+import { useContext, useState, useEffect } from "react";
+
+export default function LoggedExercise({ exercise, key }) {
+  const [update, setUpdate] = useState(false);
+  const { exerciseName, sets } = exercise;
+  const { currentSet, setCurrentSet } = useContext(exerciseSetContext);
+  const { setIsNewWorkout } = useContext(newWorkoutContext);
 
 
-export default function LoggedExercise({ exercise }) {
-  const { exerciseName, unit, sets } = exercise;
-  const {setIsNewWorkout} = useContext(newWorkoutContext)
 
-
-  useEffect(() => {
-    return setIsNewWorkout(false)
-  },[setIsNewWorkout])
-
-
+  // delete a set
   const handleDeleteSet = async (id) => {
     try {
       const deleteRequest = {
@@ -34,18 +32,63 @@ export default function LoggedExercise({ exercise }) {
       if (!deleteSet.ok) {
         throw new Error("failed to delete set");
       }
-      setIsNewWorkout(true)
+      setIsNewWorkout(true);
     } catch (err) {
-      alert(err.message);
+      console.log(err);
+      alert("handleDelete error");
     }
   };
+
+  // select set to update
+  const handleUpdateSelect = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/workoutLog/exercise-log/${exercise._id}/update-set/${id}`
+      );
+      const selectedSet = await response.json();
+      console.log(selectedSet);
+      setCurrentSet({
+        weight: selectedSet.weight,
+        reps: selectedSet.reps,
+        unit: selectedSet.unit,
+      });
+      setUpdate(true);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  // const handleSetUpdate = async () => {
+  //     try {
+  //       const updateRequest = {
+  //         method: "PUT",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           setID: id,
+  //           exerciseLogID: exercise._id,
+  //           updatedSet: currentSet,
+  //         }),
+  //       };
+  //       const updatedSet = await fetch(
+  //         `http://localhost:3000/workoutLog/exercise-log/update-set/`,
+  //         updateRequest
+  //       );
+  //       if (!updatedSet.ok) {
+  //         throw new Error("response for update not okay");
+  //       }
+  //       setIsNewWorkout(true);
+  //     } catch (err) {
+  //       alert(err.message);
+  //     }
+  //   };
 
   return (
     <ListGroupItem>
       <Container>
         <Row>
           <Col>
-            <h3>{exerciseName} </h3>
+            <h3>
+              {exerciseName} (weight in {sets[0].unit}){" "}
+            </h3>
           </Col>
           <Col className="text-end">
             <Dropdown>
@@ -69,7 +112,7 @@ export default function LoggedExercise({ exercise }) {
         {sets.map((set, index) => {
           return (
             <>
-              <Row className="bg-info pt-2">
+              <Row key={key} className="bg-info pt-2">
                 <Col>
                   <h5>{index + 1}</h5>
                 </Col>
@@ -82,7 +125,11 @@ export default function LoggedExercise({ exercise }) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item>Edit</Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => handleUpdateSelect(set._id)}
+                      >
+                        Edit
+                      </Dropdown.Item>
                       <Dropdown.Item onClick={() => handleDeleteSet(set._id)}>
                         Delete
                       </Dropdown.Item>

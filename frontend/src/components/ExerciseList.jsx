@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
-import GoBackButton from "./GoBackButton";
+import GoBackButton from "./utils/GoBackButton.jsx";
 
 export default function ExerciseList() {
   const { muscle } = useParams();

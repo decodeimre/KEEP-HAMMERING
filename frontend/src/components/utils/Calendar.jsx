@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import multiMonthPlugin from "@fullcalendar/multimonth";
-import { DateContext } from "./context/dateContext";
+import { DateContext } from "../context/dateContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 

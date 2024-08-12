@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ListGroup, Container, Row } from "react-bootstrap";
-import GoBackButton from './GoBackButton.jsx'
+import GoBackButton from './utils/GoBackButton.jsx'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
