@@ -8,6 +8,7 @@ import { WorkoutLog } from "./components/WorkoutLog.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
 import { NewWorkoutContextProvider } from "./components/context/newWorkoutContext.jsx";
 import { ExerciseSetContextProvider } from "./components/context/exerciseSetContext.jsx";
+import { SelectedExerciseProvider } from "./components/context/selectedExerciseContext.jsx";
 import TargetMuscleList from "./components/TargetMuscleList.jsx";
 import ExerciseList from "./components/ExerciseList.jsx";
 import { ExerciseLog } from "./components/ExerciseLog.jsx";
@@ -16,23 +17,28 @@ function App() {
   return (
     <>
       <DateContextProvider>
-        <NewWorkoutContextProvider>
-          <ExerciseSetContextProvider>
-            <Header />
-            <Routes>
-              <Route path="/" element={<MyCalendar />} />
-              <Route path="/workoutLog" element={<WorkoutLog />}>
-                <Route path="targetMuscleList" element={<TargetMuscleList />} />
-                <Route path=":muscle/exercises" element={<ExerciseList />} />
-                <Route
-                  path=":muscle/exercises/:exerciseID"
-                  element={<ExerciseLog />}
-                />
-              </Route>
-              <Route path="*" element={<NoMatch />} />
-            </Routes>
-          </ExerciseSetContextProvider>
-        </NewWorkoutContextProvider>
+        <SelectedExerciseProvider>
+          <NewWorkoutContextProvider>
+            <ExerciseSetContextProvider>
+              <Header />
+              <Routes>
+                <Route path="/" element={<MyCalendar />} />
+                <Route path="/workoutLog" element={<WorkoutLog />}>
+                  <Route
+                    path="targetMuscleList"
+                    element={<TargetMuscleList />}
+                  />
+                  <Route path=":muscle/exercises" element={<ExerciseList />} />
+                  <Route
+                    path=":muscle/exercises/:exerciseID"
+                    element={<ExerciseLog />}
+                  />
+                </Route>
+                <Route path="*" element={<NoMatch />} />
+              </Routes>
+            </ExerciseSetContextProvider>
+          </NewWorkoutContextProvider>
+        </SelectedExerciseProvider>
       </DateContextProvider>
     </>
   );

@@ -11,6 +11,7 @@ library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
+import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
@@ -19,6 +20,7 @@ export function WorkoutLog() {
   const navigate = useNavigate();
   const location = useLocation();
   const { date } = useContext(DateContext);
+  const {selectedExercise, setSelectedExercise} = useContext(selectedExerciseContext)
   const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
 
   useEffect(() => {
@@ -56,6 +58,7 @@ export function WorkoutLog() {
           <Col>
             <ListGroup>
               {workoutSets.map((exercise, index) => {
+              
                 return <LoggedExercise exercise={exercise} key={index}/>;
               })}
             </ListGroup>

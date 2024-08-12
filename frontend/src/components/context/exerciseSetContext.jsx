@@ -1,26 +1,19 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const exerciseSetContext = createContext();
 
 export const ExerciseSetContextProvider = ({ children }) => {
-  const [weight, setWeight] = useState(0);
-  const [reps, setReps] = useState(0);
-  const [unit, setUnit] = useState("kg");
-  const [currentSet, setCurrentSet] = useState({});
 
-  useEffect(() => {
-    setCurrentSet({ weight, reps, unit });
-  }, [weight, reps, unit]);
+  const [currentSet, setCurrentSet] = useState({
+    weight: 0,
+    reps: 0,
+    unit: "kg"
+  });
+
 
   return (
     <exerciseSetContext.Provider
       value={{
-        weight,
-        setWeight,
-        reps,
-        setReps,
-        unit,
-        setUnit,
         currentSet,
         setCurrentSet,
       }}

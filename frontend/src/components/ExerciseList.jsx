@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
 import GoBackButton from "./utils/GoBackButton.jsx";
+import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
 
 export default function ExerciseList() {
   const { muscle } = useParams();
   const [exercises, setExercises] = useState([]);
+  const {setSelectedExercise} = useContext(selectedExerciseContext)
 
   useEffect(() => {
     const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises`;
@@ -31,6 +33,7 @@ export default function ExerciseList() {
           return (
             <>
               <Link
+              onClick={()=>setSelectedExercise({exerciseName: exercise.exerciseName, targetMuscle: exercise.targetMuscle})}
                 to={`/workoutLog/${muscle}/exercises/${exercise._id}`}
                 style={{ textDecoration: "none" }}
               >

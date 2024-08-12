@@ -5,6 +5,7 @@ import { useEffect, useState, useContext } from "react";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { exerciseSetContext } from "./context/exerciseSetContext.jsx";
+import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -17,6 +18,7 @@ import {
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 // Add the imported icons to the library
 library.add(faPlus, faMinus, faCircleInfo);
 
@@ -24,16 +26,8 @@ export function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
   //should ultimately be a context for use on other pages:
   const [exercise, setExercise] = useState({});
-  const {
-    weight,
-    setWeight,
-    reps,
-    setReps,
-    unit,
-    setUnit,
-    currentSet,
-    setCurrentSet,
-  } = useContext(exerciseSetContext);
+  const { currentSet, setCurrentSet } = useContext(exerciseSetContext);
+  const {selectedExercise, setSelectedExercise} = useContext(selectedExerciseContext)
   const { date } = useContext(DateContext);
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [showInfo, setShowInfo] = useState(false);
@@ -47,12 +41,15 @@ export function ExerciseLog() {
   }, []);
 
   useEffect(() => {
+
+  }, [selectedExercise, currentSet])
+
+  useEffect(() => {
     async function fetchExercise() {
       const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
       try {
         const response = await fetch(fetchURL);
         const data = await response.json();
-        console.log(data);
         setExercise(data); // set the exercise to log for the form
       } catch (err) {
         console.log(err.message);
@@ -66,7 +63,6 @@ export function ExerciseLog() {
 
   const saveExerciseSet = async (e) => {
     e.preventDefault();
-
 
     const newExerciseLog = {
       date: DateFormat(date),
@@ -86,7 +82,7 @@ export function ExerciseLog() {
         if (!response.ok) {
           throw new Error("failed to save to database");
         }
-   
+
         setIsNewWorkout(true);
       } catch (err) {
         alert(err.message);
@@ -96,37 +92,58 @@ export function ExerciseLog() {
   };
 
   const changeUnit = (e) => {
-    setUnit(e.target.value);
+    setCurrentSet({
+      ...currentSet,
+      unit: e.target.value,
+    });
   };
 
   const changeWeight = (e) => {
-    setWeight(Number(e.target.value));
+    setCurrentSet({
+      ...currentSet,
+      weight: e.target.value,
+    });
   };
 
   const changeReps = (e) => {
-    setReps(Number(e.target.value));
+    setCurrentSet({
+      ...currentSet,
+      reps: e.target.value,
+    });
   };
 
   const incrementWeight = () => {
-    const newWeight = weight + 2.5;
-    setWeight(newWeight);
+    const newWeight = currentSet.weight + 2.5;
+    setCurrentSet({
+      ...currentSet,
+      weight: newWeight,
+    });
   };
   const decrementWeight = () => {
-    if (weight === 0) return;
+    if (currentSet.weight === 0) return;
     else {
-      const newWeight = weight - 2.5;
-      setWeight(newWeight);
+      const newWeight = currentSet.weight - 2.5;
+      setCurrentSet({
+        ...currentSet,
+        weight: newWeight,
+      });
     }
   };
   const incrementReps = () => {
-    const newRepNumber = reps + 1;
-    setReps(newRepNumber);
+    const newRepNumber = currentSet.reps + 1;
+    setCurrentSet({
+      ...currentSet,
+      reps: newRepNumber,
+    });
   };
   const decrementReps = () => {
-    if (reps === 0) return;
+    if (currentSet.reps === 0) return;
     else {
-      const newRepNumber = reps - 1;
-      setReps(newRepNumber);
+      const newRepNumber = currentSet.reps - 1;
+      setCurrentSet({
+        ...currentSet,
+        reps: newRepNumber,
+      });
     }
   };
 
@@ -140,7 +157,7 @@ export function ExerciseLog() {
         <Container>
           <Row>
             <Col>
-              <h2>{exercise.name}</h2>
+              <h2>{selectedExercise.exerciseName}</h2>
             </Col>
             <Col role="button" onClick={showExerciseInfo} className="text-end">
               <FontAwesomeIcon size="lg" icon={faCircleInfo} />
@@ -154,7 +171,7 @@ export function ExerciseLog() {
               Weight
             </Form.Label>
             <Col sm="3">
-              <Form.Select onChange={changeUnit} className="select-unit">
+              <Form.Select onChange={changeUnit} className="select-unit" value={currentSet.unit}>
                 <option value="kg">kg</option>
                 <option value="lbs">lbs</option>
               </Form.Select>
@@ -177,7 +194,7 @@ export function ExerciseLog() {
                 type="number"
                 className="custom-input"
                 min="0"
-                step="0.1"
+                step="2.5"
               />
             </Col>
             <Col sm="3">
@@ -213,6 +230,7 @@ export function ExerciseLog() {
                 type="number"
                 className="custom-input"
                 min="0"
+                step="1"
               />
             </Col>
             <Col sm="3">

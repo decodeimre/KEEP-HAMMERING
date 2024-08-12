@@ -19,5 +19,7 @@ exerciseLogRouter.get("/", async (req, res, next) => {
 
 exerciseLogRouter.post(`/exercise-log/save`, saveNewExerciseSet);
 exerciseLogRouter.delete("/exercise-log/delete-set", deleteExerciseSet);
-exerciseLogRouter.get('/exercise-log/:exerciseID/update-set/:setID', getSelectedSet);
+exerciseLogRouter.get('/exercise-log/update-set/:setID', getSelectedSet);
 exerciseLogRouter.put("/exercise-log/update-set/", updatedExerciseSet);
+
+

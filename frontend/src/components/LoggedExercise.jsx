@@ -7,15 +7,20 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 library.add(faEllipsisVertical);
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { exerciseSetContext } from "./context/exerciseSetContext.jsx";
-import { useContext, useState, useEffect } from "react";
+import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
+import { DateContext } from "./context/dateContext.jsx";
+import { useContext, useState } from "react";
+import DateFormat from "./utils/DateFormatter.jsx";
 
-export default function LoggedExercise({ exercise, key }) {
-  const [update, setUpdate] = useState(false);
-  const { exerciseName, sets } = exercise;
+export default function LoggedExercise({ exercise }) {
+  const [update, setUpdate] = useState(false); // for showing update Button or not
+  const { selectedExercise, setSelectedExercise } = useContext(
+    selectedExerciseContext
+  );
+  const { date } = useContext(DateContext);
+  const { sets } = exercise;
   const { currentSet, setCurrentSet } = useContext(exerciseSetContext);
   const { setIsNewWorkout } = useContext(newWorkoutContext);
-
-
 
   // delete a set
   const handleDeleteSet = async (id) => {
@@ -41,17 +46,25 @@ export default function LoggedExercise({ exercise, key }) {
 
   // select set to update
   const handleUpdateSelect = async (id) => {
+    const dateQuery = DateFormat(date);
+    const fetchURL = `http://localhost:3000/workoutLog/exercise-log/update-set/${id}/?date=${dateQuery}`;
+
     try {
-      const response = await fetch(
-        `http://localhost:3000/workoutLog/exercise-log/${exercise._id}/update-set/${id}`
-      );
-      const selectedSet = await response.json();
-      console.log(selectedSet);
-      setCurrentSet({
-        weight: selectedSet.weight,
-        reps: selectedSet.reps,
-        unit: selectedSet.unit,
+      const response = await fetch(fetchURL);
+      const data = await response.json();
+      console.log(data) // gives back the right data
+      setSelectedExercise({
+        exerciseName: data.exerciseName,
+        targetMuscle: data.targetMuscle,
       });
+      const set = data.sets.filter((set) => set._id === id)[0];
+      console.log(set); //gives back the right data
+      setCurrentSet({
+        weight: set.weight,
+        reps: set.reps,
+        unit: set.unit,
+      });
+
       setUpdate(true);
     } catch (err) {
       console.log(err.message);
@@ -87,7 +100,7 @@ export default function LoggedExercise({ exercise, key }) {
         <Row>
           <Col>
             <h3>
-              {exerciseName} (weight in {sets[0].unit}){" "}
+              {exercise.exerciseName} (weight in {sets[0].unit}){" "}
             </h3>
           </Col>
           <Col className="text-end">
@@ -112,7 +125,7 @@ export default function LoggedExercise({ exercise, key }) {
         {sets.map((set, index) => {
           return (
             <>
-              <Row key={key} className="bg-info pt-2">
+              <Row key={index} className="bg-info pt-2">
                 <Col>
                   <h5>{index + 1}</h5>
                 </Col>

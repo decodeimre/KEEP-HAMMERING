@@ -53,17 +53,20 @@ export const deleteExerciseSet = async (req, res, next) => {
 
 export const getSelectedSet = async (req, res, next) => {
   try {
-    const { exerciseID, setID } = req.params;
-    const selectedSet = await ExerciseLog.findOne( //returns array
+    const { setID } = req.params;
+    const {date} = req.query
+    console.log(date);
+    console.log(setID)
+    const selectedExerciseLog = await ExerciseLog.findOne( //returns array
       {
-        _id: exerciseID,
+        date: date,
         "sets._id": setID,
       },
-      { "sets.$": 1 } // returns only the matched set, not the ExerciseLog that contains the set
     );
-    if (selectedSet && selectedSet.sets.length > 0) {
-      const foundSet = selectedSet.sets[0];
-      res.status(200).json(foundSet);
+    console.log(selectedExerciseLog)
+    if (selectedExerciseLog && selectedExerciseLog.sets.length > 0) {
+      const foundSet = selectedExerciseLog.sets[0];
+      res.status(200).json(selectedExerciseLog);
     } else {
       res.status(404).json({ message: "Set not found." });
     }
