@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useReducer } from "react";
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
-import { Row, Col, Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Row, Col, Container, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -11,37 +11,35 @@ library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
+import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
 export function WorkoutLog() {
-  const [workoutSets, setWorkoutSets] = useState([]);
+  const [dailyWorkouts, setDailyWorkouts] = useState([]); // save all workouts of THAT day for display and edit
   const navigate = useNavigate();
   const location = useLocation();
   const { date } = useContext(DateContext);
-  const {selectedExercise, setSelectedExercise} = useContext(selectedExerciseContext)
-  const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
+  const { state, dispatch } = useContext(currentExerciseContext);
+  const { isNewWorkout, setIsNewWorkout } = useContext(newWorkoutContext);
 
   useEffect(() => {
     const dateQuery = DateFormat(date);
     const fetchURL = `http://localhost:3000/workoutLog/?date=${dateQuery}`;
 
     async function fetchWorkoutSets() {
-   
       try {
         const response = await fetch(fetchURL);
         const data = await response.json();
-        setWorkoutSets(data); //array of all logged exercises of that day
-        setIsNewWorkout(false)
+        console.log(data)
+        setDailyWorkouts(data); //array of all logged exercises of that day
+        setIsNewWorkout(false);
       } catch (err) {
         alert("connection to the server failed");
       }
     }
     fetchWorkoutSets();
   }, [date, navigate, isNewWorkout]);
-
-
 
   const handleAddWorkoutClick = () => {
     setIsNewWorkout(true);
@@ -51,21 +49,21 @@ export function WorkoutLog() {
   return (
     <>
       <DateSelecter />
-      <Outlet />
+      {/*Outlet is for targetMuscleList OR ExerciseList OR ExerciseLog*/}
+      <Outlet /> 
 
-      {workoutSets.length !== 0  && (
+      {dailyWorkouts.length !== 0 && (
         <Container>
           <Col>
             <ListGroup>
-              {workoutSets.map((exercise, index) => {
-              
-                return <LoggedExercise exercise={exercise} key={index}/>;
+              {dailyWorkouts.map((exercise, index) => {
+                return <LoggedExercise exercise={exercise} key={index} />;
               })}
             </ListGroup>
           </Col>
         </Container>
       )}
-      {workoutSets.length === 0 && !isNewWorkout && (
+      {dailyWorkouts.length === 0 && !isNewWorkout && (
         <Container>
           <Row>
             <div className="d-flex justify-content-center align-items-center empty-workout-log">
@@ -74,7 +72,7 @@ export function WorkoutLog() {
           </Row>
         </Container>
       )}
-      {location.pathname === '/workoutLog' && (
+      {location.pathname === "/workoutLog" && (
         <Container>
           <Row>
             <Col className="d-flex justify-content-center mt-5">

@@ -1,0 +1,43 @@
+
+STRUCTURE:
+
+APP
+    HEADER (always displayed)
+    Calendar (OR...)
+    WorkoutLog (w/ DateSelector)
+            ExerciseList
+            TargetMuscleList
+            ExerciseLog
+            LoggedExercises (always displayed in WorkoutLog)
+
+
+
+
+12.08.24
+    need to set selected Exercise to a state (context)
+    Problem: initial fetch comes from Exercise DB - gets Exercise, InfoNotes etc
+    BUT: When updating I fetch from the ExerciseLog DB (to get the sets as well) - different ID, no InfoNotes ...
+
+
+
+
+LogIn and Register
+    - User Schema and Model
+    - using pre() methods for 
+      - validation and authentication
+        - express-validator
+          - validations middleware array (e.g. body('fullName').trim().notEmpty().matches(....))
+          - validationresults function handles errors (express validator)
+      - encryption middleware
+        - userSchema.pre('save', async function (next) {
+            if (!this.isModified('password')) {   //check if we modified password or same, then next (reusable for create user or update)
+            return (next ())}
+            const salt = await bcrypt.genSalt(10)
+            this.password = await bcrypt.hash(this.password, salt)})
+
+Password Encryption
+    - use bcrypt
+    - password = somePassword123
+    - const salt = await bcrypt.genSalt(10)
+    - const hashPass = await bcrypt.hash(password, salt)
+    - const passwordMatch = await bcrypt.compare(passwordInput, hash)

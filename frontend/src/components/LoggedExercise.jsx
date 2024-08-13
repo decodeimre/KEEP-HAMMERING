@@ -1,4 +1,5 @@
 import { ListGroupItem, Container, Col, Row, Dropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 // Import the specific icons
@@ -6,20 +7,16 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 // Add the imported icons to the library
 library.add(faEllipsisVertical);
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import { exerciseSetContext } from "./context/exerciseSetContext.jsx";
-import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
+import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { useContext, useState } from "react";
 import DateFormat from "./utils/DateFormatter.jsx";
 
 export default function LoggedExercise({ exercise }) {
-  const [update, setUpdate] = useState(false); // for showing update Button or not
-  const { selectedExercise, setSelectedExercise } = useContext(
-    selectedExerciseContext
-  );
+  // const [update, setUpdate] = useState(false); // for showing update Button or not
+  const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
   const { date } = useContext(DateContext);
-  const { sets } = exercise;
-  const { currentSet, setCurrentSet } = useContext(exerciseSetContext);
+  const { sets, _id, targetMuscle, exerciseName } = exercise;
   const { setIsNewWorkout } = useContext(newWorkoutContext);
 
   // delete a set
@@ -45,32 +42,29 @@ export default function LoggedExercise({ exercise }) {
   };
 
   // select set to update
-  const handleUpdateSelect = async (id) => {
-    const dateQuery = DateFormat(date);
-    const fetchURL = `http://localhost:3000/workoutLog/exercise-log/update-set/${id}/?date=${dateQuery}`;
-
-    try {
-      const response = await fetch(fetchURL);
-      const data = await response.json();
-      console.log(data) // gives back the right data
-      setSelectedExercise({
-        exerciseName: data.exerciseName,
-        targetMuscle: data.targetMuscle,
-      });
-      const set = data.sets.filter((set) => set._id === id)[0];
-      console.log(set); //gives back the right data
-      setCurrentSet({
-        weight: set.weight,
-        reps: set.reps,
-        unit: set.unit,
-      });
-
-      setUpdate(true);
-    } catch (err) {
-      console.log(err.message);
-    }
+  const handleUpdateSelect = (set) => {
+    const selectedSet = {
+      weight: set.weight,
+      reps: set.reps,
+      unit: set.unit,
+      _id: set._id,
+    };
+    console.log(exercise)
+    const selectedExerciseDetails = {
+      targetMuscle: exercise.targetMuscle,
+      exerciseName: exercise.exerciseName,
+      notes: exercise.notes,
+    };
+    dispatch({ type: ACTIONS.UPDATE_CURRENT_SET, payload: selectedSet });
+    dispatch({
+      type: ACTIONS.SET_EXERCISE_DETAILS,
+      payload: selectedExerciseDetails,
+    });
   };
+
   // const handleSetUpdate = async () => {
+  // const dateQuery = DateFormat(date);
+  // const fetchURL = `http://localhost:3000/workoutLog/exercise-log/update-set/${id}/?date=${dateQuery}`;
   //     try {
   //       const updateRequest = {
   //         method: "PUT",
@@ -96,24 +90,12 @@ export default function LoggedExercise({ exercise }) {
 
   return (
     <ListGroupItem>
-      <Container>
+      <Container key={_id}>
         <Row>
           <Col>
             <h3>
-              {exercise.exerciseName} (weight in {sets[0].unit}){" "}
+              {exerciseName} (weight in {sets[0].unit}){" "}
             </h3>
-          </Col>
-          <Col className="text-end">
-            <Dropdown>
-              <Dropdown.Toggle variant className="custom-dropdown">
-                <FontAwesomeIcon icon={faEllipsisVertical} />
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item>Edit</Dropdown.Item>
-                <Dropdown.Item>Delete</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
           </Col>
         </Row>
         <Row>
@@ -138,11 +120,14 @@ export default function LoggedExercise({ exercise }) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => handleUpdateSelect(set._id)}
+                      <Link
+                        to={`/workoutLog/${targetMuscle}/exercises/${_id}`}
+                        style={{ textDecoration: "none" }}
                       >
-                        Edit
-                      </Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleUpdateSelect(set)}>
+                          Edit
+                        </Dropdown.Item>
+                      </Link>
                       <Dropdown.Item onClick={() => handleDeleteSet(set._id)}>
                         Delete
                       </Dropdown.Item>

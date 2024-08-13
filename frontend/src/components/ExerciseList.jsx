@@ -3,13 +3,14 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
 import GoBackButton from "./utils/GoBackButton.jsx";
-import { selectedExerciseContext } from "./context/selectedExerciseContext.jsx";
+import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 
 export default function ExerciseList() {
   const { muscle } = useParams();
-  const [exercises, setExercises] = useState([]);
-  const {setSelectedExercise} = useContext(selectedExerciseContext)
+  const [exercises, setExercises] = useState([]); //for displaying all exercises for that muscle group
+  const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
 
+  //fetches the exercises for that muscle group
   useEffect(() => {
     const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises`;
 
@@ -26,6 +27,18 @@ export default function ExerciseList() {
     fetchExercises();
   }, [muscle]);
 
+  const setCurrentExercise = (exercise) => {
+    dispatch({
+      type: ACTIONS.SET_EXERCISE_DETAILS,
+      payload: {
+        targetMuscle: exercise.targetMuscle,
+        exerciseName: exercise.name,
+        notes: exercise.notes,
+      },
+    });
+    dispatch({ type: ACTIONS.RESET_FORM });
+  };
+
   return (
     <>
       <ListGroup className="target-muscle-list">
@@ -33,11 +46,11 @@ export default function ExerciseList() {
           return (
             <>
               <Link
-              onClick={()=>setSelectedExercise({exerciseName: exercise.exerciseName, targetMuscle: exercise.targetMuscle})}
                 to={`/workoutLog/${muscle}/exercises/${exercise._id}`}
                 style={{ textDecoration: "none" }}
               >
                 <ListGroupItem
+                  onClick={(exercise) => setCurrentExercise(exercise)}
                   action
                   variant="dark"
                   className="target-muscle-item"

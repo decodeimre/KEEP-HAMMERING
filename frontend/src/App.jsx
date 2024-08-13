@@ -7,8 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import { WorkoutLog } from "./components/WorkoutLog.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
 import { NewWorkoutContextProvider } from "./components/context/newWorkoutContext.jsx";
-import { ExerciseSetContextProvider } from "./components/context/exerciseSetContext.jsx";
-import { SelectedExerciseProvider } from "./components/context/selectedExerciseContext.jsx";
+import { CurrentExerciseProvider } from "./components/context/currentExerciseContext.jsx";
 import TargetMuscleList from "./components/TargetMuscleList.jsx";
 import ExerciseList from "./components/ExerciseList.jsx";
 import { ExerciseLog } from "./components/ExerciseLog.jsx";
@@ -17,10 +16,9 @@ function App() {
   return (
     <>
       <DateContextProvider>
-        <SelectedExerciseProvider>
+        <CurrentExerciseProvider>
           <NewWorkoutContextProvider>
-            <ExerciseSetContextProvider>
-              <Header />
+                <Header />
               <Routes>
                 <Route path="/" element={<MyCalendar />} />
                 <Route path="/workoutLog" element={<WorkoutLog />}>
@@ -36,9 +34,9 @@ function App() {
                 </Route>
                 <Route path="*" element={<NoMatch />} />
               </Routes>
-            </ExerciseSetContextProvider>
+
           </NewWorkoutContextProvider>
-        </SelectedExerciseProvider>
+        </CurrentExerciseProvider>
       </DateContextProvider>
     </>
   );
