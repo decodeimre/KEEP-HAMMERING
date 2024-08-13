@@ -9,10 +9,10 @@ const ACTIONS = {
 };
 
 const initialState = {
-  exerciseDetails: null,
-  currentSet: { weight: 0, reps: 0, unit: "kg", _id: null },
+  exerciseDetails: {},
+  currentSet: { weight: 0, reps: 0, unit: "kg", id: "" },
   isEditMode: false,
-  selectedExerciseLogID: null,
+  exerciseLogID: "",
 };
 
 function currentExerciseReducer(state, action) {
@@ -31,10 +31,10 @@ function currentExerciseReducer(state, action) {
         ...state,
         currentSet: initialState.currentSet,
         isEditMode: false,
-        selectedLogId: null,
+        exerciseLogID: "",
       };
     case ACTIONS.SET_SELECTED_LOG:
-      return { ...state, selectedLogId: action.payload };
+      return { ...state, exerciseLogID: action.payload };
     default:
       return state;
   }
@@ -50,7 +50,7 @@ export const CurrentExerciseProvider = ({ children }) => {
       value={{
         state,
         dispatch,
-        ACTIONS
+        ACTIONS,
       }}
     >
       {children}

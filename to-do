@@ -13,10 +13,9 @@ APP
 
 
 
-12.08.24
-    need to set selected Exercise to a state (context)
-    Problem: initial fetch comes from Exercise DB - gets Exercise, InfoNotes etc
-    BUT: When updating I fetch from the ExerciseLog DB (to get the sets as well) - different ID, no InfoNotes ...
+13.08.
+ - state variable works basically - checking for bugs
+ - update sets works basically - checking for bugs
 
 
 

@@ -6,11 +6,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 // Add the imported icons to the library
 library.add(faEllipsisVertical);
-import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import { DateContext } from "./context/dateContext.jsx";
+import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { useContext, useState } from "react";
-import DateFormat from "./utils/DateFormatter.jsx";
 
 export default function LoggedExercise({ exercise }) {
   // const [update, setUpdate] = useState(false); // for showing update Button or not
@@ -47,9 +46,10 @@ export default function LoggedExercise({ exercise }) {
       weight: set.weight,
       reps: set.reps,
       unit: set.unit,
-      _id: set._id,
+      id: set._id,
     };
-    console.log(exercise)
+    console.log(exercise);
+
     const selectedExerciseDetails = {
       targetMuscle: exercise.targetMuscle,
       exerciseName: exercise.exerciseName,
@@ -60,37 +60,14 @@ export default function LoggedExercise({ exercise }) {
       type: ACTIONS.SET_EXERCISE_DETAILS,
       payload: selectedExerciseDetails,
     });
+    dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: true });
+    dispatch({ type: ACTIONS.SET_SELECTED_LOG, payload: exercise._id });
+  
   };
-
-  // const handleSetUpdate = async () => {
-  // const dateQuery = DateFormat(date);
-  // const fetchURL = `http://localhost:3000/workoutLog/exercise-log/update-set/${id}/?date=${dateQuery}`;
-  //     try {
-  //       const updateRequest = {
-  //         method: "PUT",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           setID: id,
-  //           exerciseLogID: exercise._id,
-  //           updatedSet: currentSet,
-  //         }),
-  //       };
-  //       const updatedSet = await fetch(
-  //         `http://localhost:3000/workoutLog/exercise-log/update-set/`,
-  //         updateRequest
-  //       );
-  //       if (!updatedSet.ok) {
-  //         throw new Error("response for update not okay");
-  //       }
-  //       setIsNewWorkout(true);
-  //     } catch (err) {
-  //       alert(err.message);
-  //     }
-  //   };
 
   return (
     <ListGroupItem>
-      <Container key={_id}>
+      <Container key={exercise._id}>
         <Row>
           <Col>
             <h3>
@@ -120,9 +97,10 @@ export default function LoggedExercise({ exercise }) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
+                      {/*link not working - navigation needs to happen somehow else*/}
                       <Link
-                        to={`/workoutLog/${targetMuscle}/exercises/${_id}`}
-                        style={{ textDecoration: "none" }}
+                        to={`/workoutLog/${targetMuscle}/exercises/${exercise._id}`}
+                        // style={{ textDecoration: "none" }}
                       >
                         <Dropdown.Item onClick={() => handleUpdateSelect(set)}>
                           Edit

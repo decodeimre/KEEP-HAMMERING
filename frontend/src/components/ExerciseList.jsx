@@ -41,6 +41,7 @@ export default function ExerciseList() {
 
   return (
     <>
+    <h2 className="text-center mt-5">{muscle} Exercises</h2>
       <ListGroup className="target-muscle-list">
         {exercises.map((exercise) => {
           return (

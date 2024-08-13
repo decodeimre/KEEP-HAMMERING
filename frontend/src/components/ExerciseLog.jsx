@@ -18,6 +18,7 @@ import {
 // Add the imported icons to the library
 library.add(faPlus, faMinus, faCircleInfo);
 
+
 export function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
   const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
@@ -25,8 +26,6 @@ export function ExerciseLog() {
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [showInfo, setShowInfo] = useState(false);
 
-
-  
   useEffect(() => {
     async function fetchExercise() {
       const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
@@ -41,13 +40,13 @@ export function ExerciseLog() {
             targetMuscle: data.targetMuscle,
             notes: data.notes,
           },
-        }); 
+        });
       } catch (err) {
         console.log(err.message);
       }
     }
     fetchExercise();
-  }, [exerciseID, muscle]);
+  }, [exerciseID, muscle,]);
 
   //date is correct, but time difference 2 hours (to summer time)
   //need to check that!!!!!!!!!!!
@@ -82,6 +81,31 @@ export function ExerciseLog() {
     saveToDB(newExerciseLog);
   };
 
+  const handleSetUpdate = async () => {
+
+          try {
+          const updateRequest = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              exerciseLogID: state.exerciseLogID,
+              updatedSet: state.currentSet,
+            }),
+          };
+          const updatedSet = await fetch(
+            `http://localhost:3000/workoutLog/exercise-log/update-set/`,
+            updateRequest
+          );
+          if (!updatedSet.ok) {
+            throw new Error("response for update not okay");
+          }
+          setIsNewWorkout(true);
+          dispatch({type: ACTIONS.TOGGLE_EDIT_MODE, payload: false})
+        } catch (err) {
+          alert(err.message);
+        }
+      };
+
   const changeUnit = (e) => {
     dispatch({
       type: ACTIONS.UPDATE_CURRENT_SET,
@@ -92,14 +116,14 @@ export function ExerciseLog() {
   const changeWeight = (e) => {
     dispatch({
       type: ACTIONS.UPDATE_CURRENT_SET,
-      payload: { weight: e.target.value },
+      payload: { weight: Number(e.target.value) },
     });
   };
 
   const changeReps = (e) => {
     dispatch({
       type: ACTIONS.UPDATE_CURRENT_SET,
-      payload: { reps: e.target.value },
+      payload: { reps: Number(e.target.value) },
     });
   };
 
@@ -142,7 +166,7 @@ export function ExerciseLog() {
     setShowInfo(!showInfo);
   };
 
-  console.log(state)
+  console.log('ExerciseLog re-render')
 
   return (
     <>
@@ -249,6 +273,17 @@ export function ExerciseLog() {
                 Save
               </Button>
             </Col>
+            {state.isEditMode && (
+              <Col>
+                <Button
+                  variant="outline-danger"
+                  onClick={handleSetUpdate}
+                  className="save-btn"
+                >
+                  Update
+                </Button>
+              </Col>
+            )}
           </Row>
         </Form>
       </Container>

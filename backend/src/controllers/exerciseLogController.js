@@ -51,34 +51,13 @@ export const deleteExerciseSet = async (req, res, next) => {
   }
 };
 
-export const getSelectedSet = async (req, res, next) => {
-  try {
-    const { setID } = req.params;
-    const {date} = req.query
-    console.log(date);
-    console.log(setID)
-    const selectedExerciseLog = await ExerciseLog.findOne( //returns array
-      {
-        date: date,
-        "sets._id": setID,
-      },
-    );
-    console.log(selectedExerciseLog)
-    if (selectedExerciseLog && selectedExerciseLog.sets.length > 0) {
-      const foundSet = selectedExerciseLog.sets[0];
-      res.status(200).json(selectedExerciseLog);
-    } else {
-      res.status(404).json({ message: "Set not found." });
-    }
-  } catch (err) {
-    next(err);
-  }
-};
-
 export const updatedExerciseSet = async (req, res, next) => {
   try {
-    const { setID, exerciseLogID, updatedSet } = req.body;
-    const updatedExercise = await ExerciseLog.findByIdAndUpdate(
+    const { exerciseLogID, updatedSet } = req.body;
+    const setID = updatedSet.id;
+    console.log(exerciseLogID);
+    console.log(updatedSet);
+    const updatedExercise = await ExerciseLog.findOneAndUpdate(
       { _id: exerciseLogID, "sets._id": setID },
       {
         $set: {
@@ -87,10 +66,40 @@ export const updatedExerciseSet = async (req, res, next) => {
           "sets.$.unit": updatedSet.unit,
         },
       },
+
       { new: true }
     );
+    if (!updatedExercise) {
+      return res.status(404).json({ message: "Exercise log or set not found" });
+    }
+
     res.status(200).json(updatedExercise);
   } catch (err) {
     next(err);
   }
 };
+
+// export const getSelectedSet = async (req, res, next) => {
+//   try {
+//     const { setID } = req.params;
+//     const { date } = req.query;
+//     console.log(date);
+//     console.log(setID);
+//     const selectedExerciseLog = await ExerciseLog.findOne(
+//       //returns array
+//       {
+//         date: date,
+//         "sets._id": setID,
+//       }
+//     );
+//     console.log(selectedExerciseLog);
+//     if (selectedExerciseLog && selectedExerciseLog.sets.length > 0) {
+//       const foundSet = selectedExerciseLog.sets[0];
+//       res.status(200).json(selectedExerciseLog);
+//     } else {
+//       res.status(404).json({ message: "Set not found." });
+//     }
+//   } catch (err) {
+//     next(err);
+//   }
+// };

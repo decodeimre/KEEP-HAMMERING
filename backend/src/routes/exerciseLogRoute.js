@@ -1,6 +1,6 @@
 import { ExerciseLog } from "../models/ExerciseLogModel.js";
 import { Router } from "express";
-import { saveNewExerciseSet, deleteExerciseSet, updatedExerciseSet, getSelectedSet } from "../controllers/exerciseLogController.js";
+import { saveNewExerciseSet, deleteExerciseSet, updatedExerciseSet } from "../controllers/exerciseLogController.js";
 
 export const exerciseLogRouter = Router();
 
@@ -19,7 +19,6 @@ exerciseLogRouter.get("/", async (req, res, next) => {
 
 exerciseLogRouter.post(`/exercise-log/save`, saveNewExerciseSet);
 exerciseLogRouter.delete("/exercise-log/delete-set", deleteExerciseSet);
-exerciseLogRouter.get('/exercise-log/update-set/:setID', getSelectedSet);
 exerciseLogRouter.put("/exercise-log/update-set/", updatedExerciseSet);
 
 

@@ -10,8 +10,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
-import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
+import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
@@ -21,7 +21,7 @@ export function WorkoutLog() {
   const location = useLocation();
   const { date } = useContext(DateContext);
   const { state, dispatch } = useContext(currentExerciseContext);
-  const { isNewWorkout, setIsNewWorkout } = useContext(newWorkoutContext);
+  const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
 
   useEffect(() => {
     const dateQuery = DateFormat(date);
@@ -33,16 +33,15 @@ export function WorkoutLog() {
         const data = await response.json();
         console.log(data)
         setDailyWorkouts(data); //array of all logged exercises of that day
-        setIsNewWorkout(false);
       } catch (err) {
         alert("connection to the server failed");
       }
     }
     fetchWorkoutSets();
+    setIsNewWorkout(false);
   }, [date, navigate, isNewWorkout]);
 
   const handleAddWorkoutClick = () => {
-    setIsNewWorkout(true);
     navigate("targetMuscleList");
   };
 
@@ -63,7 +62,7 @@ export function WorkoutLog() {
           </Col>
         </Container>
       )}
-      {dailyWorkouts.length === 0 && !isNewWorkout && (
+      {dailyWorkouts.length === 0 && (
         <Container>
           <Row>
             <div className="d-flex justify-content-center align-items-center empty-workout-log">
@@ -72,7 +71,7 @@ export function WorkoutLog() {
           </Row>
         </Container>
       )}
-      {location.pathname === "/workoutLog" && (
+      {/* {location.pathname === "/workoutLog" && ( */}
         <Container>
           <Row>
             <Col className="d-flex justify-content-center mt-5">
@@ -90,7 +89,7 @@ export function WorkoutLog() {
             </Col>
           </Row>
         </Container>
-      )}
+      {/* )} */}
     </>
   );
 }
