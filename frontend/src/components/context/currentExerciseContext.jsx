@@ -1,4 +1,4 @@
-import { createContext, useState, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 const ACTIONS = {
   SET_EXERCISE_DETAILS: "SET_EXERCISE_DETAILS",

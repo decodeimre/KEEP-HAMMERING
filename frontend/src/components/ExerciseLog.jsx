@@ -18,7 +18,6 @@ import {
 // Add the imported icons to the library
 library.add(faPlus, faMinus, faCircleInfo);
 
-
 export function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
   const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
@@ -46,7 +45,7 @@ export function ExerciseLog() {
       }
     }
     fetchExercise();
-  }, [exerciseID, muscle,]);
+  }, [exerciseID, muscle]);
 
   //date is correct, but time difference 2 hours (to summer time)
   //need to check that!!!!!!!!!!!
@@ -82,29 +81,28 @@ export function ExerciseLog() {
   };
 
   const handleSetUpdate = async () => {
-
-          try {
-          const updateRequest = {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              exerciseLogID: state.exerciseLogID,
-              updatedSet: state.currentSet,
-            }),
-          };
-          const updatedSet = await fetch(
-            `http://localhost:3000/workoutLog/exercise-log/update-set/`,
-            updateRequest
-          );
-          if (!updatedSet.ok) {
-            throw new Error("response for update not okay");
-          }
-          setIsNewWorkout(true);
-          dispatch({type: ACTIONS.TOGGLE_EDIT_MODE, payload: false})
-        } catch (err) {
-          alert(err.message);
-        }
+    try {
+      const updateRequest = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          exerciseLogID: state.exerciseLogID,
+          updatedSet: state.currentSet,
+        }),
       };
+      const updatedSet = await fetch(
+        `http://localhost:3000/workoutLog/exercise-log/update-set/`,
+        updateRequest
+      );
+      if (!updatedSet.ok) {
+        throw new Error("response for update not okay");
+      }
+      setIsNewWorkout(true);
+      dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: false });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   const changeUnit = (e) => {
     dispatch({
@@ -166,7 +164,7 @@ export function ExerciseLog() {
     setShowInfo(!showInfo);
   };
 
-  console.log('ExerciseLog re-render')
+  console.log("ExerciseLog re-render");
 
   return (
     <>
@@ -268,12 +266,17 @@ export function ExerciseLog() {
           </Form.Group>
 
           <Row>
-            <Col>
-              <Button variant="outline-info" type="submit" className="save-btn">
-                Save
-              </Button>
-            </Col>
-            {state.isEditMode && (
+            {!state.isEditMode ? (
+              <Col>
+                <Button
+                  variant="outline-info"
+                  type="submit"
+                  className="save-btn"
+                >
+                  Save
+                </Button>
+              </Col>
+            ) : (
               <Col>
                 <Button
                   variant="outline-danger"
