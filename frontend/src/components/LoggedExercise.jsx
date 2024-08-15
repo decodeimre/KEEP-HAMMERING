@@ -50,7 +50,7 @@ export default function LoggedExercise({ exercise }) {
       unit: set.unit,
       id: set._id,
     };
-    console.log(exercise);
+    console.log(exercise.exerciseName);
 
     const selectedExerciseDetails = {
       targetMuscle: exercise.targetMuscle,

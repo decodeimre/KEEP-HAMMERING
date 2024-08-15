@@ -1,5 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DateContext } from "./context/dateContext";
 import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,15 +18,28 @@ import {
 library.add(faBars, faUser, faPlus, faHome);
 
 function MenuDropDownLeft() {
+  const navigate = useNavigate();
+
+  const navigateToWorkoutLog = () => {
+    const date = new Date();
+    navigate(`/workoutLog/${date}`);
+  };
+
   return (
     <Dropdown>
-      <Dropdown.Toggle className="custom-dropdown" as="button" id="dropdown-menu">
+      <Dropdown.Toggle
+        className="custom-dropdown"
+        as="button"
+        id="dropdown-menu"
+      >
         <FontAwesomeIcon icon="bars" />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Item href="/">Home (Calendar)</Dropdown.Item>
-        <Dropdown.Item href="/workoutLog">Plan new Workout</Dropdown.Item>
+        <Dropdown.Item onClick={navigateToWorkoutLog}>
+          Plan new Workout
+        </Dropdown.Item>
         <Dropdown.Item href="#/action-2">Exercise Overview</Dropdown.Item>
         <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
       </Dropdown.Menu>

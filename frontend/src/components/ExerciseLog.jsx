@@ -25,27 +25,27 @@ export function ExerciseLog() {
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [showInfo, setShowInfo] = useState(false);
 
-  // useEffect(() => {
-  //   async function fetchExercise() {
-  //     const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
-  //     try {
-  //       const response = await fetch(fetchURL);
-  //       const data = await response.json();
-  //       console.log(data);
-  //       dispatch({
-  //         type: ACTIONS.SET_EXERCISE_DETAILS,
-  //         payload: {
-  //           exerciseName: data.name,
-  //           targetMuscle: data.targetMuscle,
-  //           notes: data.notes,
-  //         },
-  //       });
-  //     } catch (err) {
-  //       console.log(err.message);
-  //     }
-  //   }
-  //   fetchExercise();
-  // }, [exerciseID, muscle]);
+  useEffect(() => {
+    async function fetchExercise() {
+      const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
+      try {
+        const response = await fetch(fetchURL);
+        const data = await response.json();
+        console.log(data);
+        dispatch({
+          type: ACTIONS.SET_EXERCISE_DETAILS,
+          payload: {
+            exerciseName: data.name,
+            targetMuscle: data.targetMuscle,
+            notes: data.notes,
+          },
+        });
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    fetchExercise();
+  }, [exerciseID, muscle]);
 
 
   

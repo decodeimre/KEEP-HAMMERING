@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 
+
 export const DateContext = createContext();
 
 export const DateContextProvider = ({ children }) => {
@@ -18,7 +19,9 @@ export const DateContextProvider = ({ children }) => {
   };
 
   return (
-    <DateContext.Provider value={{ date, setCurrentDate, goOneDayBack, goOneDayForward }}>
+    <DateContext.Provider
+      value={{ date, setCurrentDate, goOneDayBack, goOneDayForward }}
+    >
       {children}
     </DateContext.Provider>
   );

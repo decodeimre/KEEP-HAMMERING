@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext, useReducer } from "react";
-import { useLocation, useNavigate, Outlet } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 import { Row, Col, Container, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -15,10 +15,9 @@ import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
-export function WorkoutLog() {
+export function DailyWorkoutLog() {
   const [dailyWorkouts, setDailyWorkouts] = useState([]); // save all workouts of THAT day for display and edit
   const navigate = useNavigate();
-  const location = useLocation();
   const { date } = useContext(DateContext);
   const { state, dispatch } = useContext(currentExerciseContext);
   const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)

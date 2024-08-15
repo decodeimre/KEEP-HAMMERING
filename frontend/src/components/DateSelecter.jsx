@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { DateContext } from "./context/dateContext.jsx";
-import { useLocation } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -14,18 +13,15 @@ library.add(faAngleLeft, faAngleRight);
 
 export default function DateSelecter() {
   const { date, goOneDayBack, goOneDayForward } = useContext(DateContext);
-  const location = useLocation();
   let selectedDate = date.toDateString();
 
   return (
     <Container className="p-3">
       <Row className="justify-content-md-center border-bottom">
         <Col className="col-2 d-flex justify-content-start">
-          {location.pathname === "/workoutLog" && (
-            <div onClick={goOneDayBack} className="button change-day-arrow">
-              <FontAwesomeIcon icon="angle-left" size="3x" />
-            </div>
-          )}
+          <div onClick={goOneDayBack} className="button change-day-arrow">
+            <FontAwesomeIcon icon="angle-left" size="3x" />
+          </div>
         </Col>
         <Col className="d-flex justify-content-center col-8">
           <h2 className="selected-date">
@@ -35,11 +31,9 @@ export default function DateSelecter() {
           </h2>
         </Col>
         <Col className="col-2 d-flex justify-content-end">
-          {location.pathname === "/workoutLog" && (
-            <div onClick={goOneDayForward} className="button change-day-arrow">
-              <FontAwesomeIcon icon="angle-right" size="3x" />
-            </div>
-          )}
+          <div onClick={goOneDayForward} className="button change-day-arrow">
+            <FontAwesomeIcon icon="angle-right" size="3x" />
+          </div>
         </Col>
       </Row>
     </Container>

@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function MyCalendar() {
 
-  const {setCurrentDate} = useContext(DateContext)
+  const {date, setCurrentDate} = useContext(DateContext)
   const navigate = useNavigate();
     //example handleClick function
     //should later open day view with planned workout and option to add new workout
     const handleDateClick = (arg) => {
       setCurrentDate(new Date(arg.date))
-      navigate('/workoutLog')
+      navigate(`/workoutLog/${arg.date}`)
     };
   
     return (
