@@ -18,23 +18,23 @@ function App() {
       <DateContextProvider>
         <CurrentExerciseProvider>
           <NewWorkoutContextProvider>
-                <Header />
-              <Routes>
-                <Route path="/" element={<MyCalendar />} />
-                <Route path="/workoutLog" element={<WorkoutLog />}>
-                  <Route
-                    path="targetMuscleList"
-                    element={<TargetMuscleList />}
-                  />
-                  <Route path=":muscle/exercises" element={<ExerciseList />} />
-                  <Route
-                    path=":muscle/exercises/:exerciseID"
-                    element={<ExerciseLog />}
-                  />
-                </Route>
-                <Route path="*" element={<NoMatch />} />
-              </Routes>
-
+            <Header />
+            <Routes>
+              <Route path="/" element={<MyCalendar />} />
+              <Route path="/workoutLog" element={<WorkoutLog />}>
+                <Route path="targetMuscleList" element={<TargetMuscleList />} />
+                <Route path=":muscle/exercises" element={<ExerciseList />} />
+                <Route
+                  path=":muscle/exercises/:exerciseID"
+                  element={<ExerciseLog />}
+                />
+                <Route
+                  path="edit/:exercisesLogID/:setID"
+                  element={<ExerciseLog />}
+                />
+              </Route>
+              <Route path="*" element={<NoMatch />} />
+            </Routes>
           </NewWorkoutContextProvider>
         </CurrentExerciseProvider>
       </DateContextProvider>

@@ -13,10 +13,9 @@ server.use(cors());
 const PORT = process.env.PORT || 3000;
 const URL = process.env.DB_URL;
 
-mongoose.connect("mongodb+srv://decodeimre:N85qF3viKztGOsPU@cluster0.839zvwc.mongodb.net/KeepHammering");
+mongoose.connect(URL);
 mongoose.connection.on("connected", () => console.log("connected to MongoDB"));
 mongoose.connection.on("error", (err) => console.log(err.message));
-
 
 server.use("/workoutLog", exerciseRouter, exerciseLogRouter);
 

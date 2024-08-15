@@ -10,6 +10,7 @@ import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoggedExercise({ exercise }) {
   // const [update, setUpdate] = useState(false); // for showing update Button or not
@@ -17,6 +18,7 @@ export default function LoggedExercise({ exercise }) {
   const { date } = useContext(DateContext);
   const { sets, _id, targetMuscle, exerciseName } = exercise;
   const { setIsNewWorkout } = useContext(newWorkoutContext);
+  const navigate = useNavigate();
 
   // delete a set
   const handleDeleteSet = async (id) => {
@@ -62,7 +64,12 @@ export default function LoggedExercise({ exercise }) {
     });
     dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: true });
     dispatch({ type: ACTIONS.SET_SELECTED_LOG, payload: exercise._id });
-  
+
+    const exerciseLogID = exercise._id
+    const setID = set._id    
+   
+    
+    navigate(`/workoutLog/edit/${exerciseLogID}/${setID}`);
   };
 
   return (
@@ -71,13 +78,13 @@ export default function LoggedExercise({ exercise }) {
         <Row>
           <Col>
             <h3>
-              {exerciseName} (weight in {sets[0].unit}){" "}
+              {exerciseName}  
             </h3>
           </Col>
         </Row>
         <Row>
           <Col>SETS</Col>
-          <Col>WEIGHT</Col>
+          <Col>WEIGHT IN KG</Col>
           <Col>REPS</Col>
           <Col></Col>
         </Row>
@@ -85,10 +92,10 @@ export default function LoggedExercise({ exercise }) {
           return (
             <>
               <Row key={index} className="bg-info pt-2">
-                <Col>
+                <Col >
                   <h5>{index + 1}</h5>
                 </Col>
-                <Col>{set.weight}</Col>
+                <Col >{set.weight}</Col>
                 <Col>{set.reps}</Col>
                 <Col className="text-end">
                   <Dropdown>
@@ -98,14 +105,11 @@ export default function LoggedExercise({ exercise }) {
 
                     <Dropdown.Menu>
                       {/*link not working - navigation needs to happen somehow else*/}
-                      <Link
-                        to={`/workoutLog/${targetMuscle}/exercises/${exercise._id}`}
-                        // style={{ textDecoration: "none" }}
-                      >
-                        <Dropdown.Item onClick={() => handleUpdateSelect(set)}>
-                          Edit
-                        </Dropdown.Item>
-                      </Link>
+
+                      <Dropdown.Item onClick={() => handleUpdateSelect(set)}>
+                        Edit
+                      </Dropdown.Item>
+
                       <Dropdown.Item onClick={() => handleDeleteSet(set._id)}>
                         Delete
                       </Dropdown.Item>

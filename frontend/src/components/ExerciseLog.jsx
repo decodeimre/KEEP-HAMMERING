@@ -25,28 +25,30 @@ export function ExerciseLog() {
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [showInfo, setShowInfo] = useState(false);
 
-  useEffect(() => {
-    async function fetchExercise() {
-      const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
-      try {
-        const response = await fetch(fetchURL);
-        const data = await response.json();
-        console.log(data);
-        dispatch({
-          type: ACTIONS.SET_EXERCISE_DETAILS,
-          payload: {
-            exerciseName: data.name,
-            targetMuscle: data.targetMuscle,
-            notes: data.notes,
-          },
-        });
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
-    fetchExercise();
-  }, [exerciseID, muscle]);
+  // useEffect(() => {
+  //   async function fetchExercise() {
+  //     const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
+  //     try {
+  //       const response = await fetch(fetchURL);
+  //       const data = await response.json();
+  //       console.log(data);
+  //       dispatch({
+  //         type: ACTIONS.SET_EXERCISE_DETAILS,
+  //         payload: {
+  //           exerciseName: data.name,
+  //           targetMuscle: data.targetMuscle,
+  //           notes: data.notes,
+  //         },
+  //       });
+  //     } catch (err) {
+  //       console.log(err.message);
+  //     }
+  //   }
+  //   fetchExercise();
+  // }, [exerciseID, muscle]);
 
+
+  
   //date is correct, but time difference 2 hours (to summer time)
   //need to check that!!!!!!!!!!!
 
@@ -215,7 +217,7 @@ export function ExerciseLog() {
                 type="number"
                 className="custom-input"
                 min="0"
-                step="2.5"
+                step="0.5"
               />
             </Col>
             <Col sm="3">

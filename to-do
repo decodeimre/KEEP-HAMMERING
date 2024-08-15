@@ -22,7 +22,7 @@ APP
 
 LogIn and Register
     - User Schema and Model
-    - using pre() methods for 
+    - using Schema.pre() methods for 
       - validation and authentication
         - express-validator
           - validations middleware array (e.g. body('fullName').trim().notEmpty().matches(....))
@@ -33,10 +33,24 @@ LogIn and Register
             return (next ())}
             const salt = await bcrypt.genSalt(10)
             this.password = await bcrypt.hash(this.password, salt)})
-
+        - write own methods for Model/Schema: 
+            - userSchema.methods.authenticate = async function(password) { return await bcrypt.compare(password, this.password)} //NOT arrow function!!!
+            - UserModel.authenticate(password)
 Password Encryption
     - use bcrypt
     - password = somePassword123
     - const salt = await bcrypt.genSalt(10)
     - const hashPass = await bcrypt.hash(password, salt)
-    - const passwordMatch = await bcrypt.compare(passwordInput, hash)
+    - const passwordMatch = await bcrypt.compare(passwordInput, hash) //returns true or false
+
+  when sending back user (found user or newly registered):
+      const {email, password} = req.body
+      const user = User.findOne(email: email)
+      user = User.autenticate(password, this.password)
+      user.password = undefined   // for the response to frontend! dont send back password, even the hashed version!
+      res.status(200).json(user)
+
+
+  Sending EMAIL from Backend:
+      - nodemailer (npm)
+        - host: smtp server for MY email 
