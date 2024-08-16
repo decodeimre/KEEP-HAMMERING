@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 export const ExercisesContext = createContext();
 
 export const ExercisesProvider = ({ children }) => {
-  const [exercises, setExercises] = useState([]);
+  const [allExercises, setExercises] = useState([]);
 
   useEffect(() => {
     const allExercises = localStorage.getItem("allExercises");
@@ -32,6 +32,6 @@ export const ExercisesProvider = ({ children }) => {
 
 
   return (
-    <ExercisesContext.Provider value={{exercises}}>{children}</ExercisesContext.Provider>
+    <ExercisesContext.Provider value={{allExercises}}>{children}</ExercisesContext.Provider>
   )
 };

@@ -13,7 +13,7 @@ export default function MyCalendar() {
     //should later open day view with planned workout and option to add new workout
     const handleDateClick = (arg) => {
       setCurrentDate(new Date(arg.date))
-      navigate(`/workoutLog/${arg.date}`)
+      navigate(`/workoutLog/`)
     };
   
     return (

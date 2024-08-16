@@ -32,19 +32,7 @@ export function DailyWorkoutLog() {
 
     setDailyWorkouts(dailyExercises); //array of all logged exercises of that day
 
-    // const fetchURL = `http://localhost:3000/workoutLog/?date=${dateQuery}`;
 
-    // async function fetchWorkoutSets() {
-    //   try {
-    //     const response = await fetch(fetchURL);
-    //     const data = await response.json();
-    //     console.log(data)
-    //
-    //   } catch (err) {
-    //     alert("connection to the server failed");
-    //   }
-    // }
-    // fetchWorkoutSets();
     setIsNewWorkout(false);
   }, [date, navigate, isNewWorkout]);
 

@@ -25,7 +25,7 @@ function App() {
                 <Header />
                 <Routes>
                   <Route path="/" element={<MyCalendar />} />
-                  <Route path="/workoutLog/:date" element={<DailyWorkoutLog />}>
+                  <Route path="/workoutLog/" element={<DailyWorkoutLog />}>
                     <Route
                       path="targetMuscleList"
                       element={<TargetMuscleList />}

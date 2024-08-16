@@ -7,26 +7,26 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 // Add the imported icons to the library
 library.add(faEllipsisVertical);
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
-import { DateContext } from "./context/dateContext.jsx";
+import { ExerciseLogsContext } from "./context/exerciseLogsContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoggedExercise({ exercise }) {
   // const [update, setUpdate] = useState(false); // for showing update Button or not
-  const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
-  const { date } = useContext(DateContext);
+  const { dispatch, ACTIONS } = useContext(currentExerciseContext);
+  const {deleteExerciseLog} = useContext(ExerciseLogsContext)
   const { sets, _id, targetMuscle, exerciseName } = exercise;
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const navigate = useNavigate();
 
   // delete a set
-  const handleDeleteSet = async (id) => {
+  const handleDeleteSet = async (setID) => {
     try {
       const deleteRequest = {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ setID: id, exerciseLogID: exercise._id }),
+        body: JSON.stringify({ setID: setID, exerciseLogID: exercise._id }),
       };
       const deleteSet = await fetch(
         `http://localhost:3000/workoutLog/exercise-log/delete-set/`,
@@ -35,6 +35,7 @@ export default function LoggedExercise({ exercise }) {
       if (!deleteSet.ok) {
         throw new Error("failed to delete set");
       }
+      deleteExerciseLog(exercise._id, setID)
       setIsNewWorkout(true);
     } catch (err) {
       console.log(err);

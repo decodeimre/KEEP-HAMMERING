@@ -5,6 +5,8 @@ import { useEffect, useState, useContext } from "react";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
+import { ExerciseLogsContext } from "./context/exerciseLogsContext.jsx";
+import { ExercisesContext } from "./context/exercisesContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -24,31 +26,22 @@ export function ExerciseLog() {
   const { date } = useContext(DateContext);
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [showInfo, setShowInfo] = useState(false);
+  const { allExercises } = useContext(ExercisesContext);
+  const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
 
   useEffect(() => {
-    async function fetchExercise() {
-      const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises/${exerciseID}`;
-      try {
-        const response = await fetch(fetchURL);
-        const data = await response.json();
-        console.log(data);
-        dispatch({
-          type: ACTIONS.SET_EXERCISE_DETAILS,
-          payload: {
-            exerciseName: data.name,
-            targetMuscle: data.targetMuscle,
-            notes: data.notes,
-          },
-        });
-      } catch (err) {
-        console.log(err.message);
-      }
-    }
-    fetchExercise();
+    const exercise = allExercises.find(exercise => exercise._id === exerciseID);
+   
+    dispatch({
+      type: ACTIONS.SET_EXERCISE_DETAILS,
+      payload: {
+        exerciseName: exercise.name,
+        targetMuscle: exercise.targetMuscle,
+        notes: exercise.notes,
+      },
+    });
   }, [exerciseID, muscle]);
 
-
-  
   //date is correct, but time difference 2 hours (to summer time)
   //need to check that!!!!!!!!!!!
 
@@ -73,7 +66,8 @@ export function ExerciseLog() {
         if (!response.ok) {
           throw new Error("failed to save to database");
         }
-
+        const newSet = await response.json()
+        addExerciseLog(newSet)
         setIsNewWorkout(true);
       } catch (err) {
         alert(err.message);

@@ -33,6 +33,8 @@ export const ExerciseLogsProvider = ({ children }) => {
     }
   }, []);
 
+
+  //this is too simple - need to find if there is an existing ExerciseLog where the set should be added to OR create a new Log
   const addExerciseLog = (newLog) => {
     setExerciseLogs((prevLogs) => {
       const updatedLogs = [...prevLogs, newLog];
@@ -49,10 +51,13 @@ export const ExerciseLogsProvider = ({ children }) => {
       const updatedLogs = prevLogs.map((exercise) => {
         if (exercise._id === exerciseID) {
           const updatedSets = exercise.sets.filter((set) => set._id !== setID);
+          if (updatedSets.length === 0) {
+            return null //if no sets are left - mark exercise for deletion in next filter step
+          }
           return { ...exercise, sets: updatedSets };
         }
         return exercise;
-      });
+      }).filter(exercise => exercise !== null);
 
       localStorage.setItem("exerciseLogs", JSON.stringify(updatedLogs));
       return updatedLogs;
