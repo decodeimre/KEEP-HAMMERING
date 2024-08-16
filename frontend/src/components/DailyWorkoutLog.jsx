@@ -10,8 +10,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faPlus);
 import DateSelecter from "./DateSelecter.jsx";
 import { DateContext } from "./context/dateContext.jsx";
-import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
+import { ExerciseLogsContext } from "./context/exerciseLogsContext.jsx";
 import DateFormat from "./utils/DateFormatter.jsx";
 import LoggedExercise from "./LoggedExercise.jsx";
 
@@ -19,24 +19,32 @@ export function DailyWorkoutLog() {
   const [dailyWorkouts, setDailyWorkouts] = useState([]); // save all workouts of THAT day for display and edit
   const navigate = useNavigate();
   const { date } = useContext(DateContext);
-  const { state, dispatch } = useContext(currentExerciseContext);
-  const {isNewWorkout, setIsNewWorkout} = useContext(newWorkoutContext)
+  const { exerciseLogs } = useContext(ExerciseLogsContext);
+
+  const { isNewWorkout, setIsNewWorkout } = useContext(newWorkoutContext);
 
   useEffect(() => {
     const dateQuery = DateFormat(date);
-    const fetchURL = `http://localhost:3000/workoutLog/?date=${dateQuery}`;
+    console.log(exerciseLogs)
+    const dailyExercises = exerciseLogs.filter(
+      (exercise) => exercise.date === dateQuery
+    );
 
-    async function fetchWorkoutSets() {
-      try {
-        const response = await fetch(fetchURL);
-        const data = await response.json();
-        console.log(data)
-        setDailyWorkouts(data); //array of all logged exercises of that day
-      } catch (err) {
-        alert("connection to the server failed");
-      }
-    }
-    fetchWorkoutSets();
+    setDailyWorkouts(dailyExercises); //array of all logged exercises of that day
+
+    // const fetchURL = `http://localhost:3000/workoutLog/?date=${dateQuery}`;
+
+    // async function fetchWorkoutSets() {
+    //   try {
+    //     const response = await fetch(fetchURL);
+    //     const data = await response.json();
+    //     console.log(data)
+    //
+    //   } catch (err) {
+    //     alert("connection to the server failed");
+    //   }
+    // }
+    // fetchWorkoutSets();
     setIsNewWorkout(false);
   }, [date, navigate, isNewWorkout]);
 
@@ -48,7 +56,7 @@ export function DailyWorkoutLog() {
     <>
       <DateSelecter />
       {/*Outlet is for targetMuscleList OR ExerciseList OR ExerciseLog*/}
-      <Outlet /> 
+      <Outlet />
 
       {dailyWorkouts.length !== 0 && (
         <Container>
@@ -71,23 +79,23 @@ export function DailyWorkoutLog() {
         </Container>
       )}
       {/* {location.pathname === "/workoutLog" && ( */}
-        <Container>
-          <Row>
-            <Col className="d-flex justify-content-center mt-5">
-              <div
-                onClick={handleAddWorkoutClick}
-                className="button workout-plus "
-              >
-                <FontAwesomeIcon icon="plus" size="4x" />
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="d-flex justify-content-center">
-              <h4>Add New Workout</h4>
-            </Col>
-          </Row>
-        </Container>
+      <Container>
+        <Row>
+          <Col className="d-flex justify-content-center mt-5">
+            <div
+              onClick={handleAddWorkoutClick}
+              className="button workout-plus "
+            >
+              <FontAwesomeIcon icon="plus" size="4x" />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <h4>Add New Workout</h4>
+          </Col>
+        </Row>
+      </Container>
       {/* )} */}
     </>
   );

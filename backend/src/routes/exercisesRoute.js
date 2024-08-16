@@ -21,7 +21,6 @@ exerciseRouter.get(`/:muscle/exercises`, async (req, res, next) => {
     });
     res.status(200).json(exercisesByMuscleGroup);
   } catch (err) {
-    res.send(err.message);
     next(err)
   }
 });
@@ -32,7 +31,6 @@ exerciseRouter.get("/:muscle/exercises/:exerciseID", async (req, res, next) => {
     const exercise = await Exercise.findById(exerciseID);
     res.status(200).json(exercise);
   } catch (err) {
-    res.json(err.message);
     next(err)
   }
 });

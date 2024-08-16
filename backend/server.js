@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { exerciseRouter } from "./src/routes/exercisesRoute.js";
 import { exerciseLogRouter } from "./src/routes/exerciseLogRoute.js";
+import { errorHandler, notFound } from "./src/errorhandler/errorhandler.js";
 import "dotenv/config.js";
 
 const server = express();
@@ -19,5 +20,6 @@ mongoose.connection.on("error", (err) => console.log(err.message));
 
 server.use('/exercises/getAll', exerciseRouter )
 server.use("/workoutLog", exerciseRouter, exerciseLogRouter);
+server.use(errorHandler, notFound)
 
 server.listen(PORT, () => console.log("server listening to port", PORT));

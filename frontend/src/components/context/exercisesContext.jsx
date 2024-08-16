@@ -18,7 +18,7 @@ export const ExercisesProvider = ({ children }) => {
             throw new Error("failed to fetch exercises");
           }
           const data = await response.json();
-          setExercises(data);
+          setExercises(data.allExercises);
           localStorage.setItem("allExercises", JSON.stringify(data));
         } catch (error) {
           console.log(error.message);
