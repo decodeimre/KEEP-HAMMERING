@@ -3,6 +3,16 @@ import { Router } from "express";
 
 export const exerciseRouter = Router();
 
+
+exerciseRouter.get('/', async(req,res,next) => {
+  try {
+    const allExercises = await Exercise.find()
+    res.status(200).json(allExercises)
+  }catch(err) {
+    next(err)
+  }
+})
+
 exerciseRouter.get(`/:muscle/exercises`, async (req, res, next) => {
   const { muscle } = req.params;
   try {

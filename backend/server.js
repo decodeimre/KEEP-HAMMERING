@@ -17,6 +17,7 @@ mongoose.connect(URL);
 mongoose.connection.on("connected", () => console.log("connected to MongoDB"));
 mongoose.connection.on("error", (err) => console.log(err.message));
 
+server.use('/exercises/getAll', exerciseRouter )
 server.use("/workoutLog", exerciseRouter, exerciseLogRouter);
 
 server.listen(PORT, () => console.log("server listening to port", PORT));

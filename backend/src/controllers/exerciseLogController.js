@@ -1,5 +1,18 @@
 import { ExerciseLog } from "../models/ExerciseLogModel.js";
 
+
+export const getAllExerciseLogs = async (req, res, next) => {
+  try {
+    const allExerciseLogs = await ExerciseLog.find();
+    if (allExerciseLogs.length === 0) {
+      res.status(400).json({msg: 'no exercise logs found'})
+    }
+    res.status(200).json({msg: 'exercise logs fetch successful', allExerciseLogs})
+  }catch (err) {
+    next(err)
+  }
+}
+
 export const saveNewExerciseSet = async (req, res, next) => {
   try {
     const { date, exerciseName } = req.body;
