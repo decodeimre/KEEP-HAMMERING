@@ -1,5 +1,4 @@
 import { ListGroupItem, Container, Col, Row, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 // Import the specific icons
@@ -9,7 +8,7 @@ library.add(faEllipsisVertical);
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import { ExerciseLogsContext } from "./context/exerciseLogsContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoggedExercise({ exercise }) {
@@ -51,7 +50,7 @@ export default function LoggedExercise({ exercise }) {
       unit: set.unit,
       id: set._id,
     };
-    console.log(exercise.exerciseName);
+    console.log(exercise);
 
     const selectedExerciseDetails = {
       targetMuscle: exercise.targetMuscle,

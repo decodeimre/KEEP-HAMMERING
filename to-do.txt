@@ -51,6 +51,20 @@ Password Encryption
       res.status(200).json(user)
 
 
+generating and verifying token:
+    - create secretKey - put in .env
+    - jwt (jsonwebtoken)
+        const createToken = async(payload, secretKey, options) => {
+            const asyncSign = promisify(jwt.sign); //promisify gives async version 
+            return asyncSign (payload, secretKey, options)
+        }
+
+        const verifyToken = asnyc (token, secretKey) => {
+             jwt.verify
+        }
+    - send token in the header/authentication (works for get requests as well)
+
+
   Sending EMAIL from Backend:
       - nodemailer (npm)
         - host: smtp server for MY email 

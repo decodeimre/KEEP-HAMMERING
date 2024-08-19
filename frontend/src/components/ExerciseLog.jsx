@@ -30,16 +30,23 @@ export function ExerciseLog() {
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
 
   useEffect(() => {
-    const exercise = allExercises.find(exercise => exercise._id === exerciseID);
-   
-    dispatch({
-      type: ACTIONS.SET_EXERCISE_DETAILS,
-      payload: {
-        exerciseName: exercise.name,
-        targetMuscle: exercise.targetMuscle,
-        notes: exercise.notes,
-      },
-    });
+
+    if (state.isEditMode) {
+      return;
+    } else {
+      const currentExercise = allExercises.find(
+        (exercise) => exercise._id === exerciseID
+      );
+      console.log(currentExercise);
+      dispatch({
+        type: ACTIONS.SET_EXERCISE_DETAILS,
+        payload: {
+          exerciseName: currentExercise.name,
+          targetMuscle: currentExercise.targetMuscle,
+          notes: currentExercise.notes,
+        },
+      });
+    }
   }, [exerciseID, muscle]);
 
   //date is correct, but time difference 2 hours (to summer time)
@@ -66,8 +73,9 @@ export function ExerciseLog() {
         if (!response.ok) {
           throw new Error("failed to save to database");
         }
-        const newSet = await response.json()
-        addExerciseLog(newSet)
+        const newSet = await response.json();
+        console.log(newSet);
+        addExerciseLog(newSet);
         setIsNewWorkout(true);
       } catch (err) {
         alert(err.message);
@@ -94,6 +102,7 @@ export function ExerciseLog() {
         throw new Error("response for update not okay");
       }
       setIsNewWorkout(true);
+      updateExerciseLog(state.exerciseLogID, state.currentSet);
       dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: false });
     } catch (err) {
       alert(err.message);

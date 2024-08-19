@@ -27,7 +27,8 @@ export const saveNewExerciseSet = async (req, res, next) => {
       const ID = exerciseAlreadyLogged._id;
       const updateLoggedExercise = await ExerciseLog.findByIdAndUpdate(ID, {
         sets: updatedSets,
-      });
+      }, {new: true});
+      // console.log(updateLoggedExercise)
       res.status(200).json(updateLoggedExercise);
     } else {
       try {

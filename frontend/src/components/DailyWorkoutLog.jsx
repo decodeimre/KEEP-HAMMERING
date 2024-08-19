@@ -25,13 +25,15 @@ export function DailyWorkoutLog() {
 
   useEffect(() => {
     const dateQuery = DateFormat(date);
-    console.log(exerciseLogs)
+    console.log(exerciseLogs);
+    if (exerciseLogs.length === 0) {
+      return;
+    }
     const dailyExercises = exerciseLogs.filter(
       (exercise) => exercise.date === dateQuery
     );
 
     setDailyWorkouts(dailyExercises); //array of all logged exercises of that day
-
 
     setIsNewWorkout(false);
   }, [date, navigate, isNewWorkout]);
