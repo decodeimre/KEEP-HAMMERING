@@ -5,6 +5,7 @@ body {
   background-color: #212529;
   color: whitesmoke;
   max-width: 1500px;
+  margin: auto;
 }
 
 /*HEADER*/

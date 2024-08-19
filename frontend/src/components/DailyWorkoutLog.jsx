@@ -53,6 +53,7 @@ export function DailyWorkoutLog() {
           <Col>
             <ListGroup>
               {dailyWorkouts.map((exercise, index) => {
+                console.log(exercise)
                 return <LoggedExercise exercise={exercise} key={index} />;
               })}
             </ListGroup>

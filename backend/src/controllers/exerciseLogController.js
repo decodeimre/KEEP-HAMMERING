@@ -34,7 +34,7 @@ export const saveNewExerciseSet = async (req, res, next) => {
       try {
         const newWorkoutSet = req.body;
         const newSet = await ExerciseLog.create(newWorkoutSet);
-        // console.log(newSet);
+        console.log(newSet);
         res.status(200).json(newSet);
       } catch (err) {
         // console.log(err.message);

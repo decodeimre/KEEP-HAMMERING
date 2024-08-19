@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { userRouter } from "./src/routes/userRouter.js";
 import { exerciseRouter } from "./src/routes/exercisesRoute.js";
 import { exerciseLogRouter } from "./src/routes/exerciseLogRoute.js";
 import { errorHandler, notFound } from "./src/errorhandler/errorhandler.js";
@@ -16,7 +17,7 @@ server.use(express.json());
 server.use(cors());
 
 
-
+server.use('/', userRouter)
 server.use('/exercises/getAll', exerciseRouter )
 server.use("/workoutLog", exerciseRouter, exerciseLogRouter);
 

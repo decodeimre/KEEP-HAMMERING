@@ -12,7 +12,7 @@ import { useContext} from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoggedExercise({ exercise }) {
-  // const [update, setUpdate] = useState(false); // for showing update Button or not
+
   const { dispatch, ACTIONS } = useContext(currentExerciseContext);
   const {deleteExerciseLog} = useContext(ExerciseLogsContext)
   const { sets, _id, targetMuscle, exerciseName } = exercise;

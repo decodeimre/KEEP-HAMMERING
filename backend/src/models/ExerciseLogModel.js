@@ -14,6 +14,7 @@ const exerciseLogSchema = new Schema(
     date: { type: String, required: true },
     targetMuscle: { type: String, required: true },
     exerciseName: { type: String, required: true },
+    notes: {type: String, required: true},
     sets: [workoutSetSchema],
   },
   { timestamps: true }

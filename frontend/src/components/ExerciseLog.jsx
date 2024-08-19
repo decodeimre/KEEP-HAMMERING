@@ -60,6 +60,7 @@ export function ExerciseLog() {
       targetMuscle: state.exerciseDetails.targetMuscle,
       exerciseName: state.exerciseDetails.exerciseName,
       sets: state.currentSet,
+      notes: state.exerciseDetails.notes
     };
     async function saveToDB(newExerciseLog) {
       try {
@@ -109,12 +110,12 @@ export function ExerciseLog() {
     }
   };
 
-  const changeUnit = (e) => {
-    dispatch({
-      type: ACTIONS.UPDATE_CURRENT_SET,
-      payload: { unit: e.target.value },
-    });
-  };
+  // const changeUnit = (e) => {
+  //   dispatch({
+  //     type: ACTIONS.UPDATE_CURRENT_SET,
+  //     payload: { unit: e.target.value },
+  //   });
+  // };
 
   const changeWeight = (e) => {
     dispatch({
@@ -192,7 +193,7 @@ export function ExerciseLog() {
             <Form.Label column sm="8" className="custom-label">
               Weight
             </Form.Label>
-            <Col sm="3">
+            {/* <Col sm="3">
               <Form.Select
                 onChange={changeUnit}
                 className="select-unit"
@@ -201,7 +202,7 @@ export function ExerciseLog() {
                 <option value="kg">kg</option>
                 <option value="lbs">lbs</option>
               </Form.Select>
-            </Col>
+            </Col> */}
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ">
             <Col sm="3">
