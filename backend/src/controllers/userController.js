@@ -35,6 +35,8 @@ export const login = async (req, res, next) => {
             throw error
         }
         // to-do: delete password before sending user back to frontend!
+        user.password = undefined;
+        user.__v = undefined;
         res.json({msg: 'login successful!', user})
     }catch(err) {
         next(err)
