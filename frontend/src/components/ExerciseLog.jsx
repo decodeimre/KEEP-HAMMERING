@@ -30,8 +30,9 @@ export function ExerciseLog() {
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
 
   useEffect(() => {
-
+    console.log(allExercises);
     if (state.isEditMode) {
+      console.log("currentExerciseContext in Edit mode");
       return;
     } else {
       const currentExercise = allExercises.find(
@@ -54,13 +55,14 @@ export function ExerciseLog() {
 
   const saveExerciseSet = async (e) => {
     e.preventDefault();
+    console.log('save exercise set submitted')
 
     const newExerciseLog = {
       date: DateFormat(date),
       targetMuscle: state.exerciseDetails.targetMuscle,
       exerciseName: state.exerciseDetails.exerciseName,
       sets: state.currentSet,
-      notes: state.exerciseDetails.notes
+      notes: state.exerciseDetails.notes,
     };
     async function saveToDB(newExerciseLog) {
       try {
@@ -103,11 +105,16 @@ export function ExerciseLog() {
         throw new Error("response for update not okay");
       }
       setIsNewWorkout(true);
-      updateExerciseLog(state.exerciseLogID, state.currentSet);
+      updateExerciseLog(state.exerciseLogID, state.currentSet); //update context and inside also local storage
       dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: false });
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    dispatch({ type: ACTIONS.RESET_FORM });
   };
 
   // const changeUnit = (e) => {
@@ -283,15 +290,28 @@ export function ExerciseLog() {
                 </Button>
               </Col>
             ) : (
-              <Col>
-                <Button
-                  variant="outline-danger"
-                  onClick={handleSetUpdate}
-                  className="save-btn"
-                >
-                  Update
-                </Button>
-              </Col>
+              <>
+                <Col>
+                  <Button
+                    type="button"
+                    variant="outline-danger"
+                    onClick={handleCancel}
+                    className="save-btn"
+                  >
+                    Cancel
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    type="button"
+                    variant="outline-success"
+                    onClick={handleSetUpdate}
+                    className="save-btn"
+                  >
+                    Update
+                  </Button>
+                </Col>
+              </>
             )}
           </Row>
         </Form>

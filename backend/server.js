@@ -6,6 +6,7 @@ import { exerciseLogRouter } from "./src/routes/exerciseLogRoute.js";
 import { errorHandler, notFound } from "./src/errorhandler/errorhandler.js";
 import connectToDatabase from "./utils/databaseConnect.js";
 import "dotenv/config.js";
+import cookieParser from "cookie-parser";
 
 const server = express();
 
@@ -14,6 +15,7 @@ connectToDatabase();
 
 server.use(express.urlencoded({extended: true}))
 server.use(express.json());
+server.use(cookieParser())
 server.use(cors());
 
 
