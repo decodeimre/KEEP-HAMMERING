@@ -9,9 +9,7 @@ import "dotenv/config.js";
 import cookieParser from "cookie-parser";
 
 const server = express();
-
 connectToDatabase();
-
 
 server.use(express.urlencoded({extended: true}))
 server.use(express.json());

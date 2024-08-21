@@ -36,9 +36,11 @@ export const login = async (req, res, next) => {
       throw error;
     }
 
-    // to-do: delete password before sending user back to frontend!
-    user.password = undefined;
-    user.__v = undefined;
+    //convert Mongoose document into object for next step (delete password):
+    const userObject = user.toObject()
+    // delete password before sending user back to frontend!
+    delete userObject.password 
+    delete userObject.__v 
 
     //create a token
     const jwtToken = await createToken(
@@ -56,7 +58,7 @@ export const login = async (req, res, next) => {
         httpOnly: true,
         expires: new Date(Date.now() + 3600000*4), // expires in 4 hours
       })
-      .json({ msg: "login successful!", user });
+      .json({ msg: "login successful!", userObject });
   } catch (err) {
     next(err);
   }
