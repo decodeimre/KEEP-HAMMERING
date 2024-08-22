@@ -1,15 +1,17 @@
 import { Form, Button } from "react-bootstrap";
 import { UserContext } from "../context/userContext.jsx";
 import { useContext, useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { login } = useContext(UserContext);
   const [loginInfo, setLoginInfo] = useState({
     userName: "",
     password: "",
   });
+ const [errorMessage, setErrorMessage] = useState(null)
+
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -17,9 +19,11 @@ export const LoginForm = () => {
       ...loginInfo,
       [name]: value,
     });
+    setErrorMessage(null)
   };
 
   const handleLogin = async (e) => {
+   
     e.preventDefault();
     try {
       const loginRequest = {
@@ -29,12 +33,23 @@ export const LoginForm = () => {
       };
       const URL = "http://localhost:3000/login";
       const response = await fetch(URL, loginRequest);
-      if(!response.ok) {
-        throw new Error('fetch response for login not okay')
+      console.log(response);
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        const newErrorMessage = errorResponse.msg || 'unexpected error'
+        setErrorMessage(newErrorMessage)
+        throw new Error(newErrorMessage);
       }
-      const userData = await response.json();
-      login(userData.userObject);
-      navigate(`/${userData.userObject._id}`)
+      if (response.status === 200) {
+        const userData = await response.json();
+
+        login(userData.userObject);
+        navigate(`/${userData.userObject._id}`);
+      }else {
+        const loginError = await response.json().msg
+        console.log(loginError)
+        
+      }
     } catch (error) {
       console.log(error);
     }
@@ -42,6 +57,7 @@ export const LoginForm = () => {
 
   return (
     <Form onSubmit={handleLogin}>
+      {errorMessage? <h3>{errorMessage}</h3> : null}
       <Form.Group className="mb-3" controlId="formUserName">
         <Form.Label>Username</Form.Label>
         <Form.Control

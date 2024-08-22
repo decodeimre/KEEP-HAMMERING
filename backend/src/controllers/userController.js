@@ -18,29 +18,23 @@ export const login = async (req, res, next) => {
   try {
     const { userName, password } = req.body;
     if (!userName || !password) {
-      const error = new Error("Username or Password missing!");
-      error.status = 400;
-      throw error;
+      res.status(400).json({ msg: "Username or Password missing!" });
     }
     const user = await User.findOne({ userName });
     if (!user) {
-      const error = new Error("User does not exist or is not activated!");
-      error.status = 403;
-      throw error;
+      res.status(401).json({ msg: "User does not exist or is not activated!" });
     }
     const passwordCorrect = await user.authenticate(password);
 
     if (!passwordCorrect) {
-      const error = new Error("Password incorrect!");
-      error.status = 401;
-      throw error;
+      res.status(401).json({ msg: "Incorrect Password" });
     }
 
     //convert Mongoose document into object for next step (delete password):
-    const userObject = user.toObject()
+    const userObject = user.toObject();
     // delete password before sending user back to frontend!
-    delete userObject.password 
-    delete userObject.__v 
+    delete userObject.password;
+    delete userObject.__v;
 
     //create a token
     const jwtToken = await createToken(
@@ -53,10 +47,10 @@ export const login = async (req, res, next) => {
     );
 
     //attach a cookie, send the token in there
-    res
+    res.status(200)
       .cookie("KH_Token", jwtToken, {
         httpOnly: true,
-        expires: new Date(Date.now() + 3600000*4), // expires in 4 hours
+        expires: new Date(Date.now() + 3600000 * 4), // expires in 4 hours
       })
       .json({ msg: "login successful!", userObject });
   } catch (err) {
