@@ -8,6 +8,13 @@ body {
   margin: auto;
 }
 
+/*LOGIN REGISTER*/
+
+.loginRegisterContainer {
+  max-width: 600px;
+  margin: auto;
+}
+
 /*HEADER*/
 
 .app-logo {

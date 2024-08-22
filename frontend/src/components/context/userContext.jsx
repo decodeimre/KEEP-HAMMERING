@@ -8,9 +8,14 @@ export const UserProvider = ({children})=> {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const login = (userData) => {
-        setUser(userData);
+        const {userName, _id} = userData
+        setUser({
+          userName: userName,
+          userID: _id  
+        });
         setIsLoggedIn(true);
-        localStorage.setItem('KH-user', JSON.stringify(userData))
+        //not necessary with cookies later: 
+        // localStorage.setItem('KH-user', JSON.stringify(userData))
     }
 
     const logout = () => {

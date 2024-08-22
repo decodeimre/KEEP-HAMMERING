@@ -4,7 +4,7 @@ import { userRouter } from "./src/routes/userRouter.js";
 import { exerciseRouter } from "./src/routes/exercisesRoute.js";
 import { exerciseLogRouter } from "./src/routes/exerciseLogRoute.js";
 import { errorHandler, notFound } from "./src/errorhandler/errorhandler.js";
-import connectToDatabase from "./utils/databaseConnect.js";
+import connectToDatabase from "./src/utils/databaseConnect.js";
 import "dotenv/config.js";
 import cookieParser from "cookie-parser";
 
