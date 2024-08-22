@@ -51,16 +51,16 @@ export default function MyCalendar() {
           events={[
             //eventsArray goes in here - workouts saved in DB  - example eventObject:
             {
-              title: "awesome" , // a property!
-              start: "2024-09-01", // a property!
+              title: "awesome" , 
+              start: "2024-09-01", 
               end: "2024-09-02", // see important note below about 'end'
-              color: "whitesmoke" // a property!
+              color: "whitesmoke" 
             },
             {
-              title: "awesome" , // a property!
-              start: "2024-09-03", // a property!
-              end: "2024-09-04", // see important note below about 'end'
-              color: "whitesmoke" // a property!
+              title: "awesome" , 
+              start: "2024-09-03", 
+              end: "2024-09-04",
+              color: "whitesmoke" 
             },
             
           ]}

@@ -20,7 +20,7 @@ import {
 // Add the imported icons to the library
 library.add(faPlus, faMinus, faCircleInfo);
 
-export function ExerciseLog() {
+export default function ExerciseLog() {
   const { exerciseID, muscle } = useParams();
   const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
   const { date } = useContext(DateContext);

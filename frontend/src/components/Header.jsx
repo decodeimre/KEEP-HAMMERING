@@ -1,6 +1,7 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DateContext } from "./context/dateContext";
+import { UserContext } from "./context/userContext";
 import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Import the FontAwesome library
@@ -64,9 +65,10 @@ function MenuDropDownRight() {
   );
 }
 
-export function Header() {
+export default function Header() {
   const location = useLocation();
   const { setCurrentDate } = useContext(DateContext);
+  const { user, isLoggedIn } = useContext(UserContext);
 
   return (
     <>
@@ -76,39 +78,44 @@ export function Header() {
             <h1 className="app-logo">KEEP HAMMERING!</h1>
           </div>
         </div>
-        {/*navigation with button burger-menu, welcome text, button user-menu*/}
         <div className="row">
           <div className="text-center">
-            <h2>Welcome, User!</h2>
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col-2 text-center">
-            <MenuDropDownLeft />
-          </div>
-
-          <div className="col-8 text-center">
-            {location.pathname === "/" ? (
-              <Link to="/workoutLog">
-                <button
-                  onClick={() => setCurrentDate(new Date())}
-                  className="btn-workout-plus button"
-                >
-                  <FontAwesomeIcon icon="plus" />
-                </button>
-              </Link>
+            {isLoggedIn ? (
+              <h2>Welcome, {user?.userName}</h2>
             ) : (
-              <Link to="/">
-                <button className="btn-home button">
-                  <FontAwesomeIcon icon="home" />
-                </button>
-              </Link>
+              <h2>Welcome!</h2>
             )}
           </div>
-          <div className="col-2 text-center">
-            <MenuDropDownRight />
-          </div>
         </div>
+        {isLoggedIn && (
+          <div className="row mt-3">
+            <div className="col-2 text-center">
+              <MenuDropDownLeft />
+            </div>
+
+            <div className="col-8 text-center">
+              {location.pathname === "/" ? (
+                <Link to="/workoutLog">
+                  <button
+                    onClick={() => setCurrentDate(new Date())}
+                    className="btn-workout-plus button"
+                  >
+                    <FontAwesomeIcon icon="plus" />
+                  </button>
+                </Link>
+              ) : (
+                <Link to="/">
+                  <button className="btn-home button">
+                    <FontAwesomeIcon icon="home" />
+                  </button>
+                </Link>
+              )}
+            </div>
+            <div className="col-2 text-center">
+              <MenuDropDownRight />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { User } from "../models/UserModel.js";
-import { createToken, verifyToken } from "../../utils/token.js";
+import { createToken, verifyToken } from "../utils/token.js";
 
 // register
 // needs alot more - verification email etc

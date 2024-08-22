@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
@@ -11,6 +10,7 @@ const workoutSetSchema = new Schema({
 
 const exerciseLogSchema = new Schema(
   {
+    userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
     date: { type: String, required: true },
     targetMuscle: { type: String, required: true },
     exerciseName: { type: String, required: true },
