@@ -42,10 +42,18 @@ export default function MyCalendar() {
       <div className="container calendar-container">
       <div id="calendar">
         <FullCalendar
-          style={{cursor: "pointer"}}
+          className="fullCalendar"
           plugins={[multiMonthPlugin, interactionPlugin]}
           initialView="multiMonthYear"
           multiMonthMaxColumns={1}
+          headerToolbar={{
+            start: 'today', // "Today" button on the left
+            center: 'title',
+            end: 'prev,next', // Navigation buttons on the right
+          }}
+          dayCellDidMount={(info) => {
+            info.el.style.cursor = 'pointer'
+          }}
           dateClick={handleDateClick}
           height="100%"
           events={[

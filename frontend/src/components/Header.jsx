@@ -21,7 +21,6 @@ library.add(faBars, faUser, faPlus, faHome);
 function MenuDropDownLeft() {
   const navigate = useNavigate();
 
-
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -33,18 +32,26 @@ function MenuDropDownLeft() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={() => navigate('/home')}>Home (Calendar)</Dropdown.Item>
+        <Dropdown.Item onClick={() => navigate("/home")}>
+          Home (Calendar)
+        </Dropdown.Item>
         <Dropdown.Item onClick={() => navigate(`/workoutLog`)}>
           Plan new Workout
         </Dropdown.Item>
         <Dropdown.Item href="#/action-2">Exercise Overview</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Settings</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
 }
 
 function MenuDropDownRight() {
+  const navigate = useNavigate();
+  const { logout } = useContext(UserContext);
+  const handleLogout = () => {
+    logout(), navigate("/");
+  };
+
   return (
     <Dropdown>
       <Dropdown.Toggle as="button" id="dropdown-menu">
@@ -55,7 +62,7 @@ function MenuDropDownRight() {
         <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
         <Dropdown.Item href="#/action-1">My Workouts</Dropdown.Item>
         <Dropdown.Item href="#/action-2">My Stats</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
+        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -66,7 +73,7 @@ export default function Header() {
   const { setCurrentDate } = useContext(DateContext);
   const { user, isLoggedIn } = useContext(UserContext);
 
-  console.log(user, isLoggedIn)
+  console.log(user, isLoggedIn);
 
   return (
     <>
