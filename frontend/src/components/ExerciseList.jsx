@@ -4,14 +4,17 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import GoBackButton from "./utils/GoBackButton.jsx";
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
+import { ExercisesContext } from "./context/exercisesContext.jsx";
 
 export default function ExerciseList() {
   const { muscle } = useParams();
   const [exercises, setExercises] = useState([]); //for displaying all exercises for that muscle group
-  const { state, dispatch, ACTIONS } = useContext(currentExerciseContext);
+  const { dispatch, ACTIONS } = useContext(currentExerciseContext);
+  const {allExercises} = useContext(ExercisesContext)
 
   //fetches the exercises for that muscle group
   useEffect(() => {
+    console.log(allExercises)
     const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises`;
 
     async function fetchExercises() {

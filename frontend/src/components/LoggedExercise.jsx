@@ -44,6 +44,12 @@ export default function LoggedExercise({ exercise }) {
 
   // select set to update
   const handleUpdateSelect = (set) => {
+    const scrollUp = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    }
     const selectedSet = {
       weight: set.weight,
       reps: set.reps,
@@ -70,6 +76,7 @@ export default function LoggedExercise({ exercise }) {
    
     
     navigate(`/workoutLog/edit/${exerciseLogID}/${setID}`);
+    scrollUp()
   };
 
   return (
@@ -84,7 +91,7 @@ export default function LoggedExercise({ exercise }) {
         </Row>
         <Row>
           <Col>SETS</Col>
-          <Col>WEIGHT IN KG</Col>
+          <Col>WEIGHT (KG)</Col>
           <Col>REPS</Col>
           <Col></Col>
         </Row>

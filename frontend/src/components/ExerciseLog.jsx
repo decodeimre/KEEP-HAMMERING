@@ -2,6 +2,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import GoBackButton from "./utils/GoBackButton.jsx";
 import { useEffect, useState, useContext } from "react";
+import { UserContext } from "./context/userContext.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
@@ -28,17 +29,17 @@ export default function ExerciseLog() {
   const [showInfo, setShowInfo] = useState(false);
   const { allExercises } = useContext(ExercisesContext);
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
+  const {user} = useContext(UserContext)
 
   useEffect(() => {
-    console.log(allExercises);
+    console.log(allExercises)
     if (state.isEditMode) {
-      console.log("currentExerciseContext in Edit mode");
       return;
     } else {
       const currentExercise = allExercises.find(
         (exercise) => exercise._id === exerciseID
       );
-      console.log(currentExercise);
+
       dispatch({
         type: ACTIONS.SET_EXERCISE_DETAILS,
         payload: {
@@ -58,6 +59,7 @@ export default function ExerciseLog() {
     console.log('save exercise set submitted')
 
     const newExerciseLog = {
+      userID: user.userID,
       date: DateFormat(date),
       targetMuscle: state.exerciseDetails.targetMuscle,
       exerciseName: state.exerciseDetails.exerciseName,
@@ -200,16 +202,7 @@ export default function ExerciseLog() {
             <Form.Label column sm="8" className="custom-label">
               Weight
             </Form.Label>
-            {/* <Col sm="3">
-              <Form.Select
-                onChange={changeUnit}
-                className="select-unit"
-                value={state.currentSet.unit}
-              >
-                <option value="kg">kg</option>
-                <option value="lbs">lbs</option>
-              </Form.Select>
-            </Col> */}
+
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ">
             <Col sm="3">

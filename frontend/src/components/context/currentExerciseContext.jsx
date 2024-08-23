@@ -9,7 +9,6 @@ const ACTIONS = {
 };
 
 const initialState = {
-  userID: '',
   exerciseDetails: {},
   currentSet: { weight: 0, reps: 0, unit: "kg", id: "" },
   isEditMode: false,

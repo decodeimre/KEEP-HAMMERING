@@ -2,8 +2,10 @@ import { ExerciseLog } from "../models/ExerciseLogModel.js";
 
 
 export const getAllExerciseLogs = async (req, res, next) => {
+  const userID = req.params.uID;
+  console.log(userID)
   try {
-    const allExerciseLogs = await ExerciseLog.find();
+    const allExerciseLogs = await ExerciseLog.find({userID: userID});
     if (allExerciseLogs.length === 0) {
       res.status(400).json({msg: 'no exercise logs found'})
     }

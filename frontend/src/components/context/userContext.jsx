@@ -14,14 +14,13 @@ export const UserProvider = ({children})=> {
           userID: _id  
         });
         setIsLoggedIn(true);
-        //not necessary with cookies later: 
-        // localStorage.setItem('KH-user', JSON.stringify(userData))
+
     }
 
     const logout = () => {
         setUser(null);
         setIsLoggedIn(false);
-        localStorage.removeItem('KH-user')
+
     }
 
    return <UserContext.Provider value={{user, isLoggedIn, login, logout}}>{children}</UserContext.Provider>

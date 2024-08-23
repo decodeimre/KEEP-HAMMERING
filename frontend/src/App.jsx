@@ -28,11 +28,8 @@ function App() {
                   <Header />
                   <Routes>
                     <Route path="/" element={<LoginRegister />} />
-                    <Route path="/:uID" element={<MyCalendar />} />
-                    <Route
-                      path="/:uID/workoutLog/"
-                      element={<DailyWorkoutLog />}
-                    >
+                    <Route path="/home" element={<MyCalendar />} />
+                    <Route path="workoutLog" element={<DailyWorkoutLog />}>
                       <Route
                         path="targetMuscleList"
                         element={<TargetMuscleList />}

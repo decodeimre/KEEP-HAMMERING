@@ -21,10 +21,6 @@ library.add(faBars, faUser, faPlus, faHome);
 function MenuDropDownLeft() {
   const navigate = useNavigate();
 
-  const navigateToWorkoutLog = () => {
-    const date = new Date();
-    navigate(`/workoutLog/${date}`);
-  };
 
   return (
     <Dropdown>
@@ -37,8 +33,8 @@ function MenuDropDownLeft() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="/">Home (Calendar)</Dropdown.Item>
-        <Dropdown.Item onClick={navigateToWorkoutLog}>
+        <Dropdown.Item onClick={() => navigate('/home')}>Home (Calendar)</Dropdown.Item>
+        <Dropdown.Item onClick={() => navigate(`/workoutLog`)}>
           Plan new Workout
         </Dropdown.Item>
         <Dropdown.Item href="#/action-2">Exercise Overview</Dropdown.Item>
@@ -70,6 +66,8 @@ export default function Header() {
   const { setCurrentDate } = useContext(DateContext);
   const { user, isLoggedIn } = useContext(UserContext);
 
+  console.log(user, isLoggedIn)
+
   return (
     <>
       <div className="container-fluid bg-dark text-white p-3">
@@ -94,7 +92,7 @@ export default function Header() {
             </div>
 
             <div className="col-8 text-center">
-              {location.pathname === "/" ? (
+              {location.pathname === "/home" ? (
                 <Link to="/workoutLog">
                   <button
                     onClick={() => setCurrentDate(new Date())}
@@ -104,7 +102,7 @@ export default function Header() {
                   </button>
                 </Link>
               ) : (
-                <Link to="/">
+                <Link to="/home">
                   <button className="btn-home button">
                     <FontAwesomeIcon icon="home" />
                   </button>

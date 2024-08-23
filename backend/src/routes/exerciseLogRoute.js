@@ -5,18 +5,8 @@ import { getAllExerciseLogs, saveNewExerciseSet, deleteExerciseSet, updatedExerc
 export const exerciseLogRouter = Router();
 
 
-exerciseLogRouter.get("/", async (req, res, next) => {
-  try {
-    const searchedDate = req.query.date;
-    const dailyWorkoutSets = await ExerciseLog.find({ date: searchedDate });
-    res.status(200).json(dailyWorkoutSets);
-  } catch (err) {
-    next(err);
-  }
-});
 
-
-exerciseLogRouter.get('/exercise-log/getAll', getAllExerciseLogs)
+exerciseLogRouter.get(`/exercise-log/getAll/:uID`, getAllExerciseLogs)
 exerciseLogRouter.post(`/exercise-log/save`, saveNewExerciseSet);
 exerciseLogRouter.delete("/exercise-log/delete-set", deleteExerciseSet);
 exerciseLogRouter.put("/exercise-log/update-set/", updatedExerciseSet);

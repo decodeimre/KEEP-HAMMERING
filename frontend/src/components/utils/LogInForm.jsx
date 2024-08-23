@@ -35,8 +35,10 @@ export const LoginForm = () => {
       const response = await fetch(URL, loginRequest);
       console.log(response);
       if (!response.ok) {
+        //to get to error message from backend: 
         const errorResponse = await response.json();
-        const newErrorMessage = errorResponse.msg || 'unexpected error'
+        const newErrorMessage = errorResponse.msg || 'unexpected error';
+        //set errorMessage for display for user:
         setErrorMessage(newErrorMessage)
         throw new Error(newErrorMessage);
       }
@@ -44,7 +46,7 @@ export const LoginForm = () => {
         const userData = await response.json();
 
         login(userData.userObject);
-        navigate(`/${userData.userObject._id}`);
+        navigate(`/home`);
       }else {
         const loginError = await response.json().msg
         console.log(loginError)

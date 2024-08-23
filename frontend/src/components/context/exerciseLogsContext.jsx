@@ -1,38 +1,33 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
+import { UserContext } from "./userContext.jsx";
 
 export const ExerciseLogsContext = createContext();
 
 export const ExerciseLogsProvider = ({ children }) => {
+  //check loggedIn status and userID for exercises fetch
+  const { isLoggedIn, user } = useContext(UserContext);
   const [exerciseLogs, setExerciseLogs] = useState([]);
 
-  const fetchLogs = async () => {
-    console.log("fetching logged exercise sets from database");
-    try {
-      const response = await fetch(
-        "http://localhost:3000/workoutLog/exercise-log/getAll"
-      );
-      if (!response.ok) {
-        throw new Error("failed to fetch logged exercise sets");
-      }
-      const data = await response.json();
-      setExerciseLogs(data.allExerciseLogs);
-      localStorage.setItem(
-        "exerciseLogs",
-        JSON.stringify(data.allExerciseLogs)
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   useEffect(() => {
-    const storedLogs = localStorage.getItem("exerciseLogs");
-    if (storedLogs) {
-      setExerciseLogs(JSON.parse(storedLogs));
-    } else {
-      fetchLogs();
-    }
-  }, []);
+    const fetchLogs = async () => {
+      if (isLoggedIn && user) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/workoutLog/exercise-log/getAll/${user.userID}`
+          );
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            console.log(errorResponse.msg)
+          }
+          const data = await response.json();
+          setExerciseLogs(data.allExerciseLogs);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+    };
+    fetchLogs();
+  }, [user]);
 
   const addExerciseLog = (newExerciseLog) => {
     setExerciseLogs((prevLogs) => {
@@ -50,7 +45,6 @@ export const ExerciseLogsProvider = ({ children }) => {
         updatedLogs = [...prevLogs, newExerciseLog];
       }
 
-      localStorage.setItem("exerciseLogs", JSON.stringify(updatedLogs));
       return updatedLogs;
     });
   };
@@ -72,7 +66,7 @@ export const ExerciseLogsProvider = ({ children }) => {
         })
         .filter((exercise) => exercise !== null);
 
-      localStorage.setItem("exerciseLogs", JSON.stringify(updatedLogs));
+
       return updatedLogs;
     });
   };
