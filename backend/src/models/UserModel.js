@@ -5,7 +5,7 @@ const userSchema = new Schema ({
     userName: {type: String, required: true, unique: true, minLength: 3},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    // isActivated: {type: Boolean, default: false},
+    isActivated: {type: Boolean, default: false},
 })
 
 // hash password before saving user to database

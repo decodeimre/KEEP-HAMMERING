@@ -1,15 +1,81 @@
 import { User } from "../models/UserModel.js";
 import { createToken, verifyToken } from "../utils/token.js";
+import nodemailer from "nodemailer";
+import { genEmailTemplate } from "../utils/emailTemplate.js";
+import 'dotenv/config.js'
 
 // register
-// needs alot more - verification email etc
 export const register = async (req, res, next) => {
   try {
     const { userName, email, password } = req.body;
+
     const newUser = await User.create({ userName, email, password });
-    res.status(200).json({ msg: "registration successful", newUser });
-  } catch (err) {
-    next(err);
+
+    const jwtToken = await createToken(
+      {
+        userID: newUser._id,
+        email: email,
+        userName: userName,
+      },
+      process.env.SECRET_JWT_KEY,
+      { expiresIn: "24h" }
+    );
+    // console.log(process.env.email, process.env.password)
+    // const transporter = nodemailer.createTransport({
+    //   host: "smtp.web.de",
+    //   port: 465,
+    //   secure: true,
+    //   auth: {
+    //     user: process.env.email,
+    //     pass: process.env.password,
+    //   },
+    // });
+    // try {
+
+    //   await transporter.sendMail({
+    //     from: process.env.email,
+    //     to: email,
+    //     subject: "Keep Hammering account activation",
+    //     html: genEmailTemplate(userName, jwtToken, newUser._id),
+    //   });
+    // }catch(emailError) {
+    //   console.log('Error sending email', emailError);
+    //   return res.status(500).json({ msg: "Failed to send verification email." });
+    // }
+
+    //convert Mongoose document into object for next step (delete password):
+    const userObject = newUser.toObject();
+    // delete password before sending user back to frontend!
+    delete userObject.password;
+    delete userObject.__v;
+
+    res.status(200).json({ msg: "registration successful! check your emails for the activation link!", userObject });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// handle verify link
+
+export const handleVerifyLink = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+    const userID = req.params.userID;
+
+    const isVerified = await verifyToken(token);
+    if (!isVerified) {
+      const error = new Error("verification link is not valid!");
+      error.status = 404;
+      throw error;
+    }
+    const user = await User.findByIdAndUpdate(userID, { isActivated: true });
+    res
+      .status(200)
+      .json({
+        msg: `Hi ${user.userName}! Your account is activated. Please log in!`,
+      });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -22,7 +88,12 @@ export const login = async (req, res, next) => {
     }
     const user = await User.findOne({ userName });
     if (!user) {
-      res.status(401).json({ msg: "User does not exist or is not activated!" });
+      res.status(401).json({ msg: "User does not exist!" });
+    }
+    if (!user.isActivated) {
+      res
+        .status(401)
+        .json({ msg: "User account not activated. Please check your Emails!" });
     }
     const passwordCorrect = await user.authenticate(password);
 
@@ -47,7 +118,8 @@ export const login = async (req, res, next) => {
     );
 
     //attach a cookie, send the token in there
-    res.status(200)
+    res
+      .status(200)
       .cookie("KH_Token", jwtToken, {
         httpOnly: true,
         expires: new Date(Date.now() + 3600000 * 4), // expires in 4 hours
