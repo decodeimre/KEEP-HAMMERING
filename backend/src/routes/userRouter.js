@@ -8,4 +8,4 @@ export const userRouter = Router();
 
 userRouter.route('/register').post(registerValidation, handleValidationResults, register);
 userRouter.route('/login').post(loginValidation, handleValidationResults, login);
-userRouter.route('/confirm/:token/:userID').get(handleVerifyLink)
+userRouter.route('/users/confirm/:token/:userID').get(handleVerifyLink)

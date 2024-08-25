@@ -1,6 +1,6 @@
 import { Tabs, Tab, Container } from "react-bootstrap";
-import { RegisterForm } from "./utils/RegisterForm.jsx";
-import { LoginForm } from "./utils/LogInForm.jsx";
+import { RegisterForm } from "./RegisterForm.jsx";
+import { LoginForm } from "./LogInForm.jsx";
 
 export default function LoginRegister() {
   return (

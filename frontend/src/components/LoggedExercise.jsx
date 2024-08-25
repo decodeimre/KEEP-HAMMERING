@@ -1,4 +1,12 @@
-import { ListGroupItem, Container, Col, Row, Dropdown } from "react-bootstrap";
+import {
+  ListGroupItem,
+  Container,
+  Col,
+  Row,
+  Dropdown,
+  Button,
+  Modal,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 // Import the specific icons
@@ -8,16 +16,20 @@ library.add(faEllipsisVertical);
 import { currentExerciseContext } from "./context/currentExerciseContext.jsx";
 import { ExerciseLogsContext } from "./context/exerciseLogsContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
-import { useContext} from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoggedExercise({ exercise }) {
-
   const { dispatch, ACTIONS } = useContext(currentExerciseContext);
-  const {deleteExerciseLog} = useContext(ExerciseLogsContext)
+  const { deleteExerciseLog } = useContext(ExerciseLogsContext);
   const { sets, _id, targetMuscle, exerciseName } = exercise;
   const { setIsNewWorkout } = useContext(newWorkoutContext);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
+
+  // show confirm pop up for deleting set
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // delete a set
   const handleDeleteSet = async (setID) => {
@@ -34,12 +46,37 @@ export default function LoggedExercise({ exercise }) {
       if (!deleteSet.ok) {
         throw new Error("failed to delete set");
       }
-      deleteExerciseLog(exercise._id, setID)
+      deleteExerciseLog(exercise._id, setID);
       setIsNewWorkout(true);
+      handleClose();
     } catch (err) {
       console.log(err);
       alert("handleDelete error");
     }
+  };
+
+
+  // pop up for confirming delete
+
+  const ConfirmPopUp = ({ set }) => {
+    return (
+      <>
+        <Modal dialogClassName="confirmPopUp" show={show} onHide={handleClose} >
+          <Modal.Header closeButton>
+            <Modal.Title>Deleting Set</Modal.Title>
+          </Modal.Header>
+          <Modal.Body >Are you sure, you want to delete this set?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-danger" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="outline-secondary" onClick={() => handleDeleteSet(set._id)}>
+              Confirm
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    );
   };
 
   // select set to update
@@ -47,9 +84,9 @@ export default function LoggedExercise({ exercise }) {
     const scrollUp = () => {
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
-      })
-    }
+        behavior: "smooth",
+      });
+    };
     const selectedSet = {
       weight: set.weight,
       reps: set.reps,
@@ -71,12 +108,11 @@ export default function LoggedExercise({ exercise }) {
     dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: true });
     dispatch({ type: ACTIONS.SET_SELECTED_LOG, payload: exercise._id });
 
-    const exerciseLogID = exercise._id
-    const setID = set._id    
-   
-    
+    const exerciseLogID = exercise._id;
+    const setID = set._id;
+
     navigate(`/workoutLog/edit/${exerciseLogID}/${setID}`);
-    scrollUp()
+    scrollUp();
   };
 
   return (
@@ -84,9 +120,7 @@ export default function LoggedExercise({ exercise }) {
       <Container key={exercise._id}>
         <Row>
           <Col>
-            <h3>
-              {exerciseName}  
-            </h3>
+            <h3>{exerciseName}</h3>
           </Col>
         </Row>
         <Row>
@@ -98,11 +132,12 @@ export default function LoggedExercise({ exercise }) {
         {sets.map((set, index) => {
           return (
             <>
+              <ConfirmPopUp set={set} />
               <Row key={index} className="bg-info pt-2">
-                <Col >
+                <Col>
                   <h5>{index + 1}</h5>
                 </Col>
-                <Col >{set.weight}</Col>
+                <Col>{set.weight}</Col>
                 <Col>{set.reps}</Col>
                 <Col className="text-end">
                   <Dropdown>
@@ -117,9 +152,7 @@ export default function LoggedExercise({ exercise }) {
                         Edit
                       </Dropdown.Item>
 
-                      <Dropdown.Item onClick={() => handleDeleteSet(set._id)}>
-                        Delete
-                      </Dropdown.Item>
+                      <Dropdown.Item onClick={handleShow}>Delete</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </Col>

@@ -20,28 +20,34 @@ export const register = async (req, res, next) => {
       process.env.SECRET_JWT_KEY,
       { expiresIn: "24h" }
     );
-    // console.log(process.env.email, process.env.password)
-    // const transporter = nodemailer.createTransport({
-    //   host: "smtp.web.de",
-    //   port: 465,
-    //   secure: true,
-    //   auth: {
-    //     user: process.env.email,
-    //     pass: process.env.password,
-    //   },
-    // });
-    // try {
-
-    //   await transporter.sendMail({
-    //     from: process.env.email,
-    //     to: email,
-    //     subject: "Keep Hammering account activation",
-    //     html: genEmailTemplate(userName, jwtToken, newUser._id),
-    //   });
-    // }catch(emailError) {
-    //   console.log('Error sending email', emailError);
-    //   return res.status(500).json({ msg: "Failed to send verification email." });
-    // }
+  
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.email,
+        pass: process.env.password,
+      },
+    });
+    try {
+      transporter.verify(function(error, success) {
+        if(error) {
+          console.log(error)
+        }else {
+          console.log(('server ready for messages'))
+        }
+      })
+      await transporter.sendMail({
+        from: process.env.email,
+        to: email,
+        subject: "Keep Hammering account activation",
+        html: genEmailTemplate(userName, jwtToken, newUser._id),
+      });
+    }catch(emailError) {
+      console.log('Error sending email', emailError);
+      return res.status(500).json({ msg: "Failed to send verification email." });
+    }
 
     //convert Mongoose document into object for next step (delete password):
     const userObject = newUser.toObject();
@@ -61,8 +67,9 @@ export const handleVerifyLink = async (req, res, next) => {
   try {
     const token = req.params.token;
     const userID = req.params.userID;
+    const secretKey = process.env.SECRET_JWT_KEY
 
-    const isVerified = await verifyToken(token);
+    const isVerified = await verifyToken(token, secretKey);
     if (!isVerified) {
       const error = new Error("verification link is not valid!");
       error.status = 404;

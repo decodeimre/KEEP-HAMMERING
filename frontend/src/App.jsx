@@ -7,7 +7,8 @@ import MyCalendar from "./components/utils/Calendar.jsx";
 import TargetMuscleList from "./components/TargetMuscleList.jsx";
 import ExerciseList from "./components/ExerciseList.jsx";
 import ExerciseLog from "./components/ExerciseLog.jsx";
-import LoginRegister from "./components/LoginRegister.jsx";
+import LoginRegister from "./components/loginRegister/LoginRegister.jsx";
+import ConfirmAccount from "./components/loginRegister/ConfirmAccount.jsx";
 import { UserProvider } from "./components/context/userContext.jsx";
 import { DailyWorkoutLog } from "./components/DailyWorkoutLog.jsx";
 import { DateContextProvider } from "./components/context/dateContext.jsx";
@@ -28,6 +29,10 @@ function App() {
                   <Header />
                   <Routes>
                     <Route path="/" element={<LoginRegister />} />
+                    <Route
+                      path="/users/confirm/:token/:userID"
+                      element={<ConfirmAccount />}
+                    />
                     <Route path="/home" element={<MyCalendar />} />
                     <Route path="workoutLog" element={<DailyWorkoutLog />}>
                       <Route

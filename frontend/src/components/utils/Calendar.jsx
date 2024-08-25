@@ -46,11 +46,11 @@ export default function MyCalendar() {
           plugins={[multiMonthPlugin, interactionPlugin]}
           initialView="multiMonthYear"
           multiMonthMaxColumns={1}
-          headerToolbar={{
-            start: 'today', // "Today" button on the left
-            center: 'title',
-            end: 'prev,next', // Navigation buttons on the right
-          }}
+          // headerToolbar={{
+          //   start: 'today', // "Today" button on the left
+          //   center: 'title',
+          //   end: 'prev,next', // Navigation buttons on the right
+          // }}
           dayCellDidMount={(info) => {
             info.el.style.cursor = 'pointer'
           }}
