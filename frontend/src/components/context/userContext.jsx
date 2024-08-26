@@ -25,7 +25,6 @@ export const UserProvider = ({ children }) => {
             userID: userData.userID
           });
           setIsLoggedIn(true);
-          setIsNewWorkout(true);
           navigate('/home')
         } else {
           setUser(null);

@@ -1,6 +1,6 @@
 
 export const genEmailTemplate = (name, token, userID) => {
-    const link = `http://localhost:5173/users/confirm/${token}/${userID}`;
+    const link = `http://localhost:5000/users/confirm/${token}/${userID}`;
     return `
     Hi ${name}!
     <br/><br/>

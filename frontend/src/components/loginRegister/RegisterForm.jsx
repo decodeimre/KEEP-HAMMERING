@@ -23,7 +23,7 @@ export const RegisterForm = () => {
     e.preventDefault();
     try {
       if (registerInfo.password !== registerInfo.passwordConfirm) {
-        setMessage("Passwords don't match");
+        setMessage({text: "Passwords don't match", color: 'red'});
         return;
       }
 
@@ -40,13 +40,13 @@ export const RegisterForm = () => {
         const errorResponse = await response.json();
         const newErrorMessage = errorResponse.errors[0].msg || "unexpected error";
         //set errorMessage for display for user:
-        setMessage(newErrorMessage);
+        setMessage({text: newErrorMessage, color: 'red'});
         throw new Error(newErrorMessage);
       }
       if (response.status === 200) {
         const register = await response.json();
         console.log(register)
-        setMessage(register.msg);
+        setMessage({text: register.msg, color: 'green'});
       } else {
         const registerError = await response.json().msg;
         console.log(registerError);
@@ -58,7 +58,7 @@ export const RegisterForm = () => {
 
   return (
     <Form onSubmit={handleRegister}>
-      {message ? <h3>{message}</h3> : null}
+      {message ? <h3 style={{color: message.color}}>{message.text}</h3> : null}
       <Form.Group className="mb-3" controlId="formUserNameReg">
         <Form.Label>Username</Form.Label>
         <Form.Control
