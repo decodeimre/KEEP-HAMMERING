@@ -12,59 +12,6 @@ APP
 
 
 
-
-13.08.
- - state variable works basically - checking for bugs
- - update sets works basically - checking for bugs
+26.08. - Implement Frontend Validation for Register!
 
 
-
-
-LogIn and Register
-    - User Schema and Model
-    - using Schema.pre() methods for 
-      - validation and authentication
-        - express-validator
-          - validations middleware array (e.g. body('fullName').trim().notEmpty().matches(....))
-          - validationresults function handles errors (express validator)
-      - encryption middleware
-        - userSchema.pre('save', async function (next) {
-            if (!this.isModified('password')) {   //check if we modified password or same, then next (reusable for create user or update)
-            return (next ())}
-            const salt = await bcrypt.genSalt(10)
-            this.password = await bcrypt.hash(this.password, salt)})
-        - write own methods for Model/Schema: 
-            - userSchema.methods.authenticate = async function(password) { return await bcrypt.compare(password, this.password)} //NOT arrow function!!!
-            - UserModel.authenticate(password)
-Password Encryption
-    - use bcrypt
-    - password = somePassword123
-    - const salt = await bcrypt.genSalt(10)
-    - const hashPass = await bcrypt.hash(password, salt)
-    - const passwordMatch = await bcrypt.compare(passwordInput, hash) //returns true or false
-
-  when sending back user (found user or newly registered):
-      const {email, password} = req.body
-      const user = User.findOne(email: email)
-      user = User.autenticate(password, this.password)
-      user.password = undefined   // for the response to frontend! dont send back password, even the hashed version!
-      res.status(200).json(user)
-
-
-generating and verifying token:
-    - create secretKey - put in .env
-    - jwt (jsonwebtoken)
-        const createToken = async(payload, secretKey, options) => {
-            const asyncSign = promisify(jwt.sign); //promisify gives async version 
-            return asyncSign (payload, secretKey, options)
-        }
-
-        const verifyToken = asnyc (token, secretKey) => {
-             jwt.verify
-        }
-    - send token in the header/authentication (works for get requests as well)
-
-
-  Sending EMAIL from Backend:
-      - nodemailer (npm)
-        - host: smtp server for MY email 

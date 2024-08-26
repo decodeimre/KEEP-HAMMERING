@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 export default function LoggedExercise({ exercise }) {
   const { dispatch, ACTIONS } = useContext(currentExerciseContext);
   const { deleteExerciseLog } = useContext(ExerciseLogsContext);
-  const { sets, _id, targetMuscle, exerciseName } = exercise;
+  const { sets } = exercise;
   const { setIsNewWorkout } = useContext(newWorkoutContext);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
@@ -36,6 +36,7 @@ export default function LoggedExercise({ exercise }) {
     try {
       const deleteRequest = {
         method: "DELETE",
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ setID: setID, exerciseLogID: exercise._id }),
       };
@@ -120,7 +121,7 @@ export default function LoggedExercise({ exercise }) {
       <Container key={exercise._id}>
         <Row>
           <Col>
-            <h3>{exerciseName}</h3>
+            <h3>{exercise.exerciseName}</h3>
           </Col>
         </Row>
         <Row>

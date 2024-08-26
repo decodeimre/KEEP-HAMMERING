@@ -29,10 +29,10 @@ export default function ExerciseLog() {
   const [showInfo, setShowInfo] = useState(false);
   const { allExercises } = useContext(ExercisesContext);
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(allExercises)
+    console.log(allExercises);
     if (state.isEditMode) {
       return;
     } else {
@@ -56,7 +56,7 @@ export default function ExerciseLog() {
 
   const saveExerciseSet = async (e) => {
     e.preventDefault();
-    console.log('save exercise set submitted')
+    console.log("save exercise set submitted");
 
     const newExerciseLog = {
       userID: user.userID,
@@ -70,6 +70,7 @@ export default function ExerciseLog() {
       try {
         const postRequest = {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newExerciseLog),
         };
@@ -93,6 +94,7 @@ export default function ExerciseLog() {
     try {
       const updateRequest = {
         method: "PUT",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           exerciseLogID: state.exerciseLogID,
@@ -202,7 +204,6 @@ export default function ExerciseLog() {
             <Form.Label column sm="8" className="custom-label">
               Weight
             </Form.Label>
-
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ">
             <Col sm="3">

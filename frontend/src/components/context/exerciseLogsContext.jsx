@@ -13,11 +13,16 @@ export const ExerciseLogsProvider = ({ children }) => {
       if (isLoggedIn && user) {
         try {
           const response = await fetch(
-            `http://localhost:3000/workoutLog/exercise-log/getAll/${user.userID}`
+            `http://localhost:3000/workoutLog/exercise-log/getAll/${user.userID}`,
+            {
+              method: "GET",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            }
           );
           if (!response.ok) {
             const errorResponse = await response.json();
-            console.log(errorResponse.msg)
+            console.log(errorResponse.msg);
           }
           const data = await response.json();
           setExerciseLogs(data.allExerciseLogs);
@@ -65,7 +70,6 @@ export const ExerciseLogsProvider = ({ children }) => {
           return exercise;
         })
         .filter((exercise) => exercise !== null);
-
 
       return updatedLogs;
     });

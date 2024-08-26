@@ -20,12 +20,12 @@ import { ExercisesProvider } from "./components/context/exercisesContext.jsx";
 function App() {
   return (
     <>
-      <UserProvider>
-        <DateContextProvider>
-          <ExercisesProvider>
-            <ExerciseLogsProvider>
-              <CurrentExerciseProvider>
-                <NewWorkoutContextProvider>
+      <NewWorkoutContextProvider>
+        <UserProvider>
+          <DateContextProvider>
+            <ExercisesProvider>
+              <ExerciseLogsProvider>
+                <CurrentExerciseProvider>
                   <Header />
                   <Routes>
                     <Route path="/" element={<LoginRegister />} />
@@ -54,12 +54,12 @@ function App() {
                     </Route>
                     <Route path="*" element={<NoMatch />} />
                   </Routes>
-                </NewWorkoutContextProvider>
-              </CurrentExerciseProvider>
-            </ExerciseLogsProvider>
-          </ExercisesProvider>
-        </DateContextProvider>
-      </UserProvider>
+                </CurrentExerciseProvider>
+              </ExerciseLogsProvider>
+            </ExercisesProvider>
+          </DateContextProvider>
+        </UserProvider>
+      </NewWorkoutContextProvider>
     </>
   );
 }

@@ -29,11 +29,12 @@ export const LoginForm = () => {
       const loginRequest = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify(loginInfo),
       };
       const URL = "http://localhost:3000/login";
       const response = await fetch(URL, loginRequest);
-      console.log(response);
+
       if (!response.ok) {
         //to get to error message from backend: 
         const errorResponse = await response.json();

@@ -2,7 +2,10 @@ import { User } from "../models/UserModel.js";
 import { createToken, verifyToken } from "../utils/token.js";
 import nodemailer from "nodemailer";
 import { genEmailTemplate } from "../utils/emailTemplate.js";
-import 'dotenv/config.js'
+
+import "dotenv/config.js";
+
+
 
 // register
 export const register = async (req, res, next) => {
@@ -20,9 +23,9 @@ export const register = async (req, res, next) => {
       process.env.SECRET_JWT_KEY,
       { expiresIn: "24h" }
     );
-  
+
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: process.env.host,
       port: 465,
       secure: true,
       auth: {
@@ -31,22 +34,24 @@ export const register = async (req, res, next) => {
       },
     });
     try {
-      transporter.verify(function(error, success) {
-        if(error) {
-          console.log(error)
-        }else {
-          console.log(('server ready for messages'))
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("server ready for messages");
         }
-      })
+      });
       await transporter.sendMail({
         from: process.env.email,
         to: email,
         subject: "Keep Hammering account activation",
         html: genEmailTemplate(userName, jwtToken, newUser._id),
       });
-    }catch(emailError) {
-      console.log('Error sending email', emailError);
-      return res.status(500).json({ msg: "Failed to send verification email." });
+    } catch (emailError) {
+      console.log("Error sending email", emailError);
+      return res
+        .status(500)
+        .json({ msg: "Failed to send verification email." });
     }
 
     //convert Mongoose document into object for next step (delete password):
@@ -55,7 +60,12 @@ export const register = async (req, res, next) => {
     delete userObject.password;
     delete userObject.__v;
 
-    res.status(200).json({ msg: "registration successful! check your emails for the activation link!", userObject });
+    res
+      .status(200)
+      .json({
+        msg: "registration successful! check your emails for the activation link!",
+        userObject,
+      });
   } catch (error) {
     next(error);
   }
@@ -67,7 +77,7 @@ export const handleVerifyLink = async (req, res, next) => {
   try {
     const token = req.params.token;
     const userID = req.params.userID;
-    const secretKey = process.env.SECRET_JWT_KEY
+    const secretKey = process.env.SECRET_JWT_KEY;
 
     const isVerified = await verifyToken(token, secretKey);
     if (!isVerified) {
@@ -76,11 +86,9 @@ export const handleVerifyLink = async (req, res, next) => {
       throw error;
     }
     const user = await User.findByIdAndUpdate(userID, { isActivated: true });
-    res
-      .status(200)
-      .json({
-        msg: `Hi ${user.userName}! Your account is activated. Please log in!`,
-      });
+    res.status(200).json({
+      msg: `Hi ${user.userName}! Your account is activated. Please log in!`,
+    });
   } catch (error) {
     next(error);
   }
@@ -121,7 +129,7 @@ export const login = async (req, res, next) => {
         userName: user.userName,
       },
       process.env.SECRET_JWT_KEY,
-      { expiresIn: "4h" }
+      { expiresIn: "24h" }
     );
 
     //attach a cookie, send the token in there
@@ -129,7 +137,9 @@ export const login = async (req, res, next) => {
       .status(200)
       .cookie("KH_Token", jwtToken, {
         httpOnly: true,
-        expires: new Date(Date.now() + 3600000 * 4), // expires in 4 hours
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // use "none" in prod for cross-site
+        secure: process.env.NODE_ENV === 'production', // secure for https only (in production)
+        expires: new Date(Date.now() + 3600000 * 24), // expires in 24 hours
       })
       .json({ msg: "login successful!", userObject });
   } catch (err) {

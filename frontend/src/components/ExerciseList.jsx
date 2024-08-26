@@ -14,20 +14,10 @@ export default function ExerciseList() {
 
   //fetches the exercises for that muscle group
   useEffect(() => {
-    console.log(allExercises)
-    const fetchURL = `http://localhost:3000/workoutLog/${muscle}/exercises`;
+   
+    const exerciseByMuscle = allExercises.filter(exercise => exercise.targetMuscle === muscle)
+    setExercises(exerciseByMuscle)
 
-    async function fetchExercises() {
-      try {
-        const response = await fetch(fetchURL);
-        const data = await response.json();
-        setExercises(data);
-      } catch (error) {
-        alert("ExerciseList error");
-      }
-    }
-
-    fetchExercises();
   }, [muscle]);
 
   const setCurrentExercise = (exercise) => {
