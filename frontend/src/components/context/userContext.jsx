@@ -1,13 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { newWorkoutContext } from "./newWorkoutContext.jsx";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { setIsNewWorkout } = useContext(newWorkoutContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,10 +20,10 @@ export const UserProvider = ({ children }) => {
           const userData = await response.json();
           setUser({
             userName: userData.userName,
-            userID: userData.userID
+            userID: userData.userID,
           });
           setIsLoggedIn(true);
-          navigate('/home')
+          navigate("/home");
         } else {
           setUser(null);
           navigate("/");
@@ -46,9 +44,21 @@ export const UserProvider = ({ children }) => {
     setIsLoggedIn(true);
   };
 
-  const logout = () => {
-    setUser(null);
-    setIsLoggedIn(false);
+  const logout = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setUser(null);
+        setIsLoggedIn(false);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("Error during Logout:", error);
+    }
   };
 
   return (

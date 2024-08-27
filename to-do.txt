@@ -13,5 +13,6 @@ APP
 
 
 26.08. - Implement Frontend Validation for Register!
+       - Set Cookie with userID or some way of differentiating between users on same browser??!?!
 
 

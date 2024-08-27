@@ -20,9 +20,9 @@ import { ExercisesProvider } from "./components/context/exercisesContext.jsx";
 function App() {
   return (
     <>
-      <NewWorkoutContextProvider>
-        <UserProvider>
-          <DateContextProvider>
+      <UserProvider>
+        <DateContextProvider>
+          <NewWorkoutContextProvider>
             <ExercisesProvider>
               <ExerciseLogsProvider>
                 <CurrentExerciseProvider>
@@ -57,9 +57,9 @@ function App() {
                 </CurrentExerciseProvider>
               </ExerciseLogsProvider>
             </ExercisesProvider>
-          </DateContextProvider>
-        </UserProvider>
-      </NewWorkoutContextProvider>
+          </NewWorkoutContextProvider>
+        </DateContextProvider>
+      </UserProvider>
     </>
   );
 }

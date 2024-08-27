@@ -46,11 +46,8 @@ function MenuDropDownLeft() {
 }
 
 function MenuDropDownRight() {
-  const navigate = useNavigate();
   const { logout } = useContext(UserContext);
-  const handleLogout = () => {
-    logout(), navigate("/");
-  };
+
 
   return (
     <Dropdown>
@@ -62,7 +59,7 @@ function MenuDropDownRight() {
         <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
         <Dropdown.Item href="#/action-1">My Workouts</Dropdown.Item>
         <Dropdown.Item href="#/action-2">My Stats</Dropdown.Item>
-        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+        <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

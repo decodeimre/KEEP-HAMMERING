@@ -71,7 +71,7 @@ export default function LoggedExercise({ exercise }) {
             <Button variant="outline-danger" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="outline-secondary" onClick={() => handleDeleteSet(set._id)}>
+            <Button variant="outline-info" onClick={() => handleDeleteSet(set._id)}>
               Confirm
             </Button>
           </Modal.Footer>

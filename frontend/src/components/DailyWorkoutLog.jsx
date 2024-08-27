@@ -36,6 +36,7 @@ export function DailyWorkoutLog() {
     setDailyWorkouts(dailyExercises); //array of all logged exercises of that day
 
     setIsNewWorkout(false);
+    // re-render on date change, navigation or if newWorkout is set
   }, [date, navigate, isNewWorkout]);
 
   const handleAddWorkoutClick = () => {

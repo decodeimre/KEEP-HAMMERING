@@ -5,8 +5,6 @@ import { genEmailTemplate } from "../utils/emailTemplate.js";
 
 import "dotenv/config.js";
 
-
-
 // register
 export const register = async (req, res, next) => {
   try {
@@ -60,12 +58,10 @@ export const register = async (req, res, next) => {
     delete userObject.password;
     delete userObject.__v;
 
-    res
-      .status(200)
-      .json({
-        msg: "registration successful! check your emails for the activation link!",
-        userObject,
-      });
+    res.status(200).json({
+      msg: "registration successful! check your emails for the activation link!",
+      userObject,
+    });
   } catch (error) {
     next(error);
   }
@@ -137,12 +133,23 @@ export const login = async (req, res, next) => {
       .status(200)
       .cookie("KH_Token", jwtToken, {
         httpOnly: true,
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // use "none" in prod for cross-site
-        secure: process.env.NODE_ENV === 'production', // secure for https only (in production)
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // use "none" in prod for cross-site
+        secure: process.env.NODE_ENV === "production", // secure for https only (in production)
         expires: new Date(Date.now() + 3600000 * 24), // expires in 24 hours
       })
       .json({ msg: "login successful!", userObject });
   } catch (err) {
     next(err);
   }
+};
+
+// logout
+
+export const logout = (req, res, next) => {
+  res.status(200).cookie("KH_Token", "", { // replace cookie in frontend with empty one
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
+    expires: new Date(0), // Cookie expired so deleted in frontend
+  }).json({msg: "Logout successful!"})
 };

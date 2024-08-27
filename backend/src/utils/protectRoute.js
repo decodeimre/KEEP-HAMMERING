@@ -14,6 +14,6 @@ export const protectRoute = async (req, res, next) => {
       req.isVerified = isVerified;
       next();
     } catch (error) {
-      next(error);
+      return res.status(401).json({msg: "Token verification failed"})
     }
   };

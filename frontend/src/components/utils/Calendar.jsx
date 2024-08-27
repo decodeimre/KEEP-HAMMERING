@@ -16,6 +16,33 @@ import { faCircleDot, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 library.add(faCircleDot, faAngleLeft);
 
 export default function MyCalendar() {
+  const { setCurrentDate } = useContext(DateContext);
+  const { exerciseLogs } = useContext(ExerciseLogsContext);
+  const navigate = useNavigate();
+
+  const events = exerciseLogs.reduce((acc, log) => {
+    const { date, targetMuscle } = log;
+
+    // Check if we already have an event for this date
+    const eventIndex = acc.findIndex((event) => event.start === date);
+
+    if (eventIndex > -1) {
+      // If the event exists for this date, add targetMuscle if it's not a duplicate
+      const event = acc[eventIndex];
+      if (!event.targetMuscles.includes(targetMuscle)) {
+        event.targetMuscles.push(targetMuscle);
+      }
+    } else {
+      // If there's no event for this date, create a new one
+      acc.push({
+        title: `Workout`,
+        start: date,
+        targetMuscles: [targetMuscle],
+        className:['bg-light border-info']
+      });
+    }
+    return acc;
+  }, []);
 
   const muscleColors = {
     Abs: "red",
@@ -24,64 +51,54 @@ export default function MyCalendar() {
     Chest: "green",
     Legs: "orange",
     Shoulders: "purple",
-    Triceps: "grey"
-};
+    Triceps: "grey",
+  };
 
-  const {date, setCurrentDate} = useContext(DateContext);
-  const {exerciseLogs} = useContext(ExerciseLogsContext);
-
-  const navigate = useNavigate();
-    //example handleClick function
-    //should later open day view with planned workout and option to add new workout
-    const handleDateClick = (arg) => {
-      setCurrentDate(new Date(arg.date))
-      navigate(`/workoutLog/`)
+  const dailyEventContent = (eventInfo) => {
+    const targetMuscles = eventInfo.event.extendedProps.targetMuscles;
+    console.log(targetMuscles);
+    const muscleIcon = (muscle) => {
+      return (
+        <FontAwesomeIcon
+          icon="fa-solid fa-circle-dot"
+          size="xs"
+          style={{ color: muscleColors[muscle], marginRight: ".2rem" }}
+        />
+      ) || null;
     };
-  
+
     return (
-      <div className="container calendar-container">
+      <div>
+        {targetMuscles.map((muscle, index) => {
+          console.log(muscleIcon(muscle))
+         return <span key={index}>{muscleIcon(muscle)}</span>;
+        })}
+      </div>
+    );
+  };
+
+  const handleDateClick = (arg) => {
+    setCurrentDate(new Date(arg.date));
+    navigate(`/workoutLog/`);
+  };
+
+  return (
+    <div className="container calendar-container">
       <div id="calendar">
         <FullCalendar
           className="fullCalendar"
           plugins={[multiMonthPlugin, interactionPlugin]}
           initialView="multiMonthYear"
           multiMonthMaxColumns={1}
-          // headerToolbar={{
-          //   start: 'today', // "Today" button on the left
-          //   center: 'title',
-          //   end: 'prev,next', // Navigation buttons on the right
-          // }}
           dayCellDidMount={(info) => {
-            info.el.style.cursor = 'pointer'
+            info.el.style.cursor = "pointer";
           }}
           dateClick={handleDateClick}
           height="100%"
-          events={[
-            //eventsArray goes in here - workouts saved in DB  - example eventObject:
-            {
-              title: "awesome" , 
-              start: "2024-09-01", 
-              end: "2024-09-02", // see important note below about 'end'
-              color: "whitesmoke" 
-            },
-            {
-              title: "awesome" , 
-              start: "2024-09-03", 
-              end: "2024-09-04",
-              color: "whitesmoke" 
-            },
-            
-          ]}
-          //this is how we can display icons. (could be callback handling all targetmuscles from exerciseLoglist and create icon array)
-          //now the eventContent works for all events - how to connect the right one?!?!
-          eventContent={[<FontAwesomeIcon
-              icon="fa-solid fa-circle-dot"
-              style={{ color: "blue", marginRight: ".5rem" }}
-            />, <FontAwesomeIcon
-            icon="fa-solid fa-circle-dot"
-            style={{ color: "red", marginRight: ".5rem" }}
-          />]}
+          events={events ? events : null}
+          eventContent={dailyEventContent}
         />
-      </div></div>
-    );
-  }
+      </div>
+    </div>
+  );
+}
