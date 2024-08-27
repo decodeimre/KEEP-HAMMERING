@@ -30,10 +30,10 @@ function App() {
                   <Routes>
                     <Route path="/" element={<LoginRegister />} />
                     <Route
-                      path="/users/confirm/:token/:userID"
+                      path="users/confirm/:token/:userID"
                       element={<ConfirmAccount />}
                     />
-                    <Route path="/home" element={<MyCalendar />} />
+                    <Route path="home" element={<MyCalendar />} />
                     <Route path="workoutLog" element={<DailyWorkoutLog />}>
                       <Route
                         path="targetMuscleList"
