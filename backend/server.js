@@ -16,7 +16,7 @@ connectToDatabase();
 server.use(express.urlencoded({extended: true}))
 server.use(express.json());
 server.use(cookieParser())
-server.use(cors({origin: 'https://keep-hammering-1.onrender.com/', credentials: true}));
+server.use(cors({origin: 'https://keep-hammering-1.onrender.com', credentials: true}));
 
 
 server.get('/auth-check', protectRoute, authenticate)
