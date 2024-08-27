@@ -74,7 +74,7 @@ export default function ExerciseLog() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newExerciseLog),
         };
-        const URL = `http://localhost:3000/workoutLog/exercise-log/save`;
+        const URL = `https://keep-hammering.onrender.com/workoutLog/exercise-log/save`;
         const response = await fetch(URL, postRequest);
         if (!response.ok) {
           throw new Error("failed to save to database");
@@ -102,7 +102,7 @@ export default function ExerciseLog() {
         }),
       };
       const updatedSet = await fetch(
-        `http://localhost:3000/workoutLog/exercise-log/update-set/`,
+        `https://keep-hammering.onrender.com/workoutLog/exercise-log/update-set/`,
         updateRequest
       );
       if (!updatedSet.ok) {

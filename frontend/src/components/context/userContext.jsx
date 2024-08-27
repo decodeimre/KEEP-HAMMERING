@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const authenticate = async () => {
       try {
-        const response = await fetch("http://localhost:3000/auth-check", {
+        const response = await fetch("https://keep-hammering.onrender.com/auth-check", {
           method: "GET",
           credentials: "include",
         });
@@ -46,7 +46,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/logout", {
+      const response = await fetch("https://keep-hammering.onrender.com/logout", {
         method: "POST",
         credentials: "include",
       });

@@ -32,7 +32,7 @@ export const LoginForm = () => {
         credentials: 'include',
         body: JSON.stringify(loginInfo),
       };
-      const URL = "http://localhost:3000/login";
+      const URL = "https://keep-hammering.onrender.com/login";
       const response = await fetch(URL, loginRequest);
 
       if (!response.ok) {

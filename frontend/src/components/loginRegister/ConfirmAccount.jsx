@@ -12,7 +12,7 @@ export default function ConfirmAccount() {
   useEffect(() => {
     const verifyAccount = async () => {
       try {
-        const URL = `http://localhost:3000/users/confirm/${token}/${userID}`;
+        const URL = `https://keep-hammering.onrender.com/users/confirm/${token}/${userID}`;
         const response = await fetch(URL);
         const data = await response.json();
         console.log(data)

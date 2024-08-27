@@ -41,7 +41,7 @@ export default function LoggedExercise({ exercise }) {
         body: JSON.stringify({ setID: setID, exerciseLogID: exercise._id }),
       };
       const deleteSet = await fetch(
-        `http://localhost:3000/workoutLog/exercise-log/delete-set/`,
+        `https://keep-hammering.onrender.com/workoutLog/exercise-log/delete-set/`,
         deleteRequest
       );
       if (!deleteSet.ok) {

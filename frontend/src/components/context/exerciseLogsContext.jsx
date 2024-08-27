@@ -13,7 +13,7 @@ export const ExerciseLogsProvider = ({ children }) => {
       if (isLoggedIn && user) {
         try {
           const response = await fetch(
-            `http://localhost:3000/workoutLog/exercise-log/getAll/${user.userID}`,
+            `https://keep-hammering.onrender.com/workoutLog/exercise-log/getAll/${user.userID}`,
             {
               method: "GET",
               credentials: "include",
