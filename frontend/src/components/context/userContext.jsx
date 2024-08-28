@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const authenticate = async () => {
       try {
-        const response = await fetch("https://keep-hammering.onrender.com/auth-check", {
+        const response = await fetch("https://keep-hammering-1.onrender.com/auth-check", {
           method: "GET",
           credentials: "include",
         });
