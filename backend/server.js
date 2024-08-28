@@ -9,6 +9,7 @@ import { protectRoute } from "./src/utils/protectRoute.js";
 import { authenticate } from "./src/utils/authenticate.js";
 import "dotenv/config.js";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 const server = express();
 connectToDatabase();
@@ -17,12 +18,15 @@ server.use(express.urlencoded({extended: true}))
 server.use(express.json());
 server.use(cookieParser())
 server.use(cors({origin: 'https://keep-hammering-1.onrender.com', credentials: true}));
-
+server.use(express.static(path.join(__dirname, 'frontend/build')))
 
 server.get('/auth-check', protectRoute, authenticate)
 server.use('/', userRouter)
 server.use('/exercises/getAll', exerciseRouter )
 server.use("/workoutLog",protectRoute, exerciseLogRouter);
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
+})
 
 //error handling
 server.use(notFound, errorHandler )
