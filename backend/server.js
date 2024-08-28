@@ -12,18 +12,19 @@ import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
 import path from "path";
 
-const server = express();
 connectToDatabase();
+const server = express();
+
+const fileName = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(fileName)
+server.use(express.static(path.join(__dirname, 'frontend/build')))
 
 server.use(express.urlencoded({extended: true}))
 server.use(express.json());
 server.use(cookieParser())
-server.use(cors({origin: 'https://keep-hammering-1.onrender.com', credentials: true}));
+server.use(cors({origin: 'https://keep-hammering.onrender.com', credentials: true}));
 
-const fileName = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(fileName)
 
-server.use(express.static(path.join(__dirname, 'frontend/build')))
 
 server.get('/auth-check', protectRoute, authenticate)
 server.use('/', userRouter)

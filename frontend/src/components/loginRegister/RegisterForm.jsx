@@ -32,7 +32,7 @@ export const RegisterForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registerInfo),
       };
-      const URL = "https://keep-hammering.onrender.com/register";
+      const URL = "https://keep-hammering-1.onrender.com/register";
       const response = await fetch(URL, registerRequest);
       console.log(response);
       if (!response.ok) {

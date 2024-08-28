@@ -14,7 +14,7 @@ export default function ConfirmAccount() {
     const verifyAccount = async () => {
       try {
         
-        const URL = `https://keep-hammering.onrender.com/users/confirm/${token}/${userID}`;
+        const URL = `https://keep-hammering-1.onrender.com/users/confirm/${token}/${userID}`;
         console.log('trying to send a fetch request to', URL)
         const response = await fetch(URL);
         const data = await response.json();

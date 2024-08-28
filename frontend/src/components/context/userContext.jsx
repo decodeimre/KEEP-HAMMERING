@@ -46,7 +46,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("https://keep-hammering.onrender.com/logout", {
+      const response = await fetch("https://keep-hammering-1.onrender.com/logout", {
         method: "POST",
         credentials: "include",
       });

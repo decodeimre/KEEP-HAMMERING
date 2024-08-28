@@ -12,7 +12,7 @@ export const ExercisesProvider = ({ children }) => {
     const fetchExercises = async () => {
       console.log("fetching all exercises from database");
       try {
-        const response = await fetch("https://keep-hammering.onrender.com/exercises/getAll");
+        const response = await fetch("https://keep-hammering-1.onrender.com/exercises/getAll");
         if (!response.ok) {
           throw new Error("failed to fetch exercises");
         }

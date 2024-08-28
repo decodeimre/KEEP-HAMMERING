@@ -102,7 +102,7 @@ export default function ExerciseLog() {
         }),
       };
       const updatedSet = await fetch(
-        `https://keep-hammering.onrender.com/workoutLog/exercise-log/update-set/`,
+        `https://keep-hammering.onrender-1.com/workoutLog/exercise-log/update-set/`,
         updateRequest
       );
       if (!updatedSet.ok) {
