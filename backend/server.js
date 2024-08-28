@@ -9,6 +9,7 @@ import { protectRoute } from "./src/utils/protectRoute.js";
 import { authenticate } from "./src/utils/authenticate.js";
 import "dotenv/config.js";
 import cookieParser from "cookie-parser";
+import { fileURLToPath } from "url";
 import path from "path";
 
 const server = express();
@@ -18,6 +19,10 @@ server.use(express.urlencoded({extended: true}))
 server.use(express.json());
 server.use(cookieParser())
 server.use(cors({origin: 'https://keep-hammering-1.onrender.com', credentials: true}));
+
+const fileName = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(fileName)
+
 server.use(express.static(path.join(__dirname, 'frontend/build')))
 
 server.get('/auth-check', protectRoute, authenticate)
