@@ -13,7 +13,7 @@ export const errorHandler = (error, req, res, next) => {
 }
 
 export const notFound = (req, res, next) => {
-    const error = new Error ('path not found');
+    const error = new Error ('path not found', req.originalUrl);
     error.status = 404;
     next(error)
 }

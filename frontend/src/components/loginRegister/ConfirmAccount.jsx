@@ -10,6 +10,7 @@ export default function ConfirmAccount() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('ConfirmAccount mounting')
     const verifyAccount = async () => {
       try {
         const URL = `https://keep-hammering.onrender.com/users/confirm/${token}/${userID}`;
