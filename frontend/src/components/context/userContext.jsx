@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
             userID: userData.userID,
           });
           setIsLoggedIn(true);
-          navigate("/home");
+          // navigate("/home");
         } else {
           setUser(null);
           navigate("/");
