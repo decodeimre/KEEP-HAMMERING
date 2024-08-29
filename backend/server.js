@@ -15,9 +15,9 @@ import path from "path";
 connectToDatabase();
 const server = express();
 
-// const fileName = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(fileName)
-// server.use(express.static(path.join(__dirname, 'frontend/build')))
+const fileName = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(fileName)
+server.use(express.static(path.join(__dirname, 'frontend/build')))
 
 server.use(express.urlencoded({extended: true}))
 server.use(express.json());
@@ -30,9 +30,9 @@ server.get('/auth-check', protectRoute, authenticate)
 server.use('/', userRouter)
 server.use('/exercises/getAll', exerciseRouter )
 server.use("/workoutLog",protectRoute, exerciseLogRouter);
-// server.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
-// })
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
+})
 
 //error handling
 server.use(notFound, errorHandler )
