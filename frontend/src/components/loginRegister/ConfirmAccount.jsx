@@ -10,7 +10,7 @@ export default function ConfirmAccount() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('ConfirmAccount mounting')
+
     const verifyAccount = async () => {
       try {
         
