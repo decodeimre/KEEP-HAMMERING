@@ -27,10 +27,12 @@ export const UserProvider = ({ children }) => {
             userName: userData.userName,
             userID: userData.userID,
           });       
-          setIsLoggedIn(true);
+          setIsLoggedIn(true); 
+          navigate("/home");
         } else {
           setUser(null);
           navigate("/");
+          setIsLoggedIn(false)
         }
       } catch (error) {
         console.log("error during authentication:", error);
