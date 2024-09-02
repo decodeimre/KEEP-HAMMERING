@@ -70,7 +70,7 @@ export const deleteExerciseSet = async (req, res, next) => {
 };
 
 export const updatedExerciseSet = async (req, res, next) => {
-  console.log(req.body)
+  console.log('update Exercise request body:', req.body)
   try {
     const { exerciseLogID, updatedSet } = req.body
     const setID = updatedSet.id;
