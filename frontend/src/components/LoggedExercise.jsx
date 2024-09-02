@@ -82,6 +82,7 @@ export default function LoggedExercise({ exercise }) {
 
   // select set to update
   const handleUpdateSelect = (set) => {
+    console.log(set)
     const scrollUp = () => {
       window.scrollTo({
         top: 0,
@@ -94,7 +95,7 @@ export default function LoggedExercise({ exercise }) {
       unit: set.unit,
       id: set._id,
     };
-    console.log(exercise);
+    console.log(selectedSet);
 
     const selectedExerciseDetails = {
       targetMuscle: exercise.targetMuscle,
