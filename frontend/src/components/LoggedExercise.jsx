@@ -94,7 +94,7 @@ export default function LoggedExercise({ exercise }) {
       weight: set.weight,
       reps: set.reps,
       unit: set.unit,
-      id: set._id,
+      _id: set._id,
     };
     console.log(selectedSet);
 

@@ -73,7 +73,7 @@ export const updatedExerciseSet = async (req, res, next) => {
   console.log('update Exercise request body:', req.body)
   try {
     const { exerciseLogID, updatedSet } = req.body
-    const setID = updatedSet.id;
+    const setID = updatedSet._id;
     console.log(exerciseLogID);
     console.log(updatedSet);
     const updatedExercise = await ExerciseLog.findOneAndUpdate(

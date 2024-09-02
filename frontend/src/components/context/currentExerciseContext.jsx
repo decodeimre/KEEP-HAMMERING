@@ -10,7 +10,7 @@ const ACTIONS = {
 
 const initialState = {
   exerciseDetails: {},
-  currentSet: { weight: 0, reps: 0, unit: "kg", id: "" },
+  currentSet: { weight: 0, reps: 0, unit: "kg", _id: "" },
   isEditMode: false,
   exerciseLogID: "",
 };
