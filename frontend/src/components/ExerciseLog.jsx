@@ -74,7 +74,7 @@ export default function ExerciseLog() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newExerciseLog),
         };
-        const URL = `https://keep-hammering.onrender.com/workoutLog/exercise-log/save`;
+        const URL = `https://keep-hammering-1.onrender.com/workoutLog/exercise-log/save`;
         const response = await fetch(URL, postRequest);
         if (!response.ok) {
           throw new Error("failed to save to database");
