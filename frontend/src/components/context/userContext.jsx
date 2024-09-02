@@ -26,9 +26,7 @@ export const UserProvider = ({ children }) => {
           setUser({
             userName: userData.userName,
             userID: userData.userID,
-          });
-          if (!isLoggedIn && location.pathname !== "/home") {
-            navigate("/home");
+          });       
           setIsLoggedIn(true);}
         } else {
           setUser(null);
