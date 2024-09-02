@@ -89,11 +89,12 @@ export default function LoggedExercise({ exercise }) {
         behavior: "smooth",
       });
     };
+    console.log(set._id)
     const selectedSet = {
       weight: set.weight,
       reps: set.reps,
       unit: set.unit,
-      id: set.id,
+      id: set._id,
     };
     console.log(selectedSet);
 
