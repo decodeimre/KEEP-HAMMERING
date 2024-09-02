@@ -32,7 +32,7 @@ export const saveNewExerciseSet = async (req, res, next) => {
       const updateLoggedExercise = await ExerciseLog.findByIdAndUpdate(ID, {
         sets: updatedSets,
       }, {new: true});
-      // console.log(updateLoggedExercise)
+      console.log(updateLoggedExercise)
       res.status(200).json(updateLoggedExercise);
     } else {
       try {
@@ -41,12 +41,12 @@ export const saveNewExerciseSet = async (req, res, next) => {
         console.log(newSet);
         res.status(200).json(newSet);
       } catch (err) {
-        // console.log(err.message);
+        console.log(err.message);
         next(err);
       }
     }
   } catch (err) {
-    // console.log(err.message);
+    console.log(err.message);
     next(err);
   }
 };
@@ -70,8 +70,9 @@ export const deleteExerciseSet = async (req, res, next) => {
 };
 
 export const updatedExerciseSet = async (req, res, next) => {
+  console.log(req.body)
   try {
-    const { exerciseLogID, updatedSet } = req.body;
+    const { exerciseLogID, updatedSet } = req.body
     const setID = updatedSet.id;
     console.log(exerciseLogID);
     console.log(updatedSet);
@@ -90,7 +91,7 @@ export const updatedExerciseSet = async (req, res, next) => {
     if (!updatedExercise) {
       return res.status(404).json({ message: "Exercise log or set not found" });
     }
-
+   console.log(updatedExercise)
     res.status(200).json(updatedExercise);
   } catch (err) {
     next(err);
