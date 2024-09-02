@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
             userName: userData.userName,
             userID: userData.userID,
           });       
-          setIsLoggedIn(true);}
+          setIsLoggedIn(true);
         } else {
           setUser(null);
           navigate("/");
