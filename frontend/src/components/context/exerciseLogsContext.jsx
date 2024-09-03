@@ -23,9 +23,11 @@ export const ExerciseLogsProvider = ({ children }) => {
           if (!response.ok) {
             const errorResponse = await response.json();
             console.log(errorResponse.msg);
+            setExerciseLogs([]);
+          } else {
+            const data = await response.json();
+            setExerciseLogs(data.allExerciseLogs);
           }
-          const data = await response.json();
-          setExerciseLogs(data.allExerciseLogs);
         } catch (error) {
           console.log(error.message);
         }

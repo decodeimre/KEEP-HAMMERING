@@ -58,7 +58,7 @@ export default function ExerciseLog() {
     e.preventDefault();
 
     delete state.currentSet._id;
-
+    console.log(state.currentSet)
     const newExerciseLog = {
       userID: user.userID,
       date: DateFormat(date),
@@ -67,6 +67,7 @@ export default function ExerciseLog() {
       sets: state.currentSet,
       notes: state.exerciseDetails.notes,
     };
+    console.log(newExerciseLog)
     async function saveToDB(newExerciseLog) {
       try {
         const postRequest = {
