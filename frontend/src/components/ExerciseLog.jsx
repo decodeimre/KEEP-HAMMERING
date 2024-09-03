@@ -1,7 +1,7 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import GoBackButton from "./utils/GoBackButton.jsx";
-import { useEffect, useState, useContext, useNavigate } from "react";
+import { useEffect, useState, useContext } from "react";
 import { UserContext } from "./context/userContext.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
