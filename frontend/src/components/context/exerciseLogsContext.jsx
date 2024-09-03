@@ -82,15 +82,14 @@ export const ExerciseLogsProvider = ({ children }) => {
       const updatedLogs = prevLogs.map((exercise) => {
         if (exercise._id === exerciseID) {
           const updatedSets = exercise.sets.map((set) =>
-            set._id === currentSet.id ? currentSet : set
+            set._id === currentSet._id ? currentSet : set
           );
           return { ...exercise, sets: updatedSets };
         }
         return exercise;
       });
 
-      localStorage.setItem("exerciseLogs", JSON.stringify(updatedLogs));
-      return updatedLogs;
+       return updatedLogs;
     });
   };
 
