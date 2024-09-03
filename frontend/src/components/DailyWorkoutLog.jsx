@@ -40,6 +40,11 @@ export function DailyWorkoutLog() {
   }, [date, navigate, isNewWorkout]);
 
   const handleAddWorkoutClick = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
     navigate("targetMuscleList");
   };
 
