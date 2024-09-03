@@ -111,9 +111,6 @@ export default function LoggedExercise({ exercise }) {
     dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: true });
     dispatch({ type: ACTIONS.SET_SELECTED_LOG, payload: exercise._id });
 
-    const exerciseLogID = exercise._id;
-    const setID = set._id;
-
     navigate(`/workoutLog/edit/`);
     scrollUp();
   };
