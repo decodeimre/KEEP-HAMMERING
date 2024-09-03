@@ -114,7 +114,7 @@ export default function LoggedExercise({ exercise }) {
     const exerciseLogID = exercise._id;
     const setID = set._id;
 
-    navigate(`/workoutLog/edit/${exerciseLogID}/${setID}`);
+    navigate(`/workoutLog/edit/`);
     scrollUp();
   };
 
