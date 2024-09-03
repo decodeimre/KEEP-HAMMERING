@@ -1,7 +1,7 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import GoBackButton from "./utils/GoBackButton.jsx";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useNavigate } from "react";
 import { UserContext } from "./context/userContext.jsx";
 import { DateContext } from "./context/dateContext.jsx";
 import { newWorkoutContext } from "./context/newWorkoutContext.jsx";
@@ -30,6 +30,7 @@ export default function ExerciseLog() {
   const { allExercises } = useContext(ExercisesContext);
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate()
 
   // set current exercise to chosen exercise from the list (if not editing existing one)
   useEffect(() => {
@@ -93,6 +94,7 @@ export default function ExerciseLog() {
   };
 
   const handleSetUpdate = async () => {
+
     try {
       const updateRequest = {
         method: "PUT",
@@ -111,16 +113,19 @@ export default function ExerciseLog() {
         throw new Error("response for update not okay");
       }
       setIsNewWorkout(true);
-      updateExerciseLog(state.exerciseLogID, state.currentSet); //update context and inside also local storage
+      updateExerciseLog(state.exerciseLogID, state.currentSet); //update context 
       dispatch({ type: ACTIONS.TOGGLE_EDIT_MODE, payload: false });
+      navigate('/workoutLog')
     } catch (err) {
       alert(err.message);
     }
   };
 
   const handleCancel = (e) => {
+   
     e.preventDefault();
     dispatch({ type: ACTIONS.RESET_FORM });
+    navigate('/workoutLog')
   };
 
   // const changeUnit = (e) => {
