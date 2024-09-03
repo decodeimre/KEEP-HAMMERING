@@ -31,7 +31,6 @@ export default function ExerciseLog() {
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
   const { user } = useContext(UserContext);
 
-
   // set current exercise to chosen exercise from the list (if not editing existing one)
   useEffect(() => {
     if (state.isEditMode) {
@@ -57,6 +56,8 @@ export default function ExerciseLog() {
 
   const saveExerciseSet = async (e) => {
     e.preventDefault();
+
+    delete state.currentSet._id;
 
     const newExerciseLog = {
       userID: user.userID,
@@ -181,7 +182,6 @@ export default function ExerciseLog() {
     setShowInfo(!showInfo);
   };
 
- 
   return (
     <>
       <Container className="containItMan mt-5">

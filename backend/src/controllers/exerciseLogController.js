@@ -36,10 +36,10 @@ export const saveNewExerciseSet = async (req, res, next) => {
       res.status(200).json(updateLoggedExercise);
     } else {
       try {
-        const newWorkoutSet = req.body;
-        const newSet = await ExerciseLog.create(newWorkoutSet);
+        const newWorkoutLog = req.body;
+        const newLog = await ExerciseLog.create(newWorkoutLog);
         console.log(newSet);
-        res.status(200).json(newSet);
+        res.status(200).json(newLog);
       } catch (err) {
         console.log(err.message);
         next(err);
