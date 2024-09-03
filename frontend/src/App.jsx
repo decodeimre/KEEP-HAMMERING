@@ -48,7 +48,7 @@ function App() {
                         element={<ExerciseLog />}
                       />
                       <Route
-                        path="edit/:exercisesLogID/:setID"
+                        path="edit"
                         element={<ExerciseLog />}
                       />
                     </Route>
