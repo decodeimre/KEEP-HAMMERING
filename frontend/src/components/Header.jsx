@@ -1,4 +1,5 @@
 import Dropdown from "react-bootstrap/Dropdown";
+import { Col, Row, Container, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DateContext } from "./context/dateContext";
 import { UserContext } from "./context/userContext";
@@ -48,7 +49,6 @@ function MenuDropDownLeft() {
 function MenuDropDownRight() {
   const { logout } = useContext(UserContext);
 
-
   return (
     <Dropdown>
       <Dropdown.Toggle as="button" id="dropdown-menu">
@@ -74,51 +74,50 @@ export default function Header() {
 
   return (
     <>
-      <div className="container-fluid bg-dark text-white p-3">
-        <div className="row">
-          <div className="col text-center">
+      <Container>
+        <Row>
+          <Col className="text-center">
             <h1 className="app-logo">KEEP HAMMERING!</h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="text-center">
+          </Col>
+        </Row>
+        <Row className="text-center">
+          <Col>
+            <MenuDropDownLeft />
+          </Col>
+          <Col className="text-center">
             {isLoggedIn ? (
-              <h2>Welcome, {user?.userName}</h2>
+              <h3>Welcome, {user?.userName}</h3>
             ) : (
-              <h2>Welcome!</h2>
+              <h3>Welcome!</h3>
             )}
-          </div>
-        </div>
+          </Col>
+          <Col>
+            <MenuDropDownRight />
+          </Col>
+        </Row>
         {isLoggedIn && (
-          <div className="row mt-3">
-            <div className="col-2 text-center">
-              <MenuDropDownLeft />
-            </div>
-
-            <div className="col-8 text-center">
+          <Row className="text-center mt-2 mb-3">
+            <Col>
               {location.pathname === "/home" ? (
                 <Link to="/workoutLog">
-                  <button
+                  <Button
                     onClick={() => setCurrentDate(new Date())}
                     className="btn-workout-plus button"
                   >
                     <FontAwesomeIcon icon="plus" />
-                  </button>
+                  </Button>
                 </Link>
               ) : (
                 <Link to="/home">
-                  <button className="btn-home button">
+                  <Button className="btn-home button p-0">
                     <FontAwesomeIcon icon="home" />
-                  </button>
+                  </Button>
                 </Link>
               )}
-            </div>
-            <div className="col-2 text-center">
-              <MenuDropDownRight />
-            </div>
-          </div>
+            </Col>
+          </Row>
         )}
-      </div>
+      </Container>
     </>
   );
 }

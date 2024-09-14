@@ -190,11 +190,11 @@ export default function ExerciseLog() {
 
   return (
     <>
-      <Container className="containItMan mt-5">
+      <Container className="containItMan mt-3">
         <Container>
           <Row>
-            <Col>
-              <h2>{state.exerciseDetails.exerciseName}</h2>
+            <Col xs={9}>
+              <h3>{state.exerciseDetails.exerciseName}</h3>
             </Col>
             <Col role="button" onClick={showExerciseInfo} className="text-end">
               <FontAwesomeIcon size="lg" icon={faCircleInfo} />
@@ -211,7 +211,7 @@ export default function ExerciseLog() {
             </Form.Label>
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ">
-            <Col sm="3">
+            <Col xs={3} >
               <Button
                 onClick={decrementWeight}
                 variant="outline-secondary"
@@ -220,7 +220,7 @@ export default function ExerciseLog() {
                 <FontAwesomeIcon icon={faMinus} />
               </Button>
             </Col>
-            <Col sm="6">
+            <Col xs="6">
               <Form.Control
                 onChange={changeWeight}
                 value={state.currentSet.weight}
@@ -230,7 +230,7 @@ export default function ExerciseLog() {
                 step="0.5"
               />
             </Col>
-            <Col sm="3">
+            <Col xs={3}>
               <Button
                 onClick={incrementWeight}
                 variant="outline-secondary"
@@ -247,7 +247,7 @@ export default function ExerciseLog() {
             </Form.Label>
           </Form.Group>
           <Form.Group as={Row} className="mb-3">
-            <Col sm="3">
+            <Col xs={3}>
               <Button
                 variant="outline-secondary"
                 onClick={decrementReps}
@@ -256,7 +256,7 @@ export default function ExerciseLog() {
                 <FontAwesomeIcon icon={faMinus} />
               </Button>
             </Col>
-            <Col sm="6">
+            <Col xs={6}>
               <Form.Control
                 onChange={changeReps}
                 value={state.currentSet.reps}
@@ -266,7 +266,7 @@ export default function ExerciseLog() {
                 step="1"
               />
             </Col>
-            <Col sm="3">
+            <Col xs={3}>
               <Button
                 variant="outline-secondary"
                 onClick={() => incrementReps()}
