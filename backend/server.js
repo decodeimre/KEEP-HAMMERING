@@ -22,6 +22,7 @@ server.use(express.static(path.join(__dirname, 'frontend/build')))
 server.use(express.urlencoded({extended: true}))
 server.use(express.json());
 server.use(cookieParser())
+
 server.use(cors({origin: 'https://keep-hammering.onrender.com', credentials: true}));
 
 

@@ -77,12 +77,14 @@ export default function Header() {
       <Container>
         <Row>
           <Col className="text-center">
-            <h1 className="app-logo">KEEP HAMMERING!</h1>
+        
+              <h1 className="app-logo">KEEP HAMMERING!</h1>
+            
           </Col>
         </Row>
         <Row className="text-center">
           <Col>
-            <MenuDropDownLeft />
+           {isLoggedIn &&  <MenuDropDownLeft />}
           </Col>
           <Col className="text-center">
             {isLoggedIn ? (
@@ -92,7 +94,7 @@ export default function Header() {
             )}
           </Col>
           <Col>
-            <MenuDropDownRight />
+            {isLoggedIn && <MenuDropDownRight />}
           </Col>
         </Row>
         {isLoggedIn && (
