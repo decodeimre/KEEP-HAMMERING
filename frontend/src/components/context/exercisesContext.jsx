@@ -5,13 +5,13 @@ export const ExercisesContext = createContext();
 
 export const ExercisesProvider = ({ children }) => {
   const [allExercises, setExercises] = useState([]);
-
+  const server = import.meta.env.VITE_Server;
 
   useEffect(() => {
     const fetchExercises = async () => {
       console.log("fetching all exercises from database");
       try {
-        const response = await fetch("https://keep-hammering-1.onrender.com/exercises/getAll");
+        const response = await fetch(`${server}/exercises/getAll`);
         if (!response.ok) {
           throw new Error("failed to fetch exercises");
         }

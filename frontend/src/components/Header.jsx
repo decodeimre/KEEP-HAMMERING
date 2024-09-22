@@ -83,7 +83,7 @@ export default function Header() {
           </Col>
         </Row>
         <Row className="text-center">
-          <Col>
+          <Col className="d-flex flex-start">
            {isLoggedIn &&  <MenuDropDownLeft />}
           </Col>
           <Col className="text-center">
@@ -93,7 +93,7 @@ export default function Header() {
               <h3>Welcome!</h3>
             )}
           </Col>
-          <Col>
+          <Col className="d-flex flex-row-reverse">
             {isLoggedIn && <MenuDropDownRight />}
           </Col>
         </Row>

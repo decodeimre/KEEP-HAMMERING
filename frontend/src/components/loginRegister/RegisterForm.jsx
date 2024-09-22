@@ -20,6 +20,9 @@ export const RegisterForm = () => {
   };
 
   const handleRegister = async (e) => {
+
+    const server = import.meta.env.VITE_Server
+
     e.preventDefault();
     try {
       if (registerInfo.password !== registerInfo.passwordConfirm) {
@@ -32,7 +35,7 @@ export const RegisterForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registerInfo),
       };
-      const URL = "https://keep-hammering-1.onrender.com/register";
+      const URL = `${server}/register`;
       const response = await fetch(URL, registerRequest);
       console.log(response);
       if (!response.ok) {

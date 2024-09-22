@@ -31,6 +31,7 @@ export default function ExerciseLog() {
   const { addExerciseLog, updateExerciseLog } = useContext(ExerciseLogsContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate()
+  const server = import.meta.env.VITE_Server;
 
   // set current exercise to chosen exercise from the list (if not editing existing one)
   useEffect(() => {
@@ -77,7 +78,7 @@ export default function ExerciseLog() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newExerciseLog),
         };
-        const URL = `https://keep-hammering-1.onrender.com/workoutLog/exercise-log/save`;
+        const URL = `${server}/workoutLog/exercise-log/save`;
         const response = await fetch(URL, postRequest);
         if (!response.ok) {
           throw new Error("failed to save to database");
@@ -106,7 +107,7 @@ export default function ExerciseLog() {
         }),
       };
       const updatedSet = await fetch(
-        `https://keep-hammering-1.onrender.com/workoutLog/exercise-log/update-set/`,
+        `${server}/workoutLog/exercise-log/update-set/`,
         updateRequest
       );
       if (!updatedSet.ok) {

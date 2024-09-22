@@ -25,6 +25,7 @@ server.use(cookieParser())
 
 server.use(cors({origin: 'https://keep-hammering.onrender.com', credentials: true}));
 
+// server.use(cors({origin: 'http://localhost:5000', credentials: true}));
 
 
 server.get('/auth-check', protectRoute, authenticate)

@@ -24,6 +24,9 @@ export const LoginForm = () => {
 
   const handleLogin = async (e) => {
    
+    const server = import.meta.env.VITE_Server
+    console.log(server)
+
     e.preventDefault();
     try {
       const loginRequest = {
@@ -32,7 +35,7 @@ export const LoginForm = () => {
         credentials: 'include',
         body: JSON.stringify(loginInfo),
       };
-      const URL = "https://keep-hammering-1.onrender.com/login";
+      const URL = `${server}/login`;
       const response = await fetch(URL, loginRequest);
 
       if (!response.ok) {

@@ -7,13 +7,14 @@ export const ExerciseLogsProvider = ({ children }) => {
   //check loggedIn status and userID for exercises fetch
   const { isLoggedIn, user } = useContext(UserContext);
   const [exerciseLogs, setExerciseLogs] = useState([]);
+  const server = import.meta.env.VITE_Server;
 
   useEffect(() => {
     const fetchLogs = async () => {
       if (isLoggedIn && user) {
         try {
           const response = await fetch(
-            `https://keep-hammering-1.onrender.com/workoutLog/exercise-log/getAll/${user.userID}`,
+            `${server}/${user.userID}`,
             {
               method: "GET",
               credentials: "include",

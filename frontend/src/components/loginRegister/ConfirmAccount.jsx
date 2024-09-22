@@ -8,13 +8,14 @@ export default function ConfirmAccount() {
   const [confirmed, setConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const server = import.meta.env.VITE_Server;
 
   useEffect(() => {
 
     const verifyAccount = async () => {
       try {
         
-        const URL = `https://keep-hammering-1.onrender.com/users/confirm/${token}/${userID}`;
+        const URL = `${server}/users/confirm/${token}/${userID}`;
         console.log('trying to send a fetch request to', URL)
         const response = await fetch(URL);
         const data = await response.json();

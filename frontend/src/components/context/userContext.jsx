@@ -1,4 +1,3 @@
-
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,31 +7,28 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
+  const server = import.meta.env.VITE_Server;
 
   useEffect(() => {
     const authenticate = async () => {
       try {
-        const response = await fetch(
-          "https://keep-hammering-1.onrender.com/auth-check",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${server}/auth-check`, {
+          method: "GET",
+          credentials: "include",
+        });
         console.log(response);
         if (response.ok) {
           const userData = await response.json();
           setUser({
             userName: userData.userName,
             userID: userData.userID,
-          });       
-          setIsLoggedIn(true); 
+          });
+          setIsLoggedIn(true);
           navigate("/home");
         } else {
           setUser(null);
           navigate("/");
-          setIsLoggedIn(false)
+          setIsLoggedIn(false);
         }
       } catch (error) {
         console.log("error during authentication:", error);
@@ -52,13 +48,10 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch(
-        "https://keep-hammering-1.onrender.com/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${server}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
 
       if (response.ok) {
         setUser(null);
